@@ -17,7 +17,7 @@ module StashMetadata
       performer = Performer.new
       performer.checksum = checksum
       performer.name = name
-      performer.url = performerJSON['url']
+      performer.url = json['url']
 
       performer.save
     }
@@ -25,30 +25,37 @@ module StashMetadata
     mappings['scenes'].each { |sceneJSON|
       checksum = sceneJSON['checksum']
       path = sceneJSON['path']
-      json = StashMetadata::JSON.scene checksum
-      next unless checksum && path && json
+      unless checksum && path
+        logger.warning "Scene mapping without checksum and path! #{sceneJSON}"
+        next
+      end
 
       scene = Scene.new
       scene.checksum = checksum
       scene.path     = path
-      scene.title    = sceneJSON['title']
-      scene.details  = sceneJSON['details']
-      scene.url      = sceneJSON['url']
 
-      # TODO studio
+      json = StashMetadata::JSON.scene checksum
+      if json
+        scene.title    = json['title']
+        scene.details  = json['details']
+        scene.url      = json['url']
 
-      if json['performers']
-        json['performers'].each { |performer_name|
-          performer = Performer.find_by(name: performer_name)
-          if performer
-            scene.performers.push performer
-          else
-            logger.warning "Performer does not exist! #{performer_name}"
-          end
-        }
+        # TODO studio
+
+        performer_names = json['performers']
+        if performer_names
+          performer_names.each { |performer_name|
+            performer = Performer.find_by(name: performer_name)
+            if performer
+              scene.performers.push(performer)
+            else
+              logger.warning "Performer does not exist! #{performer_name}"
+            end
+          }
+        end
+
+        # TODO tags
       end
-
-      # TODO tags
 
       scene.save
     }
