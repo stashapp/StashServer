@@ -43,5 +43,16 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.belongs_to :scene, index: true
     end
 
+    # -------
+    # Studios
+    # -------
+
+    create_table :studios do |t|
+      t.string :name
+      t.string :url
+
+      t.timestamps
+    end
+
   end
 end

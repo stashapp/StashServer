@@ -40,4 +40,11 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.index ["studio_id"], name: "index_scenes_on_studio_id"
   end
 
+  create_table "studios", force: :cascade do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end

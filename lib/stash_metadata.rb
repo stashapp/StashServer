@@ -26,7 +26,7 @@ module StashMetadata
       checksum = sceneJSON['checksum']
       path = sceneJSON['path']
       unless checksum && path
-        logger.warning "Scene mapping without checksum and path! #{sceneJSON}"
+        puts "Scene mapping without checksum and path! #{sceneJSON}"
         next
       end
 
@@ -40,7 +40,16 @@ module StashMetadata
         scene.details  = json['details']
         scene.url      = json['url']
 
-        # TODO studio
+        studio_name = json['studio']
+        if studio_name
+          studio = Studio.find_by(name: studio_name)
+          if studio
+            scene.studio = studio
+          else
+            puts "Created new studio #{studio_name}"
+            scene.studio = Studio.create(name: studio_name)
+          end
+        end
 
         performer_names = json['performers']
         if performer_names
@@ -49,7 +58,7 @@ module StashMetadata
             if performer
               scene.performers.push(performer)
             else
-              logger.warning "Performer does not exist! #{performer_name}"
+              puts "Performer does not exist! #{performer_name}"
             end
           }
         end
