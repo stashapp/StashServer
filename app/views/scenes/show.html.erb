@@ -1,0 +1,53 @@
+<div class="ui container segments">
+  <div class="ui top attached segment">
+    Main Content
+  </div>
+
+  <% if @scene.details %>
+  <div class="ui attached segment">
+    <h3>Details</h3>
+    <%= @scene.details %>
+  </div>
+  <% end %>
+
+  <% if @scene.performers.count > 0 %>
+  <div class="ui attached segment">
+    <h3>Performers</h3>
+    <div class="ui four centered stackable link cards">
+      <% @scene.performers.each do |performer| %>
+        <%= render performer %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+  <!-- TODO Tags -->
+
+  <div class="ui bottom attached segment">
+    <div class="ui list">
+      <a class="clippable item" title="Click to copy" data-clipboard-text="<%= @scene.checksum %>">
+        <i class="privacy icon"></i>
+        <div class="content">
+          <div class="header">Checksum</div>
+          <div class="description"><%= @scene.checksum %></div>
+        </div>
+      </a>
+      <a class="clippable item" title="Click to copy" data-clipboard-text="<%= @scene.path %>">
+        <i class="folder open outline icon"></i>
+        <div class="content">
+          <div class="header">Path</div>
+          <div class="description"><%= @scene.path %></div>
+        </div>
+      </a>
+      <% if @scene.url %>
+      <a class="clippable item" title="Click to copy" data-clipboard-text="<%= @scene.url %>">
+        <i class="server icon"></i>
+        <div class="content">
+          <div class="header">URL</div>
+          <div class="description"><%= @scene.url %></div>
+        </div>
+      </a>
+      <% end %>
+    </div>
+  </div>
+</div>

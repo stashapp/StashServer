@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title></title>
     <%= csrf_meta_tags %>
 
@@ -9,6 +13,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.6/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.6/semantic.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.5.16/clipboard.min.js"></script>
   </head>
 
   <body>
@@ -20,26 +25,33 @@
     </div>
 
     <div class="ui top fixed menu">
-      <a id="main-menu-button" class="item">
-        <i class="sidebar icon"></i>
-      </a>
-      <div class="right menu">
-        <div class="ui right aligned category search item">
-          <div class="ui transparent icon input">
-            <input class="prompt" placeholder="Search..." type="text">
-            <i class="search link icon"></i>
+      <div class="ui container">
+        <a id="main-menu-button" class="item">
+          <i class="sidebar icon"></i>
+        </a>
+        <div class="right menu">
+          <div class="ui right aligned category search item">
+            <div class="ui transparent icon input">
+              <input class="prompt" placeholder="Search..." type="text">
+              <i class="search link icon"></i>
+            </div>
+            <div class="results"></div>
           </div>
-          <div class="results"></div>
         </div>
       </div>
     </div>
 
-    <div class="pusher" style="padding-top: 40px;">
-      <%= yield %>
+    <div class="pusher">
+      <div class="ui main container">
+        <%= yield %>
+      </div>
     </div>
 
     <script>
       $('.ui.sidebar').sidebar('attach events', '#main-menu-button');
+
+      new Clipboard('.clippable');
+      $('.clippable').popup({hoverable: true, position: 'left center'});
     </script>
   </body>
 </html>

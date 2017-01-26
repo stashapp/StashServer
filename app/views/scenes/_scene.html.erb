@@ -1,6 +1,6 @@
 <div class="card">
   <%= link_to scene_path(scene), class: 'image' do %>
-    <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=300%C3%97350&w=300&h=350">
+    <img src="https://unsplash.it/300/350/?random">
   <% end %>
   <div class="content">
     <div class="header"><%= scene.title || 'No Title' %></div>
@@ -8,14 +8,21 @@
       <a><%= scene.checksum %></a>
     </div>
     <div class="description">
-      <%= scene.details || "No Details" %>
+      <% if scene.details %>
+        <%= scene.details.truncate(300, omission: '... (continued)') %>
+      <% else %>
+        <%= "No Details" %>
+      <% end %>
     </div>
   </div>
   <div class="extra content">
     <span>
       <i class="record icon"></i>
-      <!-- TODO -->
-      No Studio
+      <% if scene.studio %>
+        <%= link_to scene.studio.name, '' %>
+      <% else %>
+        No Studio
+      <% end %>
     </span>
   </div>
   <div class="extra content">

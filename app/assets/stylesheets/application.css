@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  background-color: #FFFFFF;
+}
+
+.main.container {
+  margin-top: 5em;
+  margin-bottom: 2em;
+}
+
+#main-pagination {
+  margin: 2em 0 1em 0;
+}
