@@ -1,0 +1,49 @@
+<div class="card">
+  <%= link_to scene_path(scene), class: 'image' do %>
+    <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=300%C3%97350&w=300&h=350">
+  <% end %>
+  <div class="content">
+    <div class="header"><%= scene.title || 'No Title' %></div>
+    <div class="meta">
+      <a><%= scene.checksum %></a>
+    </div>
+    <div class="description">
+      <%= scene.details || "No Details" %>
+    </div>
+  </div>
+  <div class="extra content">
+    <span>
+      <i class="record icon"></i>
+      <!-- TODO -->
+      No Studio
+    </span>
+  </div>
+  <div class="extra content">
+    <span>
+      <i class="user icon"></i>
+      <% if scene.performers.count > 0 %>
+        <% scene.performers.each do |performer| %>
+          <div class="ui label"><%= performer.name %></div>
+        <% end %>
+      <% else %>
+        No Performers
+      <% end %>
+    </span>
+  </div>
+  <div class="extra content">
+    <span>
+      <i class="tags icon"></i>
+      <!-- TODO -->
+      No Tags
+    </span>
+  </div>
+  <!-- <div class="extra content">
+    <span class="right floated">
+      More Metadata
+    </span>
+    <span>
+      <i class="tags icon"></i>
+      None
+    </span>
+  </div> -->
+</div>

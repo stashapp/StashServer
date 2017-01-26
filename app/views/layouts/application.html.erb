@@ -1,14 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Stash</title>
+    <title></title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.6/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.6/semantic.min.js"></script>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="ui inverted labeled icon left inline vertical sidebar menu">
+      <%= link_to root_path, class: 'item' do %>
+        <i class="home icon"></i>
+        Home
+      <% end %>
+    </div>
+
+    <div class="ui top fixed menu">
+      <a id="main-menu-button" class="item">
+        <i class="sidebar icon"></i>
+      </a>
+      <div class="right menu">
+        <div class="ui right aligned category search item">
+          <div class="ui transparent icon input">
+            <input class="prompt" placeholder="Search..." type="text">
+            <i class="search link icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pusher" style="padding-top: 55px;">
+      <%= yield %>
+    </div>
+
+    <script>
+      $('.ui.sidebar').sidebar('attach events', '#main-menu-button');
+    </script>
   </body>
 </html>
