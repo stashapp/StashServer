@@ -1,6 +1,7 @@
-<div class="ui three container cards">
+<div class="ui three doubling stackable container cards basic segment">
   <% @scenes.each do |scene| %>
-    <%#= render partial: 'scenes/scene' %>
     <%= render scene %>
   <% end %>
 </div>
+
+<%= paginate @scenes %>

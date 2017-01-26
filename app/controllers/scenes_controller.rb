@@ -2,7 +2,7 @@ class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update]
 
   def index
-    @scenes = Scene.all
+    @scenes = Scene.all.page params[:page]
   end
 
   def show
