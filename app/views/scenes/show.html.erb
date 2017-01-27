@@ -1,7 +1,24 @@
 <div class="ui container segments">
   <div class="ui top attached segment">
-    Main Content
+    <!-- TODO Poster -->
+    <video id="player" class="video-js vjs-16-9 vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="">
+      <source src="<%= stream_path @scene %>" type="<%= @scene.mime_type %>">
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a web browser that
+        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+      </p>
+    </video>
   </div>
+
+  <script type="text/javascript">
+    var player = videojs('player', { "techOrder": ["html5"] }, function() {
+
+    });
+
+    // player.markers({
+    //   markers: <%#= raw @scene.markers_json %>
+    // });
+  </script>
 
   <% if @scene.details %>
   <div class="ui attached segment">
