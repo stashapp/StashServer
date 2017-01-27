@@ -24,7 +24,7 @@ class ScenesController < ApplicationController
   end
 
   def stream
-    send_file @scene.path, range: true, disposition: 'inline', filename: File.basename(@scene.path)
+    send_file @scene.path, disposition: 'inline', filename: File.basename(@scene.path)
   end
 
   private
