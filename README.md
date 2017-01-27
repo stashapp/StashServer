@@ -1,24 +1,36 @@
-# README
+# Setup
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## NGINX
 
-Things you may want to cover:
+* `$ brew install nginx --with-passenger` and follow the instructions (add passenger lines to nginx.conf)
+* Create a file called `/usr/local/etc/nginx/servers/stash` with the following contents:
 
-* Ruby version
+```
+upstream puma {
+  server localhost:3000;
+}
 
-* System dependencies
+server {
+  listen 4000 default;
+  root **PATH_TO_STASH_APP_HERE**;
+  try_files $uri/index.html $uri @puma;
 
-* Configuration
+  location /protected/ {
+    internal;
+    alias /$1/;
+  }
 
-* Database creation
+  location @puma {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header HOST $http_host;
+    proxy_set_header X-Sendfile-Type X-Accel-Redirect;
+    proxy_set_header X-Accel-Mapping ^/*=/protected/$1;
+    proxy_redirect off;
+    proxy_pass http://localhost:3000;
+  }
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 4G;
+  keepalive_timeout 5;
+}
+```
