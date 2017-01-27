@@ -2,3 +2,9 @@
 
 # Add new mime types for use in respond_to blocks:
 # Mime::Type.register "text/richtext", :rtf
+
+Mime::Type.register "image/jpg", :jpg
+Mime::Type.register "image/png", :png
+Mime::Type.register "video/mp4", :mp4
+Mime::Type.register "video/quicktime", :mov
+Mime::Type.register "video/x-ms-wmv", :wmv

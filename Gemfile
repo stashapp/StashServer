@@ -54,3 +54,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Mine
 gem 'kaminari', '~> 1.0.1'
+gem 'send_file_with_range', '1.0.0'

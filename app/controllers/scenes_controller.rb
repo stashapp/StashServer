@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update]
+  before_action :set_scene, only: [:show, :edit, :update, :stream]
 
   def index
     @scenes = Scene.all.page params[:page]
@@ -21,6 +21,10 @@ class ScenesController < ApplicationController
         format.html { render :edit }
       end
     end
+  end
+
+  def stream
+    send_file @scene.path, range: true, disposition: 'inline', filename: File.basename(@scene.path)
   end
 
   private
