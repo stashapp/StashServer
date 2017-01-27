@@ -1,7 +1,6 @@
 <div class="ui container segments">
   <div class="ui top attached segment">
-    <!-- TODO Poster -->
-    <video id="player" class="video-js vjs-16-9 vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="">
+    <video id="player" class="video-js vjs-16-9 vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="<%= screenshot_path(@scene) %>">
       <source src="<%= stream_path @scene %>" type="<%= @scene.mime_type %>">
       <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a web browser that

@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream]
+  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot]
 
   def index
     @scenes = Scene.all.page params[:page]
@@ -25,6 +25,21 @@ class ScenesController < ApplicationController
 
   def stream
     send_file @scene.path, disposition: 'inline'
+  end
+
+  def screenshot
+    seconds = params[:seconds]
+
+    # TODO Use this
+    # screenshot = @scene.screenshot
+    # if seconds
+    #   # TODO add logic to return default if out of bounds
+    #   screenshot = FFMPEGUtility.get_raw_screenshot @scene.absolute_path, seconds
+    # end
+    # send_data screenshot, type: 'image/jpg', disposition: 'inline'
+
+    path = File.join(ENV['HOME'], "/.stash/screenshots/#{@scene.checksum}.jpg")
+    send_file path, disposition: 'inline'
   end
 
   private

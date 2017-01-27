@@ -1,6 +1,6 @@
 <div class="card">
   <%= link_to scene_path(scene), class: 'image' do %>
-    <img src="https://unsplash.it/300/350/?random">
+    <%= image_tag screenshot_path(scene) %>
   <% end %>
   <div class="content">
     <div class="header"><%= scene.title || 'No Title' %></div>
