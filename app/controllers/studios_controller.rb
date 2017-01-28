@@ -2,7 +2,10 @@ class StudiosController < ApplicationController
   before_action :set_studio, only: [:show, :edit, :update]
 
   def index
-    @studios = Studio.all.page params[:page]
+    @studios = Studio
+                .search_for(params[:q])
+                .page(params[:page])
+                
     respond_to do |format|
       format.html
       format.json { render json: @studios.to_json }

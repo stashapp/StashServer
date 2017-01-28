@@ -2,7 +2,10 @@ class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update]
 
   def index
-    @performers = Performer.all.page params[:page]
+    @performers = Performer
+                    .search_for(params[:q])
+                    .page(params[:page])
+                    
     respond_to do |format|
       format.html
       format.json { render json: @performers.to_json }

@@ -2,7 +2,20 @@ class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot]
 
   def index
-    @scenes = Scene.all.page params[:page]
+    # TODO Refactor
+    if params[:filter_studios]
+      params[:filter_studios] = params[:filter_studios].split(',')
+    end
+    if params[:filter_performers]
+      params[:filter_performers] = params[:filter_performers].split(',')
+    end
+
+    sliced = params.slice(:filter_studios, :filter_performers)
+
+    @scenes = Scene
+                .search_for(params[:q])
+                .filter(sliced)
+                .page(params[:page])
   end
 
   def show
