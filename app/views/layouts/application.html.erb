@@ -46,7 +46,10 @@
     </div>
 
     <script>
-      $('.ui.sidebar').sidebar('attach events', '#main-menu-button');
+      $('.ui.sidebar')
+        .sidebar('attach events', '#main-menu-button')
+        .sidebar('setting', 'transition', 'slide along')
+        .sidebar('setting', 'dimPage', false);
 
       new Clipboard('.clippable');
       $('.clippable').popup({hoverable: true, position: 'left center'});
