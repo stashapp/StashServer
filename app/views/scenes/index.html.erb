@@ -1,3 +1,50 @@
+<form id="scene-filter" class="ui mini form segment">
+  <div class="ui equal width centered divided grid">
+    <div class="row">
+      <div class="column">
+        <div class="ui massive fluid icon input">
+          <input name="q" placeholder="Search scenes..." type="text">
+          <i class="search icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="column">
+        <h5>Studios</h5>
+        <div id="studio-filter" class="ui fluid multiple search selection dropdown button">
+          <input name="filter_studios" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text"><i class="record icon"></i>Studios</div>
+        </div>
+      </div>
+      <div class="column">
+        <h5>Performers</h5>
+        <div id="performer-filter" class="ui fluid multiple search selection dropdown button">
+          <input name="filter_performers" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text"><i class="user icon"></i>Performers</div>
+        </div>
+      </div>
+      <div class="column">
+        <h5>Tags</h5>
+      </div>
+      <div class="column">
+        <h5>Sort</h5>
+      </div>
+    </div>
+
+    <div class="one column centered row">
+      <button class="ui reset button">
+        Reset
+      </button>
+      <button class="ui primary button">
+        Filter
+      </button>
+    </div>
+  </div>
+</form>
+
 <div class="ui three doubling cards">
   <% @scenes.each do |scene| %>
     <%= render scene %>
