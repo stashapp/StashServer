@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require semantic
 //= require video
 //= require_tree .
