@@ -4,7 +4,7 @@
 
 * `$ brew install nginx --with-passenger` and follow the instructions (add passenger lines to nginx.conf)
 * Create a file called `/usr/local/etc/nginx/servers/stash` with the following contents:
-
+* `brew services [start|stop|restart] nginx`
 ```
 upstream puma {
   server localhost:3000;
