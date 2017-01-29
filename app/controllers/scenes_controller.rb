@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot]
+  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt]
 
   def index
     # TODO Refactor
@@ -55,11 +55,30 @@ class ScenesController < ApplicationController
     send_file path, disposition: 'inline'
   end
 
+  def vtt
+    respond_to do |format|
+      format.vtt {
+        path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_thumbs.vtt")
+        send_file path, disposition: 'inline'
+      }
+      format.jpg {
+        path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_sprite.jpg")
+        send_file path, disposition: 'inline'
+      }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
     def set_scene
-      @scene = Scene.find(params[:id])
+      if Scene.find_by(id: params[:id])
+        @scene = Scene.find(params[:id])
+      else
+        params[:id].slice! '_thumbs.vtt'
+        params[:id].slice! '_sprite.jpg'
+        @scene = Scene.find_by(checksum: params[:id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

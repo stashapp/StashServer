@@ -1,5 +1,9 @@
+<script src='https://content.jwplatform.com/libraries/L7fM8L0h.js'></script>
+<script>jwplayer.key='';</script>
+
 <div class="ui container segments">
   <div class="ui top attached segment">
+    <% if request.user_agent =~ /Mobile|webOS/ %>
     <video id="player" class="video-js vjs-16-9 vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="<%= screenshot_path(@scene) %>">
       <source src="<%= stream_path @scene %>" type="<%= @scene.mime_type %>">
       <p class="vjs-no-js">
@@ -7,16 +11,29 @@
         <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
       </p>
     </video>
+    <% else %>
+    <div id="player">Loading the player...</div>
+    <% end %>
   </div>
 
   <script type="text/javascript">
+    <% if request.user_agent =~ /Mobile|webOS/ %>
     var player = videojs('player', { "techOrder": ["html5"] }, function() {
 
     });
-
-    // player.markers({
-    //   markers: <%#= raw @scene.markers_json %>
-    // });
+    <% else %>
+    const player = jwplayer('player').setup({
+      file: '<%= stream_path @scene %>.mp4',
+      image: '<%= screenshot_path(@scene) %>.jpg',
+      tracks: [{
+          file: "/scenes/<%= @scene.checksum %>_thumbs.vtt",
+          kind: "thumbnails"
+      }],
+      primary: 'html5',
+      autostart: false,
+      volume: 50
+    });
+    <% end %>
   </script>
 
   <% if @scene.details %>
