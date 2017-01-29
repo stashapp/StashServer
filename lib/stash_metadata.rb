@@ -1,7 +1,10 @@
+require 'fileutils'
+
 module StashMetadata
   STASH_DIRECTORY            = File.join(Dir.home, '.stash')
   STASH_PERFORMERS_DIRECTORY = File.join(STASH_DIRECTORY, 'performers')
   STASH_SCENES_DIRECTORY     = File.join(STASH_DIRECTORY, 'scenes')
+  STASH_VTT_DIRECTORY        = File.join(STASH_DIRECTORY, 'vtt')
   STASH_MAPPINGS_FILE        = File.join(STASH_DIRECTORY, 'mappings.json')
 
   def self.import
@@ -69,5 +72,22 @@ module StashMetadata
       scene.save
     }
 
+  end
+
+  def self.create_vtt
+    FileUtils.mkdir_p(STASH_VTT_DIRECTORY) unless File.directory?(STASH_VTT_DIRECTORY)
+
+    Scene.all.each { |scene|
+      path = File.join(STASH_VTT_DIRECTORY, "#{scene.checksum}_thumbs.vtt")
+      next unless !File.exist?(path)
+
+      movie = VTTGenerator::Movie.new(scene.path)
+      movie.thumb_width = 160
+      movie.sprite_filename = "#{scene.checksum}_sprite.jpg"
+      movie.vtt_filename = "#{scene.checksum}_thumbs.vtt"
+      movie.output_directory = STASH_VTT_DIRECTORY
+
+      movie.generate
+    }
   end
 end

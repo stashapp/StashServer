@@ -9,4 +9,9 @@ namespace :metadata do
   task export: :environment do
   end
 
+  desc "Create VTT"
+  task create_vtt: :environment do
+    StashMetadata.create_vtt
+  end
+
 end

@@ -55,3 +55,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Mine
 gem 'kaminari', '~> 1.0.1'
 gem 'scoped_search', '~> 4.0.0'
+gem 'streamio-ffmpeg', '~> 3.0.2'
+gem 'fastimage', '2.0.1'
