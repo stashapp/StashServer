@@ -26,9 +26,13 @@
       file: '<%= stream_path @scene %>.mp4',
       image: '<%= screenshot_path(@scene) %>.jpg',
       tracks: [{
-          file: "/scenes/<%= @scene.checksum %>_thumbs.vtt",
-          kind: "thumbnails"
+        file: "/scenes/<%= @scene.checksum %>_thumbs.vtt",
+        kind: "thumbnails"
       }],
+      // {
+      //   file: "<%= scene_chapter_vtt_path(@scene) %>.vtt",
+      //   kind: "chapters"
+      // }],
       primary: 'html5',
       autostart: false,
       volume: 50

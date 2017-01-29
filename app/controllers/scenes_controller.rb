@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt]
+  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt]
 
   def index
     # TODO Refactor
@@ -65,6 +65,12 @@ class ScenesController < ApplicationController
         path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_thumbs.vtt")
         send_file path, disposition: 'inline'
       }
+    end
+  end
+
+  def chapter_vtt
+    respond_to do |format|
+      format.vtt { render inline: @scene.chapter_vtt }
     end
   end
 
