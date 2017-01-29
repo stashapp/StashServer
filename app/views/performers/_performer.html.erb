@@ -1,6 +1,6 @@
 <div class="card">
-  <%= link_to performer_path(performer), class: 'image' do %>
-    <%= image_tag performer_image_path(performer) %>
+  <%= link_to performer_path(performer), class: 'performer image', style: "background-image:url(#{performer_image_path(performer)});" do %>
+    <%#= image_tag performer_image_path(performer) %>
   <% end %>
   <div class="content">
     <div class="header"><%= performer.name %></div>
