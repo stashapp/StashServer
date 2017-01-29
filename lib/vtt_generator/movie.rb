@@ -4,7 +4,7 @@ require 'fastimage'
 module VTTGenerator
 
   class Movie
-    attr_reader   :info, :path, :number_of_frames, :nth_frame
+    attr_reader   :info, :path, :number_of_frames, :nth_frame, :frame_rate
     attr_accessor :thumb_width, :sprite_filename, :vtt_filename, :output_directory, :rows, :cols
 
     def initialize(path=nil, options={})
@@ -25,14 +25,22 @@ module VTTGenerator
         raise Errno::EINVAL, "No valid video stream for file '#{path}'"
       end
 
+      @frame_rate = @info.frame_rate || video_stream[:r_frame_rate].to_i
       @number_of_frames = video_stream[:nb_frames].to_i
       if @number_of_frames == 0
         @number_of_frames = `ffmpeg -nostats -i #{@path} -vcodec copy -f rawvideo -y /dev/null 2>&1 | grep frame | awk '{split($0,a,"fps")}END{print a[1]}' | sed 's/.*= *//'`.to_i
+        if @number_of_frames == 0
+          @number_of_frames = @frame_rate * @info.duration
+        end
       end
       @nth_frame = @number_of_frames / (@rows * @cols)
     end
 
     def generate
+      Dir.glob("#{@output_directory}/tmp/thumbnail*.jpg") do |image|
+        File.delete(image)
+      end
+
       generate_thumbs
       generate_vtt
     end
@@ -40,8 +48,25 @@ module VTTGenerator
     private
 
     def generate_thumbs
-      cmd = "ffmpeg -v quiet -threads 3 -i '#{@path}' -y -frames 1 -q:v 2 -vf 'select=not(mod(n\\,#{@nth_frame})),scale=#{@thumb_width}:-1,tile=#{@cols}x#{@rows}' '#{File.join(@output_directory, @sprite_filename)}'"
       VTTGenerator.logger.info("Generating thumbnail for #{@path}")
+
+      count = @rows * @cols
+      step_size = @info.duration / count
+      count.times do |i|
+        time = i * step_size
+        num = "%.3d" % i
+        filename = "thumbnail#{num}.jpg"
+        cmd = "ffmpeg -v quiet -ss #{time} -y -i \"#{@path}\" -vframes 1 -q:v 1 -vf scale=#{@thumb_width}:-1 -f image2 '#{File.join(@output_directory, 'tmp', filename)}'"
+        system(cmd)
+      end
+
+      images = []
+      Dir.glob("#{@output_directory}/tmp/thumbnail*.jpg") do |image|
+        images.push(image)
+      end
+
+      size = FastImage.size(images.first)
+      cmd = "montage #{File.join(@output_directory, 'tmp', 'thumbnail*.jpg')} -tile #{@rows}x#{@cols} -geometry #{size[0]}x#{size[1]} #{File.join(@output_directory, @sprite_filename)}"
       system(cmd)
     end
 
@@ -50,7 +75,7 @@ module VTTGenerator
       width = size[0] / @cols
       height = size[1] / @rows
 
-      step_size = @nth_frame / @info.frame_rate
+      step_size = @nth_frame / @frame_rate
 
       vtt = ["WEBVTT",""]
       time = 0
