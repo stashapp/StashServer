@@ -3,7 +3,7 @@
     <%= image_tag screenshot_path(scene) %>
   <% end %>
   <div class="content">
-    <div class="header"><%= scene.title || 'No Title' %></div>
+    <div class="header"><%= scene.title || scene.path %></div>
     <div class="meta">
       <a><i class="like icon"></i></a>
     </div>
