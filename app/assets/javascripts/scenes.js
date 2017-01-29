@@ -1,7 +1,7 @@
 $.urlParam = function (name) {
   var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-  if (results == null) { return 0; }
-  return results[1] || 0;
+  if (results == null) { return ""; }
+  return results[1] || "";
 }
 
 $(function() {
@@ -53,9 +53,14 @@ $(function() {
   $('#performer-filter').trigger('click');
   $('#studio-filter').trigger('click');
   $('#scene-search').focus();
+
+  var q = $.urlParam('q').replace(/\+/g, '%20');
+  q = q.replace(/\+/g, '%20');
+  q = decodeURIComponent(q);
+
   $('form')
   .form('set values', {
-    q: $.urlParam('q') || '',
+    q: q || '',
     sort: $.urlParam('sort') || 'path',
     direction: $.urlParam('direction') || 'desc',
     filter_studios: decodeURIComponent($.urlParam('filter_studios')).split(','),

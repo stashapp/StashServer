@@ -3,5 +3,5 @@ class Performer < ApplicationRecord
 
   scoped_search on: [:name, :checksum]
 
-  default_scope { order(name: :desc) }
+  default_scope { order(name: :asc) }
 end
