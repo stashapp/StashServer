@@ -1,4 +1,6 @@
 $(function() {
+  $('.ui.dropdown').dropdown();
+  
   $('#studio-filter').dropdown({
     apiSettings: {
       onResponse: function(res) {

@@ -15,6 +15,7 @@ class ScenesController < ApplicationController
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(sliced)
+                .reorder(sort_column + ' ' + sort_direction)
                 .page(params[:page])
   end
 
@@ -91,4 +92,13 @@ class ScenesController < ApplicationController
     def scene_params
       params.fetch(:scene, {})
     end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'desc'
+    end
+
+    def sort_column
+      Scene.column_names.include?(params[:sort]) ? params[:sort] : 'path'
+    end
+
 end

@@ -12,7 +12,7 @@
     <div class="row">
       <div class="column">
         <h5>Studios</h5>
-        <div id="studio-filter" class="ui fluid multiple search selection dropdown button">
+        <div id="studio-filter" class="ui fluid multiple search selection dropdown">
           <input name="filter_studios" type="hidden">
           <i class="dropdown icon"></i>
           <div class="default text"><i class="record icon"></i>Studios</div>
@@ -20,7 +20,7 @@
       </div>
       <div class="column">
         <h5>Performers</h5>
-        <div id="performer-filter" class="ui fluid multiple search selection dropdown button">
+        <div id="performer-filter" class="ui fluid multiple search selection dropdown">
           <input name="filter_performers" type="hidden">
           <i class="dropdown icon"></i>
           <div class="default text"><i class="user icon"></i>Performers</div>
@@ -30,7 +30,30 @@
         <h5>Tags</h5>
       </div>
       <div class="column">
-        <h5>Sort</h5>
+        <div class="ui list">
+          <div class="item">
+            <div class="ui fluid selection dropdown">
+              <input name="sort" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Sort By</div>
+              <div class="menu">
+                <div class="item" data-value="path">Path</div>
+                <div class="item" data-value="title">Title</div>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="ui fluid selection dropdown">
+              <input name="direction" type="hidden">
+              <i class="dropdown icon"></i>
+              <div class="default text">Direction</div>
+              <div class="menu">
+                <div class="item" data-value="asc">Ascending</div>
+                <div class="item" data-value="desc">Descending</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
