@@ -57,12 +57,12 @@ class ScenesController < ApplicationController
 
   def vtt
     respond_to do |format|
-      format.vtt {
-        path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_thumbs.vtt")
-        send_file path, disposition: 'inline'
-      }
       format.jpg {
         path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_sprite.jpg")
+        send_file path, disposition: 'inline'
+      }
+      format.vtt {
+        path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_thumbs.vtt")
         send_file path, disposition: 'inline'
       }
     end
@@ -72,12 +72,12 @@ class ScenesController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_scene
-      if Scene.find_by(id: params[:id])
-        @scene = Scene.find(params[:id])
-      else
-        params[:id].slice! '_thumbs.vtt'
-        params[:id].slice! '_sprite.jpg'
+      params[:id].slice! '_thumbs.vtt'
+      params[:id].slice! '_sprite.jpg'
+      if Scene.find_by(checksum: params[:id])
         @scene = Scene.find_by(checksum: params[:id])
+      else
+        @scene = Scene.find(params[:id])
       end
     end
 
