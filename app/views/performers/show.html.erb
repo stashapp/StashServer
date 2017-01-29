@@ -6,6 +6,14 @@
     <div class="ui two column middle aligned very relaxed stackable grid">
       <div class="column">
         <%= image_tag performer_image_path(@performer), class: 'ui fluid bordered image' %>
+        <div class="ui large horizontal divided list">
+          <%= link_to scenes_path(filter_performers: @performer.id), class: 'item' do %>
+            Scenes
+          <% end %>
+          <a class="item">
+            Galleries
+          </a>
+        </div>
       </div>
       <div class="ui vertical divider">
         🍑

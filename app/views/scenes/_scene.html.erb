@@ -27,14 +27,16 @@
   </div>
   <div class="extra content">
     <span>
-      <i class="user icon"></i>
-      <% if scene.performers.count > 0 %>
-        <% scene.performers.each do |performer| %>
-          <div class="ui label"><%= performer.name %></div>
+      <div class="ui labels">
+        <i class="user icon"></i>
+        <% if scene.performers.count > 0 %>
+          <% scene.performers.each do |performer| %>
+            <%= link_to performer.name, performer, class: 'ui label' %>
+          <% end %>
+        <% else %>
+          No Performers
         <% end %>
-      <% else %>
-        No Performers
-      <% end %>
+      </div>
     </span>
   </div>
   <div class="extra content">
