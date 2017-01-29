@@ -1,11 +1,11 @@
 class PerformersController < ApplicationController
-  before_action :set_performer, only: [:show, :edit, :update]
+  before_action :set_performer, only: [:show, :edit, :update, :image]
 
   def index
     @performers = Performer
                     .search_for(params[:q])
                     .page(params[:page])
-                    
+
     respond_to do |format|
       format.html
       format.json { render json: @performers.to_json }
@@ -26,6 +26,12 @@ class PerformersController < ApplicationController
         format.html { render :edit }
       end
     end
+  end
+
+  def image
+    # TODO Handle more than JPG
+    path = File.join(ENV['HOME'], "/.stash/performers/#{@performer.checksum}.jpg")
+    send_file path, disposition: 'inline'
   end
 
   private

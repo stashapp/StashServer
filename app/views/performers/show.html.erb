@@ -1,0 +1,47 @@
+<script src='https://content.jwplatform.com/libraries/L7fM8L0h.js'></script>
+<script>jwplayer.key='';</script>
+
+<div class="ui container segments">
+  <div class="ui top attached segment">
+    <div class="ui two column middle aligned very relaxed stackable grid">
+      <div class="column">
+        <%= image_tag performer_image_path(@performer), class: 'ui fluid bordered image' %>
+      </div>
+      <div class="ui vertical divider">
+        🍑
+      </div>
+      <div class="center aligned column">
+        <div class="ui huge very relaxed list">
+          <div class="item">
+            <div class="header">Name</div>
+            <%= @performer.name %>
+          </div>
+          <div class="item">
+            <div class="header">Birthdate</div>
+            MM/DD/YYYY
+          </div>
+          <div class="item">
+            <div class="header">Ethnicity</div>
+            Caucasian
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui attached segment">
+    <h3>Social</h3>
+  </div>
+
+  <div class="ui bottom attached segment">
+    <div class="ui list">
+      <%= link_to @performer.url, class: 'item', title: 'More information' do %>
+        <i class="linkify icon"></i>
+        <div class="content">
+          <div class="header">URL</div>
+          <div class="description"><%= @performer.url %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

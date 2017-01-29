@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'scenes/:id/vtt/chapter', to: 'scenes#chapter_vtt', defaults: { format: :vtt }, as: :scene_chapter_vtt
 
   resources :performers, only: [:index, :show]
+  get 'performers/:id/image', to: 'performers#image', as: :performer_image
 
   resources :studios, only: [:index, :show]
 

@@ -1,6 +1,6 @@
 <div class="card">
-  <%= link_to '#', class: 'image' do %>
-    <img src="https://unsplash.it/300/350/?random">
+  <%= link_to performer_path(performer), class: 'image' do %>
+    <%= image_tag performer_image_path(performer) %>
   <% end %>
   <div class="content">
     <div class="header"><%= performer.name %></div>

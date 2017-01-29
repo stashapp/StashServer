@@ -1,0 +1,7 @@
+<div class="ui three doubling cards">
+  <% @performers.each do |performer| %>
+    <%= render performer %>
+  <% end %>
+</div>
+
+<%= paginate @performers %>
