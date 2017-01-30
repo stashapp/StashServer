@@ -1,0 +1,2 @@
+module StashHelper
+end
