@@ -11,5 +11,7 @@ Rails.application.routes.draw do
 
   resources :studios, only: [:index, :show]
 
+  get 'search', to: 'application#search', defaults: { format: :json }, as: :search
+
   root to: 'scenes#index'
 end

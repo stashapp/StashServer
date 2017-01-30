@@ -15,3 +15,13 @@
 //= require semantic
 //= require video
 //= require_tree .
+
+$(function() {
+  $('.ui.search').search({
+    type: 'category',
+    minCharacters: 3,
+    apiSettings: {
+      url: '/search/?q={query}'
+    }
+  });
+});
