@@ -59,6 +59,9 @@ GEM
     ffi (1.9.17)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    graphiql-rails (1.4.1)
+      rails
+    graphql (1.4.2)
     i18n (0.7.0)
     jbuilder (2.6.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -175,6 +178,8 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.2)
   fastimage (= 2.0.1)
+  graphiql-rails (= 1.4.1)
+  graphql (= 1.4.2)
   jbuilder (~> 2.5)
   jquery-rails
   kaminari (~> 1.0.1)

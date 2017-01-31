@@ -13,5 +13,11 @@ Rails.application.routes.draw do
 
   get 'search', to: 'stash#search', defaults: { format: :json }, as: :search
 
+  post 'graphql', to: 'stash#graphql'
+
   root to: 'stash#dashboard'
+
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
+  end
 end

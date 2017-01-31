@@ -23,5 +23,8 @@ module Stash
     # -- all .rb files in that directory are automatically loaded.
 
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app', 'graphql')
+    config.autoload_paths << Rails.root.join('app', 'graphql', 'types')
+    config.autoload_paths << Rails.root.join('app', 'graphql', 'fields')
   end
 end

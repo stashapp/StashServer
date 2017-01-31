@@ -55,4 +55,8 @@ class StashController < ApplicationController
     }.to_json
   end
 
+  def graphql
+    render json: StashSchema.execute(params.fetch('query'), context: {})
+  end
+
 end

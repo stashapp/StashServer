@@ -2,19 +2,10 @@ class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt]
 
   def index
-    # TODO Refactor
-    if params[:filter_studios]
-      params[:filter_studios] = params[:filter_studios].split(',')
-    end
-    if params[:filter_performers]
-      params[:filter_performers] = params[:filter_performers].split(',')
-    end
-
-    sliced = params.slice(:filter_studios, :filter_performers)
-
+    whitelist = params.slice(:filter_studios, :filter_performers)
     @scenes = Scene
                 .search_for(params[:q])
-                .filter(sliced)
+                .filter(whitelist)
                 .reorder(sort_column + ' ' + sort_direction)
                 .page(params[:page])
   end
