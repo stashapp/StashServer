@@ -9,6 +9,11 @@ namespace :metadata do
   task export: :environment do
   end
 
+  desc "Scan the stash directory for new files"
+  task scan: :environment do
+    StashMetadata::Tasks::Scan.start
+  end
+
   desc "Generates sprites and a VTT file for scrubbing video"
   task generate_sprites: :environment do
     StashMetadata::Tasks::GenerateSprites.start
