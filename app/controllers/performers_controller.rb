@@ -30,7 +30,7 @@ class PerformersController < ApplicationController
 
   def image
     # TODO Handle more than JPG
-    path = File.join(ENV['HOME'], "/.stash/performers/#{@performer.checksum}.jpg")
+    path = File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{@performer.checksum}.jpg")
     send_file path, disposition: 'inline'
   end
 

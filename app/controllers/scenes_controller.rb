@@ -43,21 +43,19 @@ class ScenesController < ApplicationController
     # end
     # send_data screenshot, type: 'image/jpg', disposition: 'inline'
 
-    path = File.join(ENV['HOME'], "/.stash/screenshots/#{@scene.checksum}.jpg")
+    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.jpg")
     send_file path, disposition: 'inline'
   end
 
   def vtt
-    respond_to do |format|
-      format.jpg {
-        path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_sprite.jpg")
-        send_file path, disposition: 'inline'
-      }
-      format.vtt {
-        path = File.join(ENV['HOME'], "/.stash/vtt/#{@scene.checksum}_thumbs.vtt")
-        send_file path, disposition: 'inline'
-      }
+    path = ''
+    if params[:format] == :jpg
+      path = File.join(StashMetadata::STASH_VTT_DIRECTORY, "#{@scene.checksum}_sprite.jpg")
+    else
+      path = File.join(StashMetadata::STASH_VTT_DIRECTORY, "#{@scene.checksum}_thumbs.vtt")
     end
+    
+    send_file path, disposition: 'inline'
   end
 
   def chapter_vtt
@@ -70,8 +68,15 @@ class ScenesController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_scene
-      params[:id].slice! '_thumbs.vtt'
-      params[:id].slice! '_sprite.jpg'
+      if params[:id].include? '.vtt'
+        params[:id].slice! '_thumbs.vtt'
+        params[:format] = :vtt
+      end
+      if params[:id].include? '.jpg'
+        params[:id].slice! '_sprite.jpg'
+        params[:format] = :jpg
+      end
+
       if Scene.find_by(checksum: params[:id])
         @scene = Scene.find_by(checksum: params[:id])
       else

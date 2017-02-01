@@ -3,7 +3,6 @@ module StashMetadata
 
     def self.mappings
       return nil unless File.exist? StashMetadata::STASH_MAPPINGS_FILE
-
       return parse StashMetadata::STASH_MAPPINGS_FILE
     end
 
