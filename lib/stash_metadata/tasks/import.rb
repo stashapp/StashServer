@@ -61,7 +61,13 @@ module StashMetadata
               }
             end
 
-            # TODO tags
+            tag_names = json['tags']
+            if tag_names
+              tag_names.each { |tag_name|
+                scene.add_tag(tag_name)
+              }
+            end
+
           end
 
           scene.save
