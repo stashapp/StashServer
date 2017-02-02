@@ -20,6 +20,20 @@ module StashMetadata
           performer.save
         }
 
+        mappings['galleries'].each { |galleryJSON|
+          checksum = galleryJSON['checksum']
+          path = galleryJSON['path']
+          json = StashMetadata::JSON.gallery checksum
+          next unless checksum && path && json
+
+          gallery = Gallery.new
+          gallery.checksum = checksum
+          gallery.path = path
+          gallery.title = json['title']
+
+          gallery.save
+        }
+
         mappings['scenes'].each { |sceneJSON|
           checksum = sceneJSON['checksum']
           path = sceneJSON['path']
@@ -46,6 +60,16 @@ module StashMetadata
               else
                 StashMetadata.logger.info("Created new studio #{studio_name}")
                 scene.studio = Studio.create(name: studio_name)
+              end
+            end
+
+            gallery_checksum = json['gallery']
+            if gallery_checksum
+              gallery = Gallery.find_by(checksum: gallery_checksum)
+              if gallery
+                scene.gallery = gallery
+              else
+                StashMetadata.logger.warning("Gallery does not exist! #{gallery_checksum}")
               end
             end
 

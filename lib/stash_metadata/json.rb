@@ -35,6 +35,18 @@ module StashMetadata
       write_json path: path, json: json
     end
 
+    def self.gallery checksum
+      path = File.join(StashMetadata::STASH_GALLERIES_DIRECTORY, "#{checksum}.json")
+      return nil unless File.exist? path
+      return parse path
+    end
+
+    def self.save_gallery checksum:, json:
+      path = File.join(StashMetadata::STASH_GALLERIES_DIRECTORY, "#{checksum}.json")
+      StashMetadata.logger.info "Saving gallery to #{checksum}.json..."
+      write_json path: path, json: json
+    end
+
     private
 
     def self.parse json_file

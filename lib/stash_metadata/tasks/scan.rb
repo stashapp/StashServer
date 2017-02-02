@@ -8,8 +8,7 @@ module StashMetadata
         StashMetadata.logger.info("Starting scan of #{scan_paths.count} files")
         scan_paths.each do |path|
           if File.extname(path) == '.zip'
-            # TODO
-            # klass = Gallery
+            klass = Gallery
           else
             klass = Scene
           end
@@ -30,7 +29,7 @@ module StashMetadata
             item.save
           else
             StashMetadata.logger.info("#{path} doesn't exist.  Creating new item...")
-            klass.create(path: path, checksum: checksum)
+            klass.create(title: File.basename(path), path: path, checksum: checksum)
           end
         end
       end
@@ -46,9 +45,13 @@ module StashMetadata
           return
         end
 
-        movie = FFMPEG::Movie.new(path)
-        make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
-        make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
+        if File.extname(path) == '.zip'
+          # TODO Zip screenshots
+        else
+          movie = FFMPEG::Movie.new(path)
+          make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
+          make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
+        end
       end
 
       def self.make_screenshot(movie:, path:, quality:, width:)
