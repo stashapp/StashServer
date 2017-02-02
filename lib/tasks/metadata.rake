@@ -5,8 +5,9 @@ namespace :metadata do
     StashMetadata::Tasks::Import.start
   end
 
-  desc "TODO"
-  task export: :environment do
+  desc "Export JSON metadata.  Use 'rails metadata:export[true]' for a dry run."
+  task :export, [:dry_run] => :environment do |t, args|
+    StashMetadata::Tasks::Export.start args
   end
 
   desc "Scan the stash directory for new files"
