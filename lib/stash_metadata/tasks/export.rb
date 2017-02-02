@@ -5,10 +5,10 @@ module StashMetadata
       def self.start(args)
         FileUtils.mkdir_p(STASH_SCENES_DIRECTORY)     unless File.directory?(STASH_SCENES_DIRECTORY)
         FileUtils.mkdir_p(STASH_PERFORMERS_DIRECTORY) unless File.directory?(STASH_PERFORMERS_DIRECTORY)
-        
+
         scene_mappings = []
         Scene.all.each do |scene|
-          scene_mappings.push([path: scene.path, checksum: scene.checksum])
+          scene_mappings.push({path: scene.path, checksum: scene.checksum})
 
           json = {}
           json[:title] = scene.title if scene.title
@@ -32,7 +32,7 @@ module StashMetadata
 
         performer_mappings = []
         Performer.all.each do |performer|
-          performer_mappings.push([name: performer.name, checksum: performer.checksum])
+          performer_mappings.push({name: performer.name, checksum: performer.checksum})
 
           json = {}
           json[:name] = performer.name if performer.name
