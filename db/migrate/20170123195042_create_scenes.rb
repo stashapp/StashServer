@@ -75,5 +75,20 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    # --------
+    # Galleries
+    # --------
+
+    create_table :galleries do |t|
+      t.string :title
+
+      t.string :path
+      t.string :checksum
+
+      t.references :ownable, polymorphic: true, index: true
+
+      t.timestamps
+    end
+
   end
 end

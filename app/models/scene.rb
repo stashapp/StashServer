@@ -3,6 +3,7 @@ class Scene < ApplicationRecord
   include Taggable
 
   has_and_belongs_to_many :performers
+  has_one :gallery, as: :ownable
   belongs_to :studio, optional: true
 
   scoped_search on: [:title, :details, :path, :checksum]

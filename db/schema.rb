@@ -12,6 +12,17 @@
 
 ActiveRecord::Schema.define(version: 20170123195042) do
 
+  create_table "galleries", force: :cascade do |t|
+    t.string   "title"
+    t.string   "path"
+    t.string   "checksum"
+    t.string   "ownable_type"
+    t.integer  "ownable_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["ownable_type", "ownable_id"], name: "index_galleries_on_ownable_type_and_ownable_id"
+  end
+
   create_table "performers", force: :cascade do |t|
     t.string   "checksum"
     t.string   "name"
