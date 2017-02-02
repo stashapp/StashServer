@@ -54,5 +54,26 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    # ----
+    # Tags
+    # ----
+
+    create_table :tags do |t|
+      t.string :name, index: true
+
+      t.timestamps
+    end
+
+    # --------
+    # Taggings
+    # --------
+
+    create_table :taggings do |t|
+      t.references :taggable, polymorphic: true, index: true
+      t.references :tag, foreign_key: true
+
+      t.timestamps
+    end
+
   end
 end
