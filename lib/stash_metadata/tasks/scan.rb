@@ -14,7 +14,10 @@ module StashMetadata
           end
 
           item = klass.find_by(path: path)
-          next if item # We already have this item in the database, keep going
+          if item
+            make_screenshots(path: item.path, checksum: item.checksum)
+            next # We already have this item in the database, keep going
+          end
 
           StashMetadata.logger.info("#{path} not found.  Calculating checksum...")
           checksum = Digest::MD5.file(path).hexdigest
@@ -41,14 +44,19 @@ module StashMetadata
         normal_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
         zip_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.zip.jpg") # TODO Assuming JPG here...
 
-        if File.exist?(thumb_path) && File.exist?(normal_path)
-          StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
-          return
-        end
-
         if File.extname(path) == '.zip'
+          if File.exist?(zip_path)
+            StashMetadata.logger.debug("Screenshot already exist for #{path}.  Skipping...")
+            return
+          end
+
           StashMetadata::Zip.extract(zip: path, index: 0, output: zip_path)
         else
+          if File.exist?(thumb_path) && File.exist?(normal_path)
+            StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
+            return
+          end
+
           movie = FFMPEG::Movie.new(path)
           make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
           make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)

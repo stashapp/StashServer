@@ -23,13 +23,16 @@ module StashMetadata
         mappings['galleries'].each { |galleryJSON|
           checksum = galleryJSON['checksum']
           path = galleryJSON['path']
-          json = StashMetadata::JSON.gallery checksum
-          next unless checksum && path && json
+          next unless checksum && path
 
           gallery = Gallery.new
           gallery.checksum = checksum
           gallery.path = path
-          gallery.title = json['title']
+
+          json = StashMetadata::JSON.gallery checksum
+          if json
+            gallery.title = json['title']
+          end
 
           gallery.save
         }
