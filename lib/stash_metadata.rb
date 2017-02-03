@@ -1,4 +1,6 @@
 require 'fileutils'
+require 'zip'
+require 'naturally'
 
 module StashMetadata
   STASH_DIRECTORY             = File.expand_path(ENV['stash_directory'])

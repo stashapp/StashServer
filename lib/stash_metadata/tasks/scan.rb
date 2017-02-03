@@ -29,7 +29,7 @@ module StashMetadata
             item.save
           else
             StashMetadata.logger.info("#{path} doesn't exist.  Creating new item...")
-            klass.create(title: File.basename(path), path: path, checksum: checksum)
+            klass.create(path: path, checksum: checksum)
           end
         end
       end
@@ -39,6 +39,7 @@ module StashMetadata
       def self.make_screenshots(path:, checksum:)
         thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.thumb.jpg")
         normal_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
+        zip_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.zip.jpg") # TODO Assuming JPG here...
 
         if File.exist?(thumb_path) && File.exist?(normal_path)
           StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
@@ -46,7 +47,7 @@ module StashMetadata
         end
 
         if File.extname(path) == '.zip'
-          # TODO Zip screenshots
+          StashMetadata::Zip.extract(zip: path, index: 0, output: zip_path)
         else
           movie = FFMPEG::Movie.new(path)
           make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
