@@ -1,10 +1,10 @@
 <div class="ui container segments">
   <div class="ui top attached segment">
-    Info
+    <h3><%= @gallery.title || 'No Title' %></h3>
   </div>
 
   <div class="ui bottom attached segment">
-    Stuff
+    <%= "#{@gallery.files.count} files in zip located at #{@gallery.path}" %>
   </div>
 </div>
 
