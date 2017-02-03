@@ -1,0 +1,20 @@
+<div class="ui container segments">
+  <div class="ui top attached segment">
+    Info
+  </div>
+
+  <div class="ui bottom attached segment">
+    Stuff
+  </div>
+</div>
+
+<div class="ui three doubling cards">
+  <% @gallery.files.count.times do |i| %>
+  <div class="card">
+    <%= link_to "", gallery_file_path(@gallery, index: i), class: 'gallery image', style: "background-image:url(#{gallery_file_path(@gallery, index: i)});" %>
+    <div class="content">
+      <div class="header"><%= @gallery.files[i].name || 'No Title' %></div>
+    </div>
+  </div>
+  <% end %>
+</div>
