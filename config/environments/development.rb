@@ -16,7 +16,7 @@ Rails.application.configure do
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
 
-    if File.expand_path(ENV['stash_cache'])
+    if ENV['stash_cache']
       config.cache_store = :file_store, File.expand_path(ENV['stash_cache'])
     else
       config.cache_store = :memory_store

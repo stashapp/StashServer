@@ -1,0 +1,47 @@
+<%= form_for(@scene, url: scene_url(@scene), html: {method: 'patch', class: 'ui form'}) do |f| %>
+  <h4 class="ui dividing header">Scene Information</h4>
+  <div class="field">
+    <div class="equal width fields">
+      <div class="field">
+        <label>Title</label>
+        <%= f.text_field :title, placeholder: 'Title' %>
+      </div>
+      <div class="field">
+        <label>URL</label>
+        <%= f.url_field :url, placeholder: 'URL' %>
+      </div>
+    </div>
+    <div class="field">
+      <label>Studio</label>
+      <div id="studio-filter" class="ui fluid search selection dropdown">
+        <%= f.hidden_field :studio_id %>
+        <i class="dropdown icon"></i>
+        <div class="default text"><i class="record icon"></i>Studios</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Performers</label>
+      <div id="performer-filter" class="ui fluid multiple search selection dropdown">
+        <%= f.hidden_field :performer_ids, multiple: true, value: @scene.performer_ids.join(",") %>
+        <i class="dropdown icon"></i>
+        <div class="default text"><i class="user icon"></i>Performers</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Details</label>
+      <%= f.text_area :details, placeholder: 'Details' %>
+    </div>
+  </div>
+  <%= f.button "Submit", class: "ui submit button" %>
+  <!-- <div class="field">
+    <label>Billing Address</label>
+    <div class="fields">
+      <div class="twelve wide field">
+        <input name="shipping[address]" placeholder="Street Address" type="text">
+      </div>
+      <div class="four wide field">
+        <input name="shipping[address-2]" placeholder="Apt #" type="text">
+      </div>
+    </div>
+  </div> -->
+<% end %>

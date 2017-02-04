@@ -49,10 +49,12 @@ $(function() {
     forceSelection: false
   });
 
-  // HACK: Fields don't populate automatically.  We click to force the API request so there is something to fill...
-  $('#performer-filter').trigger('click');
-  $('#studio-filter').trigger('click');
-  $('#scene-search').focus();
+  if (!window.location.href.includes('/edit')) {
+    // HACK: Fields don't populate automatically.  We click to force the API request so there is something to fill...
+    $('#performer-filter').trigger('click');
+    $('#studio-filter').trigger('click');
+    $('#scene-search').focus();
+  }
 
   var q = $.urlParam('q').replace(/\+/g, '%20');
   q = q.replace(/\+/g, '%20');

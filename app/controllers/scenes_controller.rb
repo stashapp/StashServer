@@ -54,7 +54,7 @@ class ScenesController < ApplicationController
     else
       path = File.join(StashMetadata::STASH_VTT_DIRECTORY, "#{@scene.checksum}_thumbs.vtt")
     end
-    
+
     send_file path, disposition: 'inline'
   end
 
@@ -86,7 +86,7 @@ class ScenesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scene_params
-      params.fetch(:scene, {})
+      params.fetch(:scene).permit(:title, :details, :url, :studio_id, performer_ids: [])
     end
 
     def sort_direction
