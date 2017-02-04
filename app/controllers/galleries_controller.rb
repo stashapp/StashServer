@@ -13,6 +13,16 @@ class GalleriesController < ApplicationController
   end
 
   def show
+    per_page = 30
+    files = @gallery.files
+    @images = Kaminari.paginate_array(files).page(params[:page]).per(per_page)
+    @count = files.count
+    if params[:page] && params[:page].to_i > 1
+      i = params[:page].to_i - 1
+      @offset = per_page * i
+    else
+      @offset = 0
+    end
   end
 
   def file

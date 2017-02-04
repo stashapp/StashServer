@@ -32,8 +32,8 @@ module StashMetadata
     private
 
     def self.sorted_files zip_file:
-      files = zip_file.glob('**/*.jpg') + zip_file.glob('**/*.png') + zip_file.glob('**/*.gif')
-      files = files.delete_if { |file| file.size < 1000}
+      files = zip_file.glob('**.jpg', File::FNM_CASEFOLD) + zip_file.glob('**.png', File::FNM_CASEFOLD) + zip_file.glob('**.gif', File::FNM_CASEFOLD)
+      files = files.delete_if { |file| file.name.include? "__MACOSX"}
       return Naturally.sort_by(files, :name)
     end
 

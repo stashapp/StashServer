@@ -4,17 +4,19 @@
   </div>
 
   <div class="ui bottom attached segment">
-    <%= "#{@gallery.files.count} files in zip located at #{@gallery.path}" %>
+    <%= "#{@count} files in zip located at #{@gallery.path}" %>
   </div>
 </div>
 
 <div class="ui three doubling cards">
-  <% @gallery.files.count.times do |i| %>
+  <% @images.count.times do |i| %>
   <div class="card">
-    <%= link_to "", gallery_file_path(@gallery, index: i), class: 'gallery image', style: "background-image:url(#{gallery_file_path(@gallery, index: i)});" %>
+    <%= link_to "", gallery_file_path(@gallery, index: i + @offset), class: 'gallery image', style: "background-image:url(#{gallery_file_path(@gallery, index: i + @offset)});" %>
     <div class="content">
-      <div class="header"><%= @gallery.files[i].name || 'No Title' %></div>
+      <div class="header"><%= @images[i].name || 'No Title' %></div>
     </div>
   </div>
   <% end %>
 </div>
+
+<%= paginate @images %>
