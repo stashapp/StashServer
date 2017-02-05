@@ -17,6 +17,11 @@
         <%= f.hidden_field :studio_id %>
         <i class="dropdown icon"></i>
         <div class="default text"><i class="record icon"></i>Studios</div>
+        <div class="menu">
+          <% Studio.all.each do |studio| %>
+            <div class="item" data-value="<%= studio.id %>"><%= studio.name %></div>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="field">
@@ -25,6 +30,11 @@
         <%= f.hidden_field :performer_ids, multiple: true, value: @scene.performer_ids.join(",") %>
         <i class="dropdown icon"></i>
         <div class="default text"><i class="user icon"></i>Performers</div>
+        <div class="menu">
+          <% Performer.all.each do |performer| %>
+            <div class="item" data-value="<%= performer.id %>"><%= performer.name %></div>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="field">
@@ -32,16 +42,5 @@
       <%= f.text_area :details, placeholder: 'Details' %>
     </div>
   </div>
-  <%= f.button "Submit", class: "ui submit button" %>
-  <!-- <div class="field">
-    <label>Billing Address</label>
-    <div class="fields">
-      <div class="twelve wide field">
-        <input name="shipping[address]" placeholder="Street Address" type="text">
-      </div>
-      <div class="four wide field">
-        <input name="shipping[address-2]" placeholder="Apt #" type="text">
-      </div>
-    </div>
-  </div> -->
+  <%= f.button "Submit", class: "ui primary  submit button" %>
 <% end %>

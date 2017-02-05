@@ -16,6 +16,11 @@
           <input name="filter_studios" type="hidden">
           <i class="dropdown icon"></i>
           <div class="default text"><i class="record icon"></i>Studios</div>
+          <div class="menu">
+            <% Studio.all.each do |studio| %>
+              <div class="item" data-value="<%= studio.id %>"><%= studio.name %></div>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="column">
@@ -24,6 +29,11 @@
           <input name="filter_performers" type="hidden">
           <i class="dropdown icon"></i>
           <div class="default text"><i class="user icon"></i>Performers</div>
+          <div class="menu">
+            <% Performer.all.each do |performer| %>
+              <div class="item" data-value="<%= performer.id %>"><%= performer.name %></div>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="column">
@@ -58,9 +68,7 @@
     </div>
 
     <div class="one column centered row">
-      <button class="ui reset button">
-        Reset
-      </button>
+      <%= link_to 'Clear', scenes_path, class: 'ui button' %>
       <button class="ui primary submit button">
         Filter
       </button>
