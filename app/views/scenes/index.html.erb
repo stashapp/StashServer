@@ -38,6 +38,16 @@
       </div>
       <div class="column">
         <h5>Tags</h5>
+        <div id="tag-filter" class="ui fluid multiple search selection dropdown">
+          <input name="filter_tags" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text"><i class="tags icon"></i>Tags</div>
+          <div class="menu">
+            <% Tag.all.each do |tag| %>
+              <div class="item" data-value="<%= tag.id %>"><%= tag.name %></div>
+            <% end %>
+          </div>
+        </div>
       </div>
       <div class="column">
         <div class="ui list">

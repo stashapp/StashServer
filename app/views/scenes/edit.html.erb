@@ -38,6 +38,19 @@
       </div>
     </div>
     <div class="field">
+      <label>Tags</label>
+      <div id="tag-filter" class="ui fluid multiple search selection dropdown">
+        <%= f.hidden_field :tag_ids, multiple: true, value: @scene.tag_ids.join(",") %>
+        <i class="dropdown icon"></i>
+        <div class="default text"><i class="tags icon"></i>Tags</div>
+        <div class="menu">
+          <% Tag.all.each do |tag| %>
+            <div class="item" data-value="<%= tag.id %>"><%= tag.name %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="field">
       <label>Details</label>
       <%= f.text_area :details, placeholder: 'Details' %>
     </div>

@@ -2,7 +2,7 @@ class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt]
 
   def index
-    whitelist = params.slice(:filter_studios, :filter_performers)
+    whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags)
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(whitelist)
@@ -86,7 +86,7 @@ class ScenesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scene_params
-      params.fetch(:scene).permit(:title, :details, :url, :studio_id, performer_ids: [])
+      params.fetch(:scene).permit(:title, :details, :url, :studio_id, performer_ids: [], tag_ids: [])
     end
 
     def sort_direction

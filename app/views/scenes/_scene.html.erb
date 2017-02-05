@@ -42,17 +42,13 @@
   <div class="extra content">
     <span>
       <i class="tags icon"></i>
-      <!-- TODO -->
-      No Tags
+      <% if scene.tags.count > 0 %>
+        <% scene.tags.each do |tag| %>
+          <%= link_to tag.name, scenes_path(filter_tags: tag.id), class: 'ui label' %>
+        <% end %>
+      <% else %>
+        No Tags
+      <% end %>
     </span>
   </div>
-  <!-- <div class="extra content">
-    <span class="right floated">
-      More Metadata
-    </span>
-    <span>
-      <i class="tags icon"></i>
-      None
-    </span>
-  </div> -->
 </div>

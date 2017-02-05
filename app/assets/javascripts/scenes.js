@@ -15,6 +15,10 @@ $(function() {
     forceSelection: false
   });
 
+  $('#tag-filter').dropdown({
+    forceSelection: false
+  });
+
   var q = $.urlParam('q').replace(/\+/g, '%20');
   q = q.replace(/\+/g, '%20');
   q = decodeURIComponent(q);
@@ -25,6 +29,7 @@ $(function() {
     sort: $.urlParam('sort') || 'path',
     direction: $.urlParam('direction') || 'desc',
     filter_studios: decodeURIComponent($.urlParam('filter_studios')).split(','),
-    filter_performers: decodeURIComponent($.urlParam('filter_performers')).split(',')
+    filter_performers: decodeURIComponent($.urlParam('filter_performers')).split(','),
+    filter_tags: decodeURIComponent($.urlParam('filter_tags')).split(',')
   });
 });
