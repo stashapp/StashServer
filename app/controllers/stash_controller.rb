@@ -7,9 +7,11 @@ class StashController < ApplicationController
     @scenes = Scene.search_for(params[:q])
     @performers = Performer.search_for(params[:q])
     @studios = Studio.search_for(params[:q])
+    @tags = Tag.search_for(params[:q])
 
     performers_json = [] # @performers.as_json(root: false)
     studios_json = []
+    tags_json = []
     scenes_json = []
 
     @performers.each do |performer|
@@ -24,6 +26,13 @@ class StashController < ApplicationController
       json = {}
       json[:title] = studio.name
       studios_json.push(json)
+    end
+
+    @tags.each do |tag|
+      json = {}
+      json[:title] = tag.name
+      json[:url]   = scenes_path(filter_tags: tag.id)
+      tags_json.push(json)
     end
 
     @scenes.each do |scene|
@@ -46,6 +55,10 @@ class StashController < ApplicationController
         studios: {
           name: 'Studios',
           results: studios_json
+        },
+        tags: {
+          name: 'Tags',
+          results: tags_json
         },
         scenes: {
           name: 'Scenes',
