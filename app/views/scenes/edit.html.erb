@@ -12,6 +12,27 @@
       </div>
     </div>
     <div class="field">
+      <label>Gallery</label>
+      <div class="fields">
+        <div class="fourteen wide field">
+          <div id="gallery-filter" class="ui fluid search selection dropdown">
+            <%= f.hidden_field :gallery_id, value: @scene.gallery ? @scene.gallery.id : nil %>
+            <i class="dropdown icon"></i>
+            <div class="default text"><i class="image icon"></i>Galleries</div>
+            <div class="menu">
+              <!-- TODO Limit this to galleries in the same folder and hide ones already assigned -->
+              <% Gallery.all.each do |gallery| %>
+                <div class="item" data-value="<%= gallery.id %>"><%= gallery.path %></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="two wide field">
+          <div id="clear-gallery-button" class="ui fluid button">Clear</div>
+        </div>
+      </div>
+    </div>
+    <div class="field">
       <label>Studio</label>
       <div id="studio-filter" class="ui fluid search selection dropdown">
         <%= f.hidden_field :studio_id %>

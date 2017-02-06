@@ -19,6 +19,15 @@ $(function() {
     forceSelection: false
   });
 
+  $('#gallery-filter').dropdown({
+    forceSelection: false,
+    fullTextSearch: true
+  });
+
+  $('#clear-gallery-button').on('click', function() {
+    $('#gallery-filter').dropdown('clear');
+  });
+
   var q = $.urlParam('q').replace(/\+/g, '%20');
   q = q.replace(/\+/g, '%20');
   q = decodeURIComponent(q);

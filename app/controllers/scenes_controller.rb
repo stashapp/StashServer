@@ -20,8 +20,13 @@ class ScenesController < ApplicationController
 
   # PATCH/PUT /scenes/1
   def update
+    @scene.attributes = scene_params
+    if params[:scene]
+      @gallery = Gallery.find(params[:scene][:gallery_id])
+    end
+    @scene.gallery = @gallery
     respond_to do |format|
-      if @scene.update(scene_params)
+      if @scene.save
         format.html { redirect_to @scene, notice: 'Scene was successfully updated.' }
       else
         format.html { render :edit }
