@@ -4,3 +4,10 @@
   background-position: center !important;
   background-repeat: no-repeat !important;
 }
+
+.gallery.small.image {
+  height: 200px;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}

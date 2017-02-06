@@ -66,6 +66,25 @@
 
   <!-- TODO Tags -->
 
+  <% if @scene.gallery %>
+  <div class="ui attached segment">
+    <h3 class="ui header">
+      Gallery
+      <%= link_to "View All", gallery_path(@scene.gallery), class: 'sub header' %>
+    </h3>
+    <div class="ui four centered stackable link cards">
+      <% 4.times do |i| %>
+      <div class="card">
+        <%= link_to "", gallery_file_path(@scene.gallery, index: i), class: 'small gallery image', style: "background-image:url(#{gallery_file_path(@scene.gallery, index: i)});" %>
+        <div class="content">
+          <div class="header"><%= @scene.gallery.files[i].name || 'No Title' %></div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
   <div class="ui bottom attached segment">
     <div class="ui list">
       <a class="clippable item" title="Click to copy" data-clipboard-text="<%= @scene.checksum %>">
