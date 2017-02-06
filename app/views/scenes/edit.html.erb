@@ -27,7 +27,7 @@
     <div class="field">
       <label>Performers</label>
       <div id="performer-filter" class="ui fluid multiple search selection dropdown">
-        <%= f.hidden_field :performer_ids, multiple: true, value: @scene.performer_ids.join(",") %>
+        <%= f.hidden_field :performer_ids, value: @scene.performer_ids %>
         <i class="dropdown icon"></i>
         <div class="default text"><i class="user icon"></i>Performers</div>
         <div class="menu">
@@ -42,7 +42,7 @@
       <div class="fields">
         <div class="fourteen wide field">
           <div id="tag-filter" class="ui fluid multiple search selection dropdown">
-            <%= f.hidden_field :tag_ids, multiple: true, value: @scene.tag_ids.join(",") %>
+            <%= f.hidden_field :tag_ids, value: @scene.tag_ids %>
             <i class="dropdown icon"></i>
             <div class="default text"><i class="tags icon"></i>Tags</div>
             <div class="menu">

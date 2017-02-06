@@ -1,5 +1,6 @@
 class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt]
+  before_action :split_commas, only: [:update]
 
   def index
     whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags)
@@ -87,6 +88,13 @@ class ScenesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def scene_params
       params.fetch(:scene).permit(:title, :details, :url, :studio_id, performer_ids: [], tag_ids: [])
+    end
+
+    def split_commas
+      if params[:scene]
+        params[:scene][:performer_ids] = params[:scene][:performer_ids].split(",") if params[:scene][:performer_ids]
+        params[:scene][:tag_ids] = params[:scene][:tag_ids].split(",") if params[:scene][:tag_ids]
+      end
     end
 
     def sort_direction
