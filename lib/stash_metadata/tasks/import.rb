@@ -17,6 +17,9 @@ module StashMetadata
           performer.name = name
           performer.url = json['url']
 
+          path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
+          performer.image = File.read(path)
+
           performer.save
         }
 

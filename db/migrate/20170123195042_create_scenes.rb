@@ -27,6 +27,7 @@ class CreateScenes < ActiveRecord::Migration[5.0]
     # ----------
 
     create_table :performers do |t|
+      t.binary :image, limit: 2.megabytes
       t.string :checksum
       t.string :name
       t.string :url

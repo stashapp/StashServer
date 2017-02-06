@@ -1,3 +1,5 @@
+require 'base64'
+
 class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update, :image]
 
@@ -16,11 +18,25 @@ class PerformersController < ApplicationController
   end
 
   def edit
+    glob_path = File.join(StashMetadata::STASH_DIRECTORY, "*", "*.{jpg}")
+    glob = Dir[glob_path]
+    @files = []
+    glob.each do |file|
+      file = {data: Base64.encode64(open(file).to_a.join), path: file}
+      @files.push(file)
+    end
   end
 
   def update
+    @performer.attributes = performer_params
+    if params[:image_path] && params[:image_path].start_with?(StashMetadata::STASH_DIRECTORY)
+      checksum = Digest::MD5.file(params[:image_path]).hexdigest
+      @performer.image = File.read(params[:image_path])
+      @performer.checksum = checksum
+    end
+
     respond_to do |format|
-      if @performer.update(scene_params)
+      if @performer.save
         format.html { redirect_to @performer, notice: 'Performer was successfully updated.' }
       else
         format.html { render :edit }
@@ -29,9 +45,7 @@ class PerformersController < ApplicationController
   end
 
   def image
-    # TODO Handle more than JPG
-    path = File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{@performer.checksum}.jpg")
-    send_file path, disposition: 'inline'
+    send_data @performer.image, disposition: 'inline'
   end
 
   private
@@ -41,6 +55,6 @@ class PerformersController < ApplicationController
     end
 
     def performer_params
-      params.fetch(:performer, {})
+      params.fetch(:performer).permit(:name, :url)
     end
 end

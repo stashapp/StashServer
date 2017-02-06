@@ -24,11 +24,12 @@ ActiveRecord::Schema.define(version: 20170123195042) do
   end
 
   create_table "performers", force: :cascade do |t|
+    t.binary   "image",      limit: 2097152
     t.string   "checksum"
     t.string   "name"
     t.string   "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "performers_scenes", id: false, force: :cascade do |t|

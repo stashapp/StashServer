@@ -51,6 +51,7 @@ module StashMetadata
           end
         end
 
+        clean_performers
         Performer.all.each do |performer|
           mappings[:performers].push({name: performer.name, checksum: performer.checksum})
 
@@ -61,12 +62,17 @@ module StashMetadata
           next if json.empty?
 
           performerJSON = StashMetadata::JSON.performer(performer.checksum)
-          next if performerJSON == json.as_json
+          next if performerJSON && performerJSON == json.as_json
 
           if args[:dry_run]
             StashMetadata.logger.info("WRITE\nJSON: #{json}\nFILE #{performerJSON}\n\n\n--------") # Dry run
           else
             StashMetadata::JSON.save_performer(checksum: performer.checksum, json: json)
+
+            image_path = File.join(STASH_PERFORMERS_DIRECTORY, "#{performer.checksum}.jpg")
+            unless File.exist?(image_path)
+              File.write(image_path, performer.image)
+            end
           end
         end
 
@@ -85,6 +91,18 @@ module StashMetadata
 
           names
         }
+      end
+
+      def self.clean_performers
+        glob = File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "*.json")
+        Dir[glob].each do |path|
+          checksum = File.basename(path, '.json')
+          next if Performer.find_by(checksum: checksum)
+          
+          StashMetadata.logger.info("Performer cleanup removing #{checksum}")
+          File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg"))
+          File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.json"))
+        end
       end
 
     end
