@@ -1,12 +1,20 @@
 <div class="ui center aligned stackable vertically divided grid">
   <div class="one column row">
-    <div class="ui huge statistics column">
+    <div class="ui huge six statistics column">
       <div class="statistic">
         <div class="value">
           <%= Scene.count %>
         </div>
         <div class="label">
           Scenes
+        </div>
+      </div>
+      <div class="statistic">
+        <div class="value">
+          <%= Gallery.count %>
+        </div>
+        <div class="label">
+          Galleries
         </div>
       </div>
       <div class="statistic">
@@ -23,6 +31,14 @@
         </div>
         <div class="label">
           Studios
+        </div>
+      </div>
+      <div class="statistic">
+        <div class="value">
+          <%= Tag.count %>
+        </div>
+        <div class="label">
+          Tags
         </div>
       </div>
     </div>

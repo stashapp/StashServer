@@ -14,6 +14,8 @@ Rails.application.routes.draw do
 
   resources :studios, only: [:index, :show]
 
+  resources :tags, only: [:index, :new, :create]
+
   get 'search', to: 'stash#search', defaults: { format: :json }, as: :search
 
   post 'graphql', to: 'stash#graphql'

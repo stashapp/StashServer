@@ -39,14 +39,21 @@
     </div>
     <div class="field">
       <label>Tags</label>
-      <div id="tag-filter" class="ui fluid multiple search selection dropdown">
-        <%= f.hidden_field :tag_ids, multiple: true, value: @scene.tag_ids.join(",") %>
-        <i class="dropdown icon"></i>
-        <div class="default text"><i class="tags icon"></i>Tags</div>
-        <div class="menu">
-          <% Tag.all.each do |tag| %>
-            <div class="item" data-value="<%= tag.id %>"><%= tag.name %></div>
-          <% end %>
+      <div class="fields">
+        <div class="fourteen wide field">
+          <div id="tag-filter" class="ui fluid multiple search selection dropdown">
+            <%= f.hidden_field :tag_ids, multiple: true, value: @scene.tag_ids.join(",") %>
+            <i class="dropdown icon"></i>
+            <div class="default text"><i class="tags icon"></i>Tags</div>
+            <div class="menu">
+              <% Tag.all.each do |tag| %>
+                <div class="item" data-value="<%= tag.id %>"><%= tag.name %></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="two wide field">
+          <%= link_to 'Add Tag', new_tag_path, class: 'ui fluid button' %>
         </div>
       </div>
     </div>
@@ -55,5 +62,5 @@
       <%= f.text_area :details, placeholder: 'Details' %>
     </div>
   </div>
-  <%= f.button "Submit", class: "ui primary  submit button" %>
+  <%= f.button "Submit", class: "ui primary submit button" %>
 <% end %>

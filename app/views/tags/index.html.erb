@@ -1,0 +1,21 @@
+<%= link_to 'Add Tag', new_tag_path, class: 'ui primary button' %>
+<table class="ui celled small compact table">
+  <thead>
+    <tr>
+      <th>Tag Name</th>
+      <th>Scenes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tags.each do |tag| %>
+    <tr>
+      <td>
+        <h5 class="ui center aligned header">
+          <%= link_to tag.name, scenes_path(filter_tags: tag.id) %>
+        </h5>
+      </td>
+      <td><%= tag.scenes.count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
