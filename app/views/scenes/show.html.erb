@@ -1,6 +1,32 @@
 <script src='https://content.jwplatform.com/libraries/L7fM8L0h.js'></script>
 <script>jwplayer.key='';</script>
 
+<script type="text/javascript">
+$(function() {
+  <% if request.user_agent =~ /Mobile|webOS/ %>
+  var player = videojs('player', { "techOrder": ["html5"] }, function() {
+
+  });
+  <% else %>
+  const player = jwplayer('player').setup({
+    file: '<%= stream_path @scene %>.mp4',
+    image: '<%= screenshot_path(@scene) %>.jpg',
+    tracks: [{
+      file: "/scenes/<%= @scene.checksum %>_thumbs.vtt",
+      kind: "thumbnails"
+    }],
+    // {
+    //   file: "<%= scene_chapter_vtt_path(@scene) %>.vtt",
+    //   kind: "chapters"
+    // }],
+    primary: 'html5',
+    autostart: false,
+    volume: 50
+  });
+  <% end %>
+});
+</script>
+
 <div class="ui container segments">
   <div class="ui top attached segment">
     <% if request.user_agent =~ /Mobile|webOS/ %>
@@ -14,37 +40,15 @@
     <% else %>
     <div id="player">Loading the player...</div>
     <% end %>
-    
+
     <div class="ui right rail">
       <div class="ui segment">
-        <%= link_to "Edit", edit_scene_path(@scene) %>
+        <div class="ui list">
+          <%= link_to "Edit", edit_scene_path(@scene), class: 'item' %>
+        </div>
       </div>
     </div>
   </div>
-
-  <script type="text/javascript">
-    <% if request.user_agent =~ /Mobile|webOS/ %>
-    var player = videojs('player', { "techOrder": ["html5"] }, function() {
-
-    });
-    <% else %>
-    const player = jwplayer('player').setup({
-      file: '<%= stream_path @scene %>.mp4',
-      image: '<%= screenshot_path(@scene) %>.jpg',
-      tracks: [{
-        file: "/scenes/<%= @scene.checksum %>_thumbs.vtt",
-        kind: "thumbnails"
-      }],
-      // {
-      //   file: "<%= scene_chapter_vtt_path(@scene) %>.vtt",
-      //   kind: "chapters"
-      // }],
-      primary: 'html5',
-      autostart: false,
-      volume: 50
-    });
-    <% end %>
-  </script>
 
   <% if @scene.details %>
   <div class="ui attached segment">
