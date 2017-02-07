@@ -68,7 +68,16 @@ $(function() {
   </div>
   <% end %>
 
-  <!-- TODO Tags -->
+  <% if @scene.tags.count > 0 %>
+  <div class="ui attached segment">
+    <h3>Tags</h3>
+    <div class="ui labels">
+      <% @scene.tags.each do |tag| %>
+        <%= link_to tag.name, scenes_path(filter_tags: tag.id), class: 'ui label' %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
 
   <% if @scene.gallery %>
   <div class="ui attached segment">
