@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :galleries, only: [:index, :show]
   get 'galleries/:id/:index', to: 'galleries#file', as: :gallery_file
 
-  resources :performers, only: [:index, :show, :edit, :update]
+  resources :performers, only: [:index, :show, :new, :create, :edit, :update]
   get 'performers/:id/image', to: 'performers#image', as: :performer_image
 
   resources :studios, only: [:index, :show]

@@ -2,6 +2,7 @@ require 'base64'
 
 class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update, :image]
+  before_action :set_files, only: [:new, :edit, :create, :update]
 
   def index
     @performers = Performer
@@ -17,23 +18,30 @@ class PerformersController < ApplicationController
   def show
   end
 
-  def edit
-    glob_path = File.join(StashMetadata::STASH_DIRECTORY, "*", "*.{jpg}")
-    glob = Dir[glob_path]
-    @files = []
-    glob.each do |file|
-      file = {data: Base64.encode64(open(file).to_a.join), path: file}
-      @files.push(file)
+  def new
+    @performer = Performer.new
+  end
+
+  def create
+    @performer = Performer.new
+    @performer.attributes = performer_params
+    update_image
+
+    respond_to do |format|
+      if @performer.save
+        format.html { redirect_to @performer, notice: 'Performer was successfully created.' }
+      else
+        format.html { render :new }
+      end
     end
+  end
+
+  def edit
   end
 
   def update
     @performer.attributes = performer_params
-    if params[:image_path] && params[:image_path].start_with?(StashMetadata::STASH_DIRECTORY)
-      checksum = Digest::MD5.file(params[:image_path]).hexdigest
-      @performer.image = File.read(params[:image_path])
-      @performer.checksum = checksum
-    end
+    update_image
 
     respond_to do |format|
       if @performer.save
@@ -56,5 +64,23 @@ class PerformersController < ApplicationController
 
     def performer_params
       params.fetch(:performer).permit(:name, :url)
+    end
+
+    def set_files
+      glob_path = File.join(StashMetadata::STASH_DIRECTORY, "*", "*.{jpg}")
+      glob = Dir[glob_path]
+      @files = []
+      glob.each do |file|
+        file = {data: Base64.encode64(open(file).to_a.join), path: file}
+        @files.push(file)
+      end
+    end
+
+    def update_image
+      if params[:image_path] && params[:image_path].start_with?(StashMetadata::STASH_DIRECTORY)
+        checksum = Digest::MD5.file(params[:image_path]).hexdigest
+        @performer.image = File.read(params[:image_path])
+        @performer.checksum = checksum
+      end
     end
 end

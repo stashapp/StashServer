@@ -1,3 +1,4 @@
+<div class="ui header"><%= link_to 'Add Performer', new_performer_path, class: 'ui primary button' %></div>
 <div class="ui three doubling cards">
   <% @performers.each do |performer| %>
     <%= render performer %>
