@@ -50,6 +50,15 @@ $(function() {
     </div>
   </div>
 
+  <div class="ui attached segment">
+    <h1 class="ui header">
+      <%= @scene.title || 'No Title' %>
+      <% if @scene.date %>
+      <div class="sub header"><%= @scene.date.strftime('%m/%d/%Y') %></div>
+      <% end %>
+    </h1>
+  </div>
+
   <% if @scene.details %>
   <div class="ui attached segment">
     <h3>Details</h3>

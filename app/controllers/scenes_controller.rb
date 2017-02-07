@@ -91,7 +91,7 @@ class ScenesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scene_params
-      params.fetch(:scene).permit(:title, :details, :url, :studio_id, performer_ids: [], tag_ids: [])
+      params.fetch(:scene).permit(:title, :details, :url, :date, :studio_id, performer_ids: [], tag_ids: [])
     end
 
     def split_commas

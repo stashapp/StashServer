@@ -16,6 +16,7 @@ module StashMetadata
           json[:title] = scene.title if scene.title
           json[:studio] = scene.studio.name if scene.studio && scene.studio.name
           json[:url] = scene.url if scene.url
+          json[:date] = scene.date.to_s if scene.date
           json[:details] = scene.details if scene.details
           json[:gallery] = scene.gallery.checksum if scene.gallery
           json[:performers] = get_names(scene.performers) unless get_names(scene.performers).empty?
@@ -98,7 +99,7 @@ module StashMetadata
         Dir[glob].each do |path|
           checksum = File.basename(path, '.json')
           next if Performer.find_by(checksum: checksum)
-          
+
           StashMetadata.logger.info("Performer cleanup removing #{checksum}")
           File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg"))
           File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.json"))

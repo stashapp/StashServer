@@ -10,6 +10,7 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :details
       t.string :url
+      t.date   :date
 
       # Video File
       t.string :path
