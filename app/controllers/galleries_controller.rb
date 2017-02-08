@@ -26,9 +26,11 @@ class GalleriesController < ApplicationController
   end
 
   def file
-    data = StashMetadata::Zip.extract(zip: @gallery.path, index: params[:index].to_i)
+    index = params[:index].to_i
+    file = @gallery.files[index]
+    data = StashMetadata::Zip.extract(zip: @gallery.path, index: index)
     if data
-      send_data data, type: 'image/jpg', disposition: 'inline' # TODO Correct mime type
+      send_data data, filename: file.name, disposition: 'inline'
     else
       raise ActionController::RoutingError.new('Not Found')
     end
