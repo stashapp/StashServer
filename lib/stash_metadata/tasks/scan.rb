@@ -15,7 +15,7 @@ module StashMetadata
 
           item = klass.find_by(path: path)
           if item
-            make_screenshots(path: item.path, checksum: item.checksum)
+            make_screenshots(path: item.path, checksum: item.checksum) if klass == Scene
             next # We already have this item in the database, keep going
           end
 
@@ -23,7 +23,7 @@ module StashMetadata
           checksum = Digest::MD5.file(path).hexdigest
           StashMetadata.logger.debug("Checksum calculated: #{checksum}")
 
-          make_screenshots(path: path, checksum: checksum)
+          make_screenshots(path: path, checksum: checksum) if klass == Scene
 
           item = klass.find_by(checksum: checksum)
           if item
@@ -42,25 +42,15 @@ module StashMetadata
       def self.make_screenshots(path:, checksum:)
         thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.thumb.jpg")
         normal_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
-        zip_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.zip.jpg") # TODO Assuming JPG here...
 
-        if File.extname(path) == '.zip'
-          if File.exist?(zip_path)
-            StashMetadata.logger.debug("Screenshot already exist for #{path}.  Skipping...")
-            return
-          end
-
-          StashMetadata::Zip.extract(zip: path, index: 0, output: zip_path)
-        else
-          if File.exist?(thumb_path) && File.exist?(normal_path)
-            StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
-            return
-          end
-
-          movie = FFMPEG::Movie.new(path)
-          make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
-          make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
+        if File.exist?(thumb_path) && File.exist?(normal_path)
+          StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
+          return
         end
+
+        movie = FFMPEG::Movie.new(path)
+        make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
+        make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
       end
 
       def self.make_screenshot(movie:, path:, quality:, width:)
