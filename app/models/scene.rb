@@ -36,6 +36,10 @@ class Scene < ApplicationRecord
     vtt.join("\n")
   end
 
+  def is_streamable
+    mime_type == "video/quicktime" || mime_type == "video/mp4"
+  end
+
   private
 
     def get_vtt_time(seconds)
