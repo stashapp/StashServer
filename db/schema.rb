@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.string   "details"
     t.string   "url"
     t.date     "date"
+    t.integer  "rating"
     t.string   "path"
     t.string   "checksum"
     t.integer  "studio_id"

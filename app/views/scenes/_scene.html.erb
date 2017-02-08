@@ -4,9 +4,11 @@
   <% end %>
   <div class="content">
     <div class="header"><%= scene.title || scene.path %></div>
+    <% if scene.rating %>
     <div class="meta">
-      <a><i class="like icon"></i></a>
+      <div class="ui tiny rating" data-rating="<%= scene.rating %>" data-max-rating="5"></div>
     </div>
+    <% end %>
     <div class="description">
       <% if scene.details %>
         <%= scene.details.truncate(300, omission: '... (continued)') %>

@@ -49,29 +49,61 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="row">
       <div class="column">
-        <div class="ui list">
-          <div class="item">
-            <div class="ui fluid selection dropdown">
-              <input name="sort" type="hidden">
-              <i class="dropdown icon"></i>
-              <div class="default text">Sort By</div>
-              <div class="menu">
-                <div class="item" data-value="path">Path</div>
-                <div class="item" data-value="title">Title</div>
-              </div>
-            </div>
+        <div class="header">Sort By</div>
+        <div class="ui fluid selection dropdown">
+          <input name="sort" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Sort By</div>
+          <div class="menu">
+            <div class="item" data-value="path">Path</div>
+            <div class="item" data-value="title">Title</div>
+            <div class="item" data-value="rating">Rating</div>
           </div>
-          <div class="item">
-            <div class="ui fluid selection dropdown">
-              <input name="direction" type="hidden">
-              <i class="dropdown icon"></i>
-              <div class="default text">Direction</div>
-              <div class="menu">
-                <div class="item" data-value="asc">Ascending</div>
-                <div class="item" data-value="desc">Descending</div>
-              </div>
-            </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="header">Sort Direction</div>
+        <div class="ui fluid selection dropdown">
+          <input name="direction" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Direction</div>
+          <div class="menu">
+            <div class="item" data-value="asc">Ascending</div>
+            <div class="item" data-value="desc">Descending</div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="header">Minimum Rating</div>
+        <div class="ui fluid selection dropdown">
+          <input name="filter_rating" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Minimum Rating</div>
+          <div class="menu">
+            <div class="item" data-value=""></div>
+            <div class="item" data-value="1">1</div>
+            <div class="item" data-value="2">2</div>
+            <div class="item" data-value="3">3</div>
+            <div class="item" data-value="4">4</div>
+            <div class="item" data-value="5">5</div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="header">Filter Missing</div>
+        <div class="ui fluid selection dropdown">
+          <input name="filter_missing" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text">Filter Missing</div>
+          <div class="menu">
+            <div class="item" data-value=""></div>
+            <div class="item" data-value="title">Title</div>
+            <div class="item" data-value="details">Details</div>
+            <div class="item" data-value="rating">Rating</div>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ class ScenesController < ApplicationController
   before_action :split_commas, only: [:update]
 
   def index
-    whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags)
+    whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags, :filter_rating, :filter_missing)
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(whitelist)
@@ -91,7 +91,7 @@ class ScenesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scene_params
-      params.fetch(:scene).permit(:title, :details, :url, :date, :studio_id, performer_ids: [], tag_ids: [])
+      params.fetch(:scene).permit(:title, :details, :url, :date, :rating, :studio_id, performer_ids: [], tag_ids: [])
     end
 
     def split_commas
@@ -102,7 +102,7 @@ class ScenesController < ApplicationController
     end
 
     def sort_direction
-      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'desc'
+      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'asc'
     end
 
     def sort_column

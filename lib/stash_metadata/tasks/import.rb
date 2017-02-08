@@ -58,6 +58,7 @@ module StashMetadata
             scene.details  = json['details']
             scene.url      = json['url']
             scene.date     = json['date']
+            scene.rating   = json['rating']
 
             studio_name = json['studio']
             if studio_name

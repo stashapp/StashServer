@@ -7,10 +7,11 @@ class CreateScenes < ActiveRecord::Migration[5.0]
 
     create_table :scenes do |t|
       # Scene Info
-      t.string :title
-      t.string :details
-      t.string :url
-      t.date   :date
+      t.string  :title
+      t.string  :details
+      t.string  :url
+      t.date    :date
+      t.integer :rating
 
       # Video File
       t.string :path

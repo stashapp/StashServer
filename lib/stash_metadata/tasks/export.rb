@@ -17,6 +17,7 @@ module StashMetadata
           json[:studio] = scene.studio.name if scene.studio && scene.studio.name
           json[:url] = scene.url if scene.url
           json[:date] = scene.date.to_s if scene.date
+          json[:rating] = scene.rating if scene.rating
           json[:details] = scene.details if scene.details
           json[:gallery] = scene.gallery.checksum if scene.gallery
           json[:performers] = get_names(scene.performers) unless get_names(scene.performers).empty?
