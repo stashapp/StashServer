@@ -3,11 +3,6 @@
 
 <script type="text/javascript">
 $(function() {
-  <% if request.user_agent =~ /Mobile|webOS/ %>
-  var player = videojs('player', { "techOrder": ["html5"] }, function() {
-
-  });
-  <% else %>
   const player = jwplayer('player').setup({
     file: '<%= stream_path @scene %>.mp4',
     image: '<%= screenshot_path(@scene) %>.jpg',
@@ -23,24 +18,13 @@ $(function() {
     autostart: false,
     volume: 50
   });
-  <% end %>
 });
 </script>
 
 <div class="ui container segments">
   <div class="ui top attached segment">
     <% if @scene.is_streamable %>
-      <% if request.user_agent =~ /Mobile|webOS/ %>
-      <video id="player" class="video-js vjs-16-9 vjs-default-skin vjs-big-play-centered" controls preload="auto" poster="<%= screenshot_path(@scene) %>">
-        <source src="<%= stream_path @scene %>" type="<%= @scene.mime_type %>">
-        <p class="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a web browser that
-          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-        </p>
-      </video>
-      <% else %>
       <div id="player">Loading the player...</div>
-      <% end %>
     <% else %>
       <%= link_to stream_path(@scene), class: 'ui fluid image' do %>
         <%= image_tag screenshot_path(@scene) %>
