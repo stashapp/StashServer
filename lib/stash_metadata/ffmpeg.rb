@@ -6,7 +6,7 @@ module StashMetadata
       unless width
         width = movie.width
       end
-      unless seconds
+      unless seconds && seconds.to_i < movie.duration.to_i
         seconds = movie.duration * 0.2
       end
 
