@@ -40,6 +40,24 @@ class Scene < ApplicationRecord
     mime_type == "video/quicktime" || mime_type == "video/mp4"
   end
 
+  def screenshot(seconds: nil, width: nil)
+    cache_key = "#{checksum}"
+    if seconds
+      cache_key = cache_key + "_#{seconds}"
+    end
+    if width
+      cache_key = cache_key + "_#{width}"
+    end
+
+    unless Rails.cache.read(cache_key).nil?
+      return Rails.cache.read(cache_key)
+    else
+      data = StashMetadata::FFMPEG.screenshot(path: path, seconds: seconds, width: width)
+      Rails.cache.write(cache_key, data)
+      return data
+    end
+  end
+
   private
 
     def get_vtt_time(seconds)

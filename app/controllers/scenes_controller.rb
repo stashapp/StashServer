@@ -39,17 +39,8 @@ class ScenesController < ApplicationController
 
   def screenshot
     seconds = params[:seconds]
-
-    # TODO Use this
-    # screenshot = @scene.screenshot
-    # if seconds
-    #   # TODO add logic to return default if out of bounds
-    #   screenshot = FFMPEGUtility.get_raw_screenshot @scene.absolute_path, seconds
-    # end
-    # send_data screenshot, type: 'image/jpg', disposition: 'inline'
-
-    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.jpg")
-    send_file path, disposition: 'inline'
+    data = @scene.screenshot(seconds: seconds)
+    send_data data, filename: 'screenshot.jpg', disposition: 'inline'
   end
 
   def vtt
