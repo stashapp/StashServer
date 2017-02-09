@@ -1,6 +1,6 @@
 <div class="card">
   <%= link_to scene_path(scene), class: 'image' do %>
-    <%= image_tag screenshot_path(scene) %>
+    <%= image_tag screenshot_path(scene, width: 320) %>
   <% end %>
   <div class="content">
     <div class="header"><%= scene.title || scene.path %></div>

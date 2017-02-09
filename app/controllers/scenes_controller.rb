@@ -38,9 +38,17 @@ class ScenesController < ApplicationController
   end
 
   def screenshot
-    seconds = params[:seconds]
-    data = @scene.screenshot(seconds: seconds)
-    send_data data, filename: 'screenshot.jpg', disposition: 'inline'
+    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.jpg")
+    thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.thumb.jpg")
+
+    if params[:seconds]
+      data = @scene.screenshot(seconds: params[:seconds], width: params[:width])
+      send_data data, filename: 'screenshot.jpg', disposition: 'inline'
+    elsif File.exist?(thumb_path) && params[:width] && params[:width].to_i < 400
+      send_file thumb_path, disposition: 'inline'
+    else
+      send_file path, disposition: 'inline'
+    end
   end
 
   def vtt
