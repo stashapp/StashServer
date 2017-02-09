@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt]
+  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt, :playlist]
   before_action :split_commas, only: [:update]
 
   def index
@@ -65,6 +65,12 @@ class ScenesController < ApplicationController
   def chapter_vtt
     respond_to do |format|
       format.vtt { render inline: @scene.chapter_vtt }
+    end
+  end
+
+  def playlist
+    respond_to do |format|
+      format.m3u8 { render inline: stream_url(@scene) }
     end
   end
 

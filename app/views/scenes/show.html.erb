@@ -26,7 +26,7 @@ $(function() {
     <% if @scene.is_streamable %>
       <div id="player">Loading the player...</div>
     <% else %>
-      <%= link_to stream_path(@scene), class: 'ui fluid image' do %>
+      <%= link_to "#{scene_playlist_path(@scene)}.m3u8", class: 'ui fluid image' do %>
         <%= image_tag screenshot_path(@scene) %>
       <% end %>
     <% end %>
