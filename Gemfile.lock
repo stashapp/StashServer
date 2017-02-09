@@ -102,6 +102,9 @@ GEM
     nio4r (1.2.1)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
+    passenger (5.1.2)
+      rack
+      rake (>= 0.8.1)
     public_suffix (2.0.4)
     puma (3.6.2)
     rack (2.0.1)
@@ -190,6 +193,7 @@ DEPENDENCIES
   kaminari (~> 1.0.1)
   listen (~> 3.0.5)
   naturally (= 2.1.0)
+  passenger (= 5.1.2)
   puma (~> 3.0)
   rails (~> 5.0.1)
   rubyzip (= 1.2.0)
