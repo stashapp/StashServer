@@ -17,7 +17,7 @@
         <%= text_field_tag :image_path, nil, placeholder: 'Image Path' %>
       </div>
       <div class="two wide field">
-        <div id="find-image-button" class="ui fluid button">Find</div>
+        <div id="server-image-button" class="ui fluid button">Select</div>
       </div>
     </div>
   </div>
@@ -25,29 +25,4 @@
 <%= f.button "Submit", class: "ui primary submit button" %>
 
 
-<div class="ui modal">
-  <div class="header">Header</div>
-  <div class="content">
-    <div class="ui middle aligned list">
-      <% @files.each do |file| %>
-      <div class="ui item filepath" data-value="<%= file[:path] %>">
-        <img class="ui small image" src="data:image/jpeg;base64,<%= file[:data] %>" />
-        <div class="content"><%= file[:path] %></div>
-      </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui button">Cancel</div>
-  </div>
-</div>
-
-<script>
-$(function() {
-  $('.modal').modal('attach events', '#find-image-button', 'show');
-  $('.modal').on('click', '.filepath', function() {
-    $('.modal').modal('hide');
-    $('#image_path').val($(this).data('value'))
-  });
-});
-</script>
+<%= render 'server_images_modal' %>

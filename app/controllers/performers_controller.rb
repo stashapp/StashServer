@@ -1,8 +1,7 @@
-require 'base64'
-
 class PerformersController < ApplicationController
+  include ServerImages
+
   before_action :set_performer, only: [:show, :edit, :update, :image]
-  before_action :set_files, only: [:new, :edit, :create, :update]
 
   def index
     @performers = Performer
@@ -64,16 +63,6 @@ class PerformersController < ApplicationController
 
     def performer_params
       params.fetch(:performer).permit(:name, :url)
-    end
-
-    def set_files
-      glob_path = File.join(StashMetadata::STASH_DIRECTORY, "*", "*.{jpg}")
-      glob = Dir[glob_path]
-      @files = []
-      glob.each do |file|
-        file = {data: Base64.encode64(open(file).to_a.join), path: file}
-        @files.push(file)
-      end
     end
 
     def update_image
