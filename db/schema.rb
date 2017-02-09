@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.index ["ownable_type", "ownable_id"], name: "index_galleries_on_ownable_type_and_ownable_id"
   end
 
+  create_table "galleries_performers", id: false, force: :cascade do |t|
+    t.integer "gallery_id"
+    t.integer "performer_id"
+    t.index ["gallery_id"], name: "index_galleries_performers_on_gallery_id"
+    t.index ["performer_id"], name: "index_galleries_performers_on_performer_id"
+  end
+
   create_table "performers", force: :cascade do |t|
     t.binary   "image",      limit: 2097152
     t.string   "checksum"

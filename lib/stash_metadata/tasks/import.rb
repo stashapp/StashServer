@@ -35,6 +35,18 @@ module StashMetadata
           json = StashMetadata::JSON.gallery checksum
           if json
             gallery.title = json['title']
+
+            performer_names = json['performers']
+            if performer_names
+              performer_names.each { |performer_name|
+                performer = Performer.find_by(name: performer_name)
+                if performer
+                  gallery.performers.push(performer)
+                else
+                  StashMetadata.logger.warning("Performer does not exist! #{performer_name}")
+                end
+              }
+            end
           end
 
           gallery.save

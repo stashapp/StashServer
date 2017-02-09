@@ -46,6 +46,15 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.belongs_to :scene, index: true
     end
 
+    # ----------------------
+    # Galleries / Performers
+    # ----------------------
+
+    create_table :galleries_performers, id: false do |t|
+      t.belongs_to :gallery, index: true
+      t.belongs_to :performer, index: true
+    end
+
     # -------
     # Studios
     # -------

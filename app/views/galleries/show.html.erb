@@ -1,6 +1,14 @@
 <div class="ui container segments">
   <div class="ui top attached segment">
     <h3><%= @gallery.title || 'No Title' %></h3>
+
+    <div class="ui right rail">
+      <div class="ui segment">
+        <div class="ui list">
+          <%= link_to "Edit", edit_gallery_path(@gallery), class: 'item' %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="ui bottom attached segment">

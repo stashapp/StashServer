@@ -40,6 +40,7 @@ module StashMetadata
 
           json = {}
           json[:title] = gallery.title if gallery.title
+          json[:performers] = get_names(gallery.performers) unless get_names(gallery.performers).empty?
 
           next if json.empty?
 

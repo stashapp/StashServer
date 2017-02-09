@@ -1,5 +1,6 @@
 class GalleriesController < ApplicationController
-  before_action :set_gallery, only: [:show, :file]
+  before_action :set_gallery, only: [:show, :edit, :update, :file]
+  before_action :split_commas, only: [:update]
 
   def index
     @galleries = Gallery
@@ -25,6 +26,19 @@ class GalleriesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    respond_to do |format|
+      if @gallery.update(gallery_params)
+        format.html { redirect_to @gallery, notice: 'Gallery was successfully updated.' }
+      else
+        format.html { render :edit }
+      end
+    end
+  end
+
   def file
     index = params[:index].to_i
     file = @gallery.files[index]
@@ -43,7 +57,13 @@ class GalleriesController < ApplicationController
     end
 
     def gallery_params
-      params.fetch(:gallery, {})
+      params.fetch(:gallery).permit(:title, performer_ids: [])
+    end
+
+    def split_commas
+      if params[:gallery]
+        params[:gallery][:performer_ids] = params[:gallery][:performer_ids].split(",") if params[:gallery][:performer_ids]
+      end
     end
 
 end
