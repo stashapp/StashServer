@@ -1,11 +1,11 @@
 class StudiosController < ApplicationController
-  before_action :set_studio, only: [:show, :edit, :update]
+  before_action :set_studio, only: [:show]
 
   def index
     @studios = Studio
                 .search_for(params[:q])
                 .page(params[:page])
-                
+
     respond_to do |format|
       format.html
       format.json { render json: @studios.to_json }
@@ -15,15 +15,17 @@ class StudiosController < ApplicationController
   def show
   end
 
-  def edit
+  def new
+    @studio = Studio.new
   end
 
-  def update
+  def create
+    @studio = Studio.new(studio_params)
     respond_to do |format|
-      if @studio.update(scene_params)
-        format.html { redirect_to @studio, notice: 'Studio was successfully updated.' }
+      if @studio.save
+        format.html { redirect_to studios_path, notice: 'Studio was successfully created.' }
       else
-        format.html { render :edit }
+        format.html { render :new }
       end
     end
   end
@@ -35,6 +37,6 @@ class StudiosController < ApplicationController
     end
 
     def studio_params
-      params.fetch(:studio, {})
+      params.fetch(:studio).permit(:name)
     end
 end

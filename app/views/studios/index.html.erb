@@ -1,0 +1,21 @@
+<%= link_to 'Add Studio', new_studio_path, class: 'ui primary button' %>
+<table class="ui celled small compact table">
+  <thead>
+    <tr>
+      <th>Studio Name</th>
+      <th>Scenes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @studios.each do |studio| %>
+    <tr>
+      <td>
+        <h5 class="ui center aligned header">
+          <%= link_to studio.name, scenes_path(filter_studios: studio.id) %>
+        </h5>
+      </td>
+      <td><%= studio.scenes.count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

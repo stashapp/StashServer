@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :performers, only: [:index, :show, :new, :create, :edit, :update]
   get 'performers/:id/image', to: 'performers#image', as: :performer_image
 
-  resources :studios, only: [:index, :show]
+  resources :studios, only: [:index, :show, :new, :create]
 
   resources :tags, only: [:index, :new, :create]
 
