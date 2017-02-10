@@ -33,6 +33,9 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.string :checksum
       t.string :name
       t.string :url
+      t.string :twitter
+      t.date   :birthdate
+      t.string :ethnicity
 
       t.timestamps
     end

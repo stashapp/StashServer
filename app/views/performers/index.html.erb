@@ -1,4 +1,20 @@
-<div class="ui header"><%= link_to 'Add Performer', new_performer_path, class: 'ui primary button' %></div>
+<form id="scene-filter" class="ui mini form segment">
+  <div class="ui equal width centered divided grid">
+    <div class="row">
+      <div class="column">
+        <div class="ui massive fluid icon input">
+          <input name="q" placeholder="Performer Name..." type="text">
+          <i class="search icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="ui header">
+  <%= link_to 'Add Performer', new_performer_path, class: 'ui primary button' %>
+</div>
+
 <div class="ui three doubling cards">
   <% @performers.each do |performer| %>
     <%= render performer %>

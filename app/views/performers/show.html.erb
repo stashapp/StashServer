@@ -3,7 +3,7 @@
 
 <div class="ui container segments">
   <div class="ui top attached segment">
-    <div class="ui two column middle aligned very relaxed stackable grid">
+    <div class="ui two column divided middle aligned very relaxed stackable grid" style="position: relative;">
       <div class="column">
         <%= image_tag performer_image_path(@performer), class: 'ui fluid bordered image' %>
         <div class="ui large horizontal divided list">
@@ -15,23 +15,24 @@
           </a>
         </div>
       </div>
-      <div class="ui vertical divider">
-        🍑
-      </div>
       <div class="center aligned column">
         <div class="ui huge very relaxed list">
           <div class="item">
             <div class="header">Name</div>
             <%= @performer.name %>
           </div>
+          <% if @performer.birthdate %>
           <div class="item">
             <div class="header">Birthdate</div>
-            MM/DD/YYYY
+            <%= @performer.birthdate.strftime('%m/%d/%Y') %>
           </div>
+          <% end %>
+          <% if @performer.ethnicity %>
           <div class="item">
             <div class="header">Ethnicity</div>
-            Caucasian
+            <%= @performer.ethnicity.capitalize %>
           </div>
+          <% end %>
         </div>
       </div>
     </div>
@@ -47,6 +48,16 @@
 
   <div class="ui attached segment">
     <h3>Social</h3>
+    <div class="ui horizontal list">
+      <% if @performer.twitter %>
+      <div class="item">
+        <i class="big twitter icon"></i>
+        <div class="content">
+          <%= link_to "@#{@performer.twitter}", "http://www.twitter.com/#{@performer.twitter}" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
   </div>
 
   <div class="ui bottom attached segment">

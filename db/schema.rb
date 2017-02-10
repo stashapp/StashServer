@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.string   "checksum"
     t.string   "name"
     t.string   "url"
+    t.string   "twitter"
+    t.date     "birthdate"
+    t.string   "ethnicity"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

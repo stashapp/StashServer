@@ -2,12 +2,36 @@
 <div class="field">
   <div class="equal width fields">
     <div class="field">
-      <label>Title</label>
+      <label>Name</label>
       <%= f.text_field :name, placeholder: 'Name' %>
     </div>
     <div class="field">
+      <label>Birth Date (YYYY-MM-DD)</label>
+      <%= f.date_field :birthdate, placeholder: 'YYYY-MM-DD' %>
+    </div>
+    <div class="field">
+      <label>Ethnicity</label>
+      <div id="studio-filter" class="ui fluid search selection dropdown">
+        <%= f.hidden_field :ethnicity %>
+        <i class="dropdown icon"></i>
+        <div class="default text">Ethnicity</div>
+        <div class="menu">
+          <div class="item" data-value="white">White</div>
+          <div class="item" data-value="black">Black</div>
+          <div class="item" data-value="asian">Asian</div>
+          <div class="item" data-value="hispanic">Hispanic</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="equal width fields">
+    <div class="field">
       <label>URL</label>
       <%= f.url_field :url, placeholder: 'URL' %>
+    </div>
+    <div class="field">
+      <label>Twitter Handle</label>
+      <%= f.text_field :twitter, placeholder: 'Twitter Handle' %>
     </div>
   </div>
   <div class="field">

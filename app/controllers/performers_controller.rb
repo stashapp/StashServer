@@ -62,7 +62,7 @@ class PerformersController < ApplicationController
     end
 
     def performer_params
-      params.fetch(:performer).permit(:name, :url)
+      params.fetch(:performer).permit(:name, :url, :birthdate, :ethnicity, :twitter)
     end
 
     def update_image
