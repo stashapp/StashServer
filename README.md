@@ -34,29 +34,24 @@ stash_cache: ''
 
 ### macOS
 
-* `$ brew install nginx --with-passenger` and follow the instructions (add passenger lines to nginx.conf)
-* Create a file called `/usr/local/etc/nginx/servers/stash` with the following contents (be sure to change "**PATH_TO_STASH_APP_HERE**" to the path of the Stash rails app.):
+* `$ brew install nginx` and follow the instructions
+* Create a file called `/usr/local/etc/nginx/servers/stash` with the following contents (be sure to change "**PATH_TO_STASH_APP_PUBLIC_DIRCTORY_HERE**" to the path of the Stash rails app. Ex: `/Users/stashappdev/Documents/Stash/public`):
 
     ```
-    upstream puma {
-      server localhost:3000;
-    }
-
     server {
-      listen 4000 default;
+      listen 4000;
       root **PATH_TO_STASH_APP_HERE**;
-      try_files $uri/index.html $uri @puma;
 
-      location /protected/ {
+      location /__send_file_accel {
         internal;
-        alias /$1/;
+        alias /;
       }
 
-      location @puma {
+      location / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header HOST $http_host;
         proxy_set_header X-Sendfile-Type X-Accel-Redirect;
-        proxy_set_header X-Accel-Mapping ^/*=/protected/$1;
+        proxy_set_header X-Accel-Mapping /=/__send_file_accel/;
         proxy_redirect off;
         proxy_pass http://localhost:3000;
       }
@@ -69,6 +64,12 @@ stash_cache: ''
 * Use the following commands to manage NGINX `$ brew services [start|stop|restart] nginx`
 
 # Usage
+
+Run `rails s` or `passenger start` to boot the app running on port 3000, but don't use it on this port since that will bypass the NGINX reverse proxy we set up above.  Instead, goto http://YOUR_LOCAL_IP_HERE:4000 to visit through the proxy, you should see the web app with no content.
+
+You're going to want to populate the database by running `rails metadata:scan`.  This will go through the stash folder you configured in the application.yml file and calculate MD5 checksums of everything and add the found scenes and galleries to the database.  This might take some time depending on how much content you have.
+
+You should see stash fill up with your content as the scan continues.  Once it completes you should run `rails metadata:export` to export the contents of the database to JSON so you can import your data again in the future.
 
 ## Rake Tasks
 
