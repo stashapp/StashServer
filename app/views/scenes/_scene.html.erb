@@ -4,9 +4,14 @@
   <% end %>
   <div class="content">
     <div class="header"><%= scene.title || scene.path %></div>
-    <% if scene.rating %>
+    <% if scene.rating || scene.date %>
     <div class="meta">
+      <% if scene.date %>
+      <span class="date"><%= scene.date.strftime('%m/%d/%Y') %></span>
+      <% end %>
+      <% if scene.rating %>
       <div class="ui tiny rating" data-rating="<%= scene.rating %>" data-max-rating="5"></div>
+      <% end %>
     </div>
     <% end %>
     <div class="description">
