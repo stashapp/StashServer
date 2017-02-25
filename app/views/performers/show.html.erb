@@ -49,7 +49,7 @@
   <div class="ui attached segment">
     <h3>Social</h3>
     <div class="ui horizontal list">
-      <% if @performer.twitter %>
+      <% if @performer.twitter && !@performer.twitter.empty? %>
       <div class="item">
         <i class="big twitter icon"></i>
         <div class="content">

@@ -4,7 +4,7 @@ class Performer < ApplicationRecord
 
   validate :image_exists
 
-  scoped_search on: [:name, :checksum]
+  scoped_search on: [:name, :checksum, :birthdate]
 
   default_scope { order(name: :asc) }
 
