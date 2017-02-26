@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :vtt, :chapter_vtt, :playlist]
+  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :preview, :vtt, :chapter_vtt, :playlist]
   before_action :split_commas, only: [:update]
 
   def index
@@ -48,6 +48,15 @@ class ScenesController < ApplicationController
       send_file thumb_path, disposition: 'inline'
     else
       send_file path, disposition: 'inline'
+    end
+  end
+
+  def preview
+    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.webm")
+    if File.exist?(path)
+      send_file path, disposition: 'inline'
+    else
+      render nothing: true, status: 404
     end
   end
 

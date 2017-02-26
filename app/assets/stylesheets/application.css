@@ -31,3 +31,20 @@ body {
 .pre {
   white-space: pre-line;
 }
+
+video.preview {
+  opacity: 0;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  max-height: 100%;
+  top: 0;
+  width: 100%;
+  z-index: 0
+}
+
+img.active-preview {
+  opacity: 0;
+  position: relative;
+  z-index: 1
+}

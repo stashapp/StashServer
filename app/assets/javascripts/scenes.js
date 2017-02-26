@@ -5,6 +5,19 @@ $.urlParam = function (name) {
 }
 
 $(function() {
+  $('.previewable').hover(
+    function hoverVideo(e) {
+      $('video', this).get(0).play();
+      $('img', this).addClass('active-preview');
+      $('video', this).css('opacity', '1');
+    },
+    function hideVideo(e) {
+      $('video', this).get(0).pause();
+      $('img', this).removeClass('active-preview');
+      $('video', this).css('opacity', '0');
+    }
+  );
+
   $('.ui.dropdown').dropdown();
   $('.ui.rating').rating({
     interactive: false

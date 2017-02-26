@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'scenes/:id/playlist', to: 'scenes#playlist', defaults: { format: :m3u8 }, as: :scene_playlist
   get 'scenes/:id/screenshot', to: 'scenes#screenshot', as: :screenshot
   get 'scenes/:id/screenshot/:seconds', to: 'scenes#screenshot'
+  get 'scenes/:id/preview', to: 'scenes#preview', as: :scene_preview
   get 'scenes/:id/vtt/chapter', to: 'scenes#chapter_vtt', defaults: { format: :vtt }, as: :scene_chapter_vtt
 
   resources :galleries, except: [:create, :new, :destroy]

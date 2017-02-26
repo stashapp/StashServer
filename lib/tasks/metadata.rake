@@ -20,4 +20,9 @@ namespace :metadata do
     StashMetadata::Tasks::GenerateSprites.start
   end
 
+  desc "Generates webm files for mouseover previews"
+  task generate_previews: :environment do
+    StashMetadata::Tasks::GeneratePreviews.start
+  end
+
 end
