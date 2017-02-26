@@ -16,6 +16,9 @@ module StashMetadata
           performer.checksum = checksum
           performer.name = name
           performer.url = json['url']
+          performer.twitter = json['twitter']
+          performer.birthdate = json['birthdate']
+          performer.ethnicity = json['ethnicity']
 
           path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
           performer.image = File.read(path)

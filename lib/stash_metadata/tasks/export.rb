@@ -61,6 +61,9 @@ module StashMetadata
           json = {}
           json[:name] = performer.name if performer.name
           json[:url] = performer.url if performer.url
+          json[:twitter] = performer.twitter if performer.twitter
+          json[:birthdate] = performer.birthdate if performer.birthdate
+          json[:ethnicity] = performer.ethnicity if performer.ethnicity
 
           next if json.empty?
 
