@@ -1,7 +1,6 @@
 <div class="card">
   <%= link_to scene_path(scene), class: 'image previewable' do %>
-    <%= image_tag screenshot_path(scene, width: 320) %>
-    <video class="preview" loop>
+    <video class="preview" loop poster="<%= screenshot_path(scene) %>">
       <source src="<%= scene_preview_path(scene) %>" type="video/webm" />
     </video>
   <% end %>
