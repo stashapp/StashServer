@@ -12,7 +12,6 @@ module StashMetadata
           next unless !File.exist?(path)
 
           movie = WebmGenerator::Movie.new(path: scene.path)
-          movie.output_width = 480
           movie.output_filename = "#{scene.checksum}.webm"
           movie.output_directory = STASH_SCREENSHOTS_DIRECTORY
 

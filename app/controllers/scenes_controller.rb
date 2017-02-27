@@ -33,6 +33,10 @@ class ScenesController < ApplicationController
     end
   end
 
+  def wall
+    @scenes = Scene.limit(40).reorder('RANDOM()')
+  end
+
   def stream
     send_file @scene.path, disposition: 'inline'
   end

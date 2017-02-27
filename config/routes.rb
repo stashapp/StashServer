@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'scenes/wall', to: 'scenes#wall', as: :scene_wall
   get 'scenes/:id', to: 'scenes#vtt', id: /.*_thumbs.vtt|.*_sprite.jpg/
   resources :scenes, except: [:create, :new, :destroy]
   get 'scenes/:id/stream', to: 'scenes#stream', as: :stream

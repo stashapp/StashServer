@@ -12,7 +12,7 @@ module WebmGenerator
 
       @info = FFMPEG::Movie.new(path)
       @path = path
-      @output_width = options[:output_width] ||= 360
+      @output_width = options[:output_width] ||= 640
       @output_filename = options[:output_filename] ||= "#{File.basename(@path, File.extname(@path))}.webm"
       @output_directory = options[:output_directory] ||= "output/"
       @chunk_count = 12

@@ -1,0 +1,9 @@
+<div class="ui four column wall grid">
+<% @scenes.each do |scene| %>
+  <%= link_to scene_path(scene), class: 'wall column' do %>
+    <video class="wall item" loop autoplay="true">
+      <source src="<%= scene_preview_path(scene) %>" type="video/webm" />
+    </video>
+  <% end %>
+<% end %>
+</div>

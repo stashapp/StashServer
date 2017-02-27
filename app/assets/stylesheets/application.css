@@ -43,6 +43,26 @@ video.preview {
   z-index: 0
 }
 
+video.wall.item {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wall.column {
+  padding: 0 !important;
+  line-height: 0;
+}
+
+.wall.grid {
+  position: absolute;
+  left: 0;
+  right: 15px;
+  top: 55px;
+  bottom: 0;
+  overflow: auto;
+}
+
 img.active-preview {
   opacity: 0;
   position: relative;
