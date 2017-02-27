@@ -1,14 +1,28 @@
 # About
 
-This isn't too user friendly for right now... Will improve in the future.
+**Stash is a rails app which organizes and serves your porn.**
 
-TODO
+I built this as an alternative to "pornganizer".  Pornganizer is great, and I recommend you check it out, it just didn't meet *my* needs.
+
+So what does stash do?
+
+* Acts as a server which provides a web interface to stream your porn
+  - Webm video previews
+  - VTT generation for scrubbing
+* Allows exporting your metadata into JSON
+
+That's it, pretty simple.  Right now all metadata must be input manually, but in the future I hope to build a scraper to make input less tedious.
+
+## Notes
+
+* This isn't too user friendly for right now... Will improve in the future.
 
 # Dependencies
 
 * Ruby (Rails)
 * NGINX (For handling video streams)
-* FFMPEG
+* FFMPEG (Compiled with libvpx for mouse over previews)
+  - macOS: `brew install ffmpeg --with-libvpx --with-opus`
 * ImageMagick
 
 # Setup
@@ -83,3 +97,5 @@ The following rake tasks are included.
   * This will scan the stash for new content, generate checksums, add to database, and generate thumbnails.  This can take a while...
 * `$ rails metadata:generate_sprites`
   * This will generate sprites and VTT files to provide video scrubbing previews.
+* `$ rails metadata:generate_previews`
+  * This will generate webm preview files
