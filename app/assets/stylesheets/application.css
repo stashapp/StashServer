@@ -56,8 +56,8 @@ video.wall.item {
 .wall.grid {
   position: absolute;
   left: 0;
-  right: 15px;
-  top: 55px;
+  right: 0;
+  top: 41px;
   bottom: 0;
   overflow: auto;
 }
