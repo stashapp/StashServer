@@ -34,7 +34,7 @@ class ScenesController < ApplicationController
   end
 
   def wall
-    @scenes = Scene.limit(40).reorder('RANDOM()')
+    @scenes = Scene.search_for(params[:q]).limit(40).reorder('RANDOM()')
   end
 
   def stream
