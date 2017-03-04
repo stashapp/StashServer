@@ -29,9 +29,13 @@
             <i class="dropdown icon"></i>
             <div class="default text"><i class="image icon"></i>Galleries</div>
             <div class="menu">
-              <!-- TODO Limit this to galleries in the same folder and hide ones already assigned -->
               <% Gallery.unowned.each do |gallery| %>
-                <div class="item" data-value="<%= gallery.id %>"><%= gallery.path %></div>
+                <% if gallery.path.include?(File.dirname(@scene.path)) %>
+                  <div class="item" data-value="<%= gallery.id %>"><%= gallery.path %></div>
+                <% end %>
+              <% end %>
+              <% if @scene.gallery %>
+                <div class="item" data-value="<%= @scene.gallery.id %>"><%= @scene.gallery.path %></div>
               <% end %>
             </div>
           </div>
