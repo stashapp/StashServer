@@ -11,6 +11,10 @@ So what does stash do?
   - VTT generation for scrubbing
 * Allows exporting your metadata into JSON
 
+In the future:
+
+* GraphQL API with mobile app
+
 That's it, pretty simple.  Right now all metadata must be input manually, but in the future I hope to build a scraper to make input less tedious.
 
 ## Notes
@@ -99,3 +103,24 @@ The following rake tasks are included.
   * This will generate sprites and VTT files to provide video scrubbing previews.
 * `$ rails metadata:generate_previews`
   * This will generate webm preview files
+
+# Questions
+
+### What's with the JSON?
+
+When thinking about my metadata, I wanted something I could store in git.  JSON files are great for this, I can easily diff changes and have a backup in the cloud.
+
+In the metadata directory after an export you'll see various files and folders...
+
+* `scenes/#{MD5_HASH}.json`
+  * Metadata for this particular scene.
+* `performers/#{MD5_HASH}.json`
+  * Ditto for performers
+* `mappings.json`
+  * This is used to map scene MD5 hashes to file paths (so you don't have to recalculate the hash on import), performer hashes to a name (so we can keep hashes out of the file content), and gallery hashes for file paths.
+
+I should note that the hash for performers is the MD5 hash of whatever image you used for the performer.
+
+### What's with performer images?
+
+I haven't gotten around to allow remote upload.  Instead stash will look for JPG's in the root or one level deep inside of your stash directory and present those for use.  Just put any images you want to expose to the add / edit screen in a folder called performers or whatever other name you like.
