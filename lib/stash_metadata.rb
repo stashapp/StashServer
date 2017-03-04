@@ -15,7 +15,7 @@ module StashMetadata
   def self.logger
     return @logger if @logger
     logger = Logger.new(STDOUT)
-    logger.level = Logger::DEBUG
+    logger.level = Logger::INFO
     @logger = logger
   end
 end
