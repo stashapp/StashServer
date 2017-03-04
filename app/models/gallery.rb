@@ -4,6 +4,9 @@ class Gallery < ApplicationRecord
 
   scoped_search on: [:title, :checksum]
 
+  scope :unowned, -> () { where ownable_id: nil }
+  scope :unowned_in_path, -> (path) { unowned.where('path like ?', "%#{path}%") }
+
   def files
     StashMetadata::Zip.files(zip: self.path)
   end

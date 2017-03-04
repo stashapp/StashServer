@@ -13,7 +13,15 @@ class Scene < ApplicationRecord
   scope :filter_performers, -> (performer_ids) { joins(:performers).where('performers.id IN (?)', performer_ids).distinct }
   scope :filter_tags, -> (tag_ids) { joins(:tags).where('tags.id IN (?)', tag_ids).distinct }
   scope :filter_rating, -> (rating) { where('rating >= ?', rating) }
-  scope :filter_missing, -> (missing) { where missing.first.to_sym => nil }
+  scope :filter_missing, -> (missing) {
+    if missing.first == 'gallery'
+      missing_gallery
+    else
+      where missing.first.to_sym => nil
+    end
+  }
+
+  scope :missing_gallery, -> () { joins('LEFT OUTER JOIN galleries ON galleries.ownable_id = scenes.id').where('galleries.ownable_id IS NULL') }
 
   def mime_type
     return Mime::Type.lookup_by_extension(File.extname(path).delete('.')).to_s
