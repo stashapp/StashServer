@@ -8,6 +8,12 @@ class Performer < ApplicationRecord
 
   default_scope { order(name: :asc) }
 
+  def age(date: Date.today)
+    a = date.year - birthdate.year
+    a = a - 1 if (birthdate.month > date.month || (birthdate.month >= date.month && birthdate.day > date.day))
+    return a
+  end
+
   private
 
   def image_exists

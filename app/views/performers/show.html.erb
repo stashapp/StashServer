@@ -24,7 +24,7 @@
           <% if @performer.birthdate %>
           <div class="item">
             <div class="header">Birthdate</div>
-            <%= @performer.birthdate.strftime('%m/%d/%Y') %>
+            <%= "#{@performer.birthdate.strftime('%m/%d/%Y')} (Age #{@performer.age})" %>
           </div>
           <% end %>
           <% if @performer.ethnicity %>

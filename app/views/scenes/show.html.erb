@@ -61,7 +61,7 @@ $(function() {
     <h3>Performers</h3>
     <div class="ui four centered stackable link cards">
       <% @scene.performers.each do |performer| %>
-        <%= render performer %>
+        <%= render(performer, scene: @scene) %>
       <% end %>
     </div>
   </div>

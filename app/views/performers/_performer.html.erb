@@ -4,6 +4,13 @@
   <% end %>
   <div class="content">
     <div class="header"><%= performer.name %></div>
+    <div class="meta">
+      <% if defined?(scene) && scene.date && performer.birthdate %>
+      <span class="date"><%= performer.age(date: scene.date) %> years old in scene.</span>
+      <% elsif performer.birthdate %>
+      <span class="date"><%= performer.age %> years old.</span>
+      <% end %>
+    </div>
   </div>
   <div class="extra content">
     <span>
