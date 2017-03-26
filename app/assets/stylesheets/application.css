@@ -19,6 +19,10 @@ body {
   background-color: #FFFFFF;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .main.container {
   margin-top: 5em;
   margin-bottom: 2em;

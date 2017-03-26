@@ -1,9 +1,19 @@
 <h4 class="ui dividing header">Performer Information</h4>
 <div class="field">
+  <div class="field">
+    <label>Name</label>
+    <%= f.text_field :name, placeholder: 'Name' %>
+  </div>
+
+  <div class="field">
+    <label>Aliases</label>
+    <%= f.text_field :aliases, placeholder: 'Aliases' %>
+  </div>
+
   <div class="equal width fields">
     <div class="field">
-      <label>Name</label>
-      <%= f.text_field :name, placeholder: 'Name' %>
+      <label>Origin Country</label>
+      <%= f.text_field :country, placeholder: 'Origin Country' %>
     </div>
     <div class="field">
       <label>Birth Date (YYYY-MM-DD)</label>
@@ -24,6 +34,41 @@
       </div>
     </div>
   </div>
+
+  <div class="equal width fields">
+    <div class="field">
+      <label>Eye Color</label>
+      <%= f.text_field :eye_color, placeholder: 'Eye Color' %>
+    </div>
+    <div class="field">
+      <label>Height (cm)</label>
+      <%= f.text_field :height, placeholder: 'Height (cm)' %>
+    </div>
+    <div class="field">
+      <label>Measurements</label>
+      <%= f.text_field :measurements, placeholder: 'Measurements' %>
+    </div>
+    <div class="field">
+      <label>Fake Tits</label>
+      <%= f.text_field :fake_tits, placeholder: 'Fake Tits' %>
+    </div>
+    <div class="field">
+      <label>Career Length</label>
+      <%= f.text_field :career_length, placeholder: 'Career Length' %>
+    </div>
+  </div>
+
+  <div class="equal width fields">
+    <div class="field">
+      <label>Tattoos</label>
+      <%= f.text_field :tattoos, placeholder: 'Tattoos' %>
+    </div>
+    <div class="field">
+      <label>Piercings</label>
+      <%= f.text_field :piercings, placeholder: 'Piercings' %>
+    </div>
+  </div>
+
   <div class="equal width fields">
     <div class="field">
       <label>URL</label>
@@ -33,7 +78,12 @@
       <label>Twitter Handle</label>
       <%= f.text_field :twitter, placeholder: 'Twitter Handle' %>
     </div>
+    <div class="field">
+      <label>Instagram Handle</label>
+      <%= f.text_field :instagram, placeholder: 'Instagram Handle' %>
+    </div>
   </div>
+
   <div class="field">
     <label>Image</label>
     <div class="fields">

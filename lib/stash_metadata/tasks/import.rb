@@ -17,8 +17,18 @@ module StashMetadata
           performer.name = name
           performer.url = json['url']
           performer.twitter = json['twitter']
+          performer.instagram = json['instagram']
           performer.birthdate = json['birthdate']
           performer.ethnicity = json['ethnicity']
+          performer.country = json['country']
+          performer.eye_color = json['eye_color']
+          performer.height = json['height']
+          performer.measurements = json['measurements']
+          performer.fake_tits = json['fake_tits']
+          performer.career_length = json['career_length']
+          performer.tattoos = json['tattoos']
+          performer.piercings = json['piercings']
+          performer.aliases = json['aliases']
 
           path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
           performer.image = File.read(path)

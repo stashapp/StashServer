@@ -62,8 +62,18 @@ module StashMetadata
           json[:name] = performer.name if performer.name
           json[:url] = performer.url if performer.url
           json[:twitter] = performer.twitter if performer.twitter
+          json[:instagram] = performer.instagram if performer.instagram
           json[:birthdate] = performer.birthdate if performer.birthdate
           json[:ethnicity] = performer.ethnicity if performer.ethnicity
+          json[:country] = performer.country if performer.country
+          json[:eye_color] = performer.eye_color if performer.eye_color
+          json[:height] = performer.height if performer.height
+          json[:measurements] = performer.measurements if performer.measurements
+          json[:fake_tits] = performer.fake_tits if performer.fake_tits
+          json[:career_length] = performer.career_length if performer.career_length
+          json[:tattoos] = performer.tattoos if performer.tattoos
+          json[:piercings] = performer.piercings if performer.piercings
+          json[:aliases] = performer.aliases if performer.aliases
 
           next if json.empty?
 

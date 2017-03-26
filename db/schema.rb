@@ -31,15 +31,25 @@ ActiveRecord::Schema.define(version: 20170123195042) do
   end
 
   create_table "performers", force: :cascade do |t|
-    t.binary   "image",      limit: 2097152
+    t.binary   "image",         limit: 2097152
     t.string   "checksum"
     t.string   "name"
     t.string   "url"
     t.string   "twitter"
+    t.string   "instagram"
     t.date     "birthdate"
     t.string   "ethnicity"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "country"
+    t.string   "eye_color"
+    t.string   "height"
+    t.string   "measurements"
+    t.string   "fake_tits"
+    t.string   "career_length"
+    t.string   "tattoos"
+    t.string   "piercings"
+    t.string   "aliases"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "performers_scenes", id: false, force: :cascade do |t|

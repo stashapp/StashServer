@@ -34,8 +34,18 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :url
       t.string :twitter
+      t.string :instagram
       t.date   :birthdate
       t.string :ethnicity
+      t.string :country
+      t.string :eye_color
+      t.string :height
+      t.string :measurements
+      t.string :fake_tits
+      t.string :career_length
+      t.string :tattoos
+      t.string :piercings
+      t.string :aliases
 
       t.timestamps
     end

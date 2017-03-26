@@ -16,23 +16,85 @@
         </div>
       </div>
       <div class="center aligned column">
-        <div class="ui huge very relaxed list">
+        <div class="ui huge very relaxed list items">
           <div class="item">
-            <div class="header">Name</div>
-            <%= @performer.name %>
+            <div class="content">
+              <div class="header">
+                <%= @performer.name %>
+              </div>
+              <% if @performer.aliases %>
+                <div class="meta"><%= @performer.aliases %></div>
+              <% end %>
+              <% if @performer.birthdate %>
+                <div class="extra">
+                  <%= "#{@performer.birthdate.strftime('%m/%d/%Y')} - Age #{@performer.age}" %>
+                </div>
+              <% end %>
+            </div>
           </div>
-          <% if @performer.birthdate %>
           <div class="item">
-            <div class="header">Birthdate</div>
-            <%= "#{@performer.birthdate.strftime('%m/%d/%Y')} (Age #{@performer.age})" %>
+            <div class="content">
+              <div class="header">Details</div>
+              <div class="description">
+                <div class="ui mini list">
+                  <% if @performer.career_length %>
+                  <div class="item">
+                    <span class="bold">Career Length</span>
+                    <%= @performer.career_length %>
+                  </div>
+                  <% end %>
+                  <% if @performer.country %>
+                  <div class="item">
+                    <span class="bold">Country</span>
+                    <%= @performer.country %>
+                  </div>
+                  <% end %>
+                  <% if @performer.ethnicity %>
+                  <div class="item">
+                    <span class="bold">Ethnicity</span>
+                    <%= @performer.ethnicity.capitalize %>
+                  </div>
+                  <% end %>
+                  <% if @performer.eye_color %>
+                  <div class="item">
+                    <span class="bold">Eye Color</span>
+                    <%= @performer.eye_color %>
+                  </div>
+                  <% end %>
+                  <% if @performer.height %>
+                  <div class="item">
+                    <span class="bold">Height (cm)</span>
+                    <%= @performer.height %>
+                  </div>
+                  <% end %>
+                  <% if @performer.measurements %>
+                  <div class="item">
+                    <span class="bold">Measurements</span>
+                    <%= @performer.measurements %>
+                  </div>
+                  <% end %>
+                  <% if @performer.fake_tits %>
+                  <div class="item">
+                    <span class="bold">Fake Tits</span>
+                    <%= @performer.fake_tits %>
+                  </div>
+                  <% end %>
+                  <% if @performer.tattoos %>
+                  <div class="item">
+                    <span class="bold">Tattoos</span>
+                    <%= @performer.tattoos %>
+                  </div>
+                  <% end %>
+                  <% if @performer.piercings %>
+                  <div class="item">
+                    <span class="bold">Piercings</span>
+                    <%= @performer.piercings %>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
           </div>
-          <% end %>
-          <% if @performer.ethnicity %>
-          <div class="item">
-            <div class="header">Ethnicity</div>
-            <%= @performer.ethnicity.capitalize %>
-          </div>
-          <% end %>
         </div>
       </div>
     </div>
@@ -46,6 +108,7 @@
     </div>
   </div>
 
+  <% if @performer.twitter || @performer.instagram %>
   <div class="ui attached segment">
     <h3>Social</h3>
     <div class="ui horizontal list">
@@ -57,8 +120,17 @@
         </div>
       </div>
       <% end %>
+      <% if @performer.instagram && !@performer.instagram.empty? %>
+      <div class="item">
+        <i class="big instagram icon"></i>
+        <div class="content">
+          <%= link_to "@#{@performer.instagram}", "http://www.instagram.com/#{@performer.instagram}" %>
+        </div>
+      </div>
+      <% end %>
     </div>
   </div>
+  <% end %>
 
   <div class="ui bottom attached segment">
     <div class="ui list">
