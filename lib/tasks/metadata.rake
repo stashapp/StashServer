@@ -25,4 +25,9 @@ namespace :metadata do
     StashMetadata::Tasks::GeneratePreviews.start
   end
 
+  desc "Generates transcodes for videos that dont support HTML5 video"
+  task generate_transcodes: :environment do
+    StashMetadata::Tasks::GenerateTranscodes.start
+  end
+
 end

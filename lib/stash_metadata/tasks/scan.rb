@@ -60,7 +60,7 @@ module StashMetadata
           return
         end
 
-        movie = FFMPEG::Movie.new(path)
+        movie = StashMetadata::FFMPEG.metadata(path: path)
         make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
         make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
       end

@@ -45,7 +45,14 @@ class Scene < ApplicationRecord
   end
 
   def is_streamable
-    mime_type == "video/quicktime" || mime_type == "video/mp4"
+    valid = mime_type == "video/quicktime" || mime_type == "video/mp4" || mime_type == "video/webm"
+
+    if !valid
+      path = File.join(StashMetadata::STASH_TRANSCODE_DIRECTORY, "#{self.checksum}.mp4")
+      valid = File.exist?(path)
+    end
+
+    return valid
   end
 
   def screenshot(seconds: nil, width: nil)

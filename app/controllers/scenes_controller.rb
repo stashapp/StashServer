@@ -38,7 +38,14 @@ class ScenesController < ApplicationController
   end
 
   def stream
-    send_file @scene.path, disposition: 'inline'
+    path = @scene.path
+
+    transcode = File.join(StashMetadata::STASH_TRANSCODE_DIRECTORY, "#{@scene.checksum}.mp4")
+    if File.exist?(transcode)
+      path = transcode
+    end
+
+    send_file path, disposition: 'inline'
   end
 
   def screenshot
