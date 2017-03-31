@@ -23,7 +23,13 @@ module StashMetadata
           json[:performers] = get_names(scene.performers) unless get_names(scene.performers).empty?
           json[:tags] = get_names(scene.tags) unless get_names(scene.tags).empty?
 
-          next if json.empty?
+          json[:file] = {}
+          json[:file][:size] = scene.size
+          json[:file][:duration] = scene.duration
+          json[:file][:video_codec] = scene.video_codec
+          json[:file][:audio_codec] = scene.audio_codec
+          json[:file][:width] = scene.width
+          json[:file][:height] = scene.height
 
           sceneJSON = StashMetadata::JSON.scene(scene.checksum)
           next if sceneJSON == json.as_json

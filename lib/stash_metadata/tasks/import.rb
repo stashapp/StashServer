@@ -125,6 +125,18 @@ module StashMetadata
               }
             end
 
+            file_info = json['file']
+            if file_info
+              scene.size = file_info['size']
+              scene.duration = file_info['duration']
+              scene.video_codec = file_info['video_codec']
+              scene.audio_codec = file_info['audio_codec']
+              scene.width = file_info['width']
+              scene.height = file_info['height']
+            else
+              # TODO Get FFMPEG metadata?
+            end
+
           end
 
           scene.save

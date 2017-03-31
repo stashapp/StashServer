@@ -16,6 +16,12 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       # Video File
       t.string :path
       t.string :checksum
+      t.string :size
+      t.decimal :duration, precision: 7, scale: 2
+      t.string :video_codec
+      t.string :audio_codec
+      t.integer :width
+      t.integer :height
 
       # References
       t.references :studio, index: true, foreign_key: true

@@ -67,9 +67,15 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.integer  "rating"
     t.string   "path"
     t.string   "checksum"
+    t.string   "size"
+    t.decimal  "duration",    precision: 7, scale: 2
+    t.string   "video_codec"
+    t.string   "audio_codec"
+    t.integer  "width"
+    t.integer  "height"
     t.integer  "studio_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.index ["path"], name: "index_scenes_on_path", unique: true
     t.index ["studio_id"], name: "index_scenes_on_studio_id"
   end

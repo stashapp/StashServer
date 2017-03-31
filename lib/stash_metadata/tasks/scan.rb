@@ -32,7 +32,19 @@ module StashMetadata
             item.save
           else
             StashMetadata.logger.info("#{path} doesn't exist.  Creating new item...")
-            klass.create(path: path, checksum: checksum)
+            item = klass.new(path: path, checksum: checksum)
+
+            if klass == Scene
+              video = StashMetadata::FFMPEG.metadata(path: path)
+              item.size        = video.size
+              item.duration    = video.duration
+              item.video_codec = video.video_codec
+              item.audio_codec = video.audio_codec
+              item.width       = video.width
+              item.height      = video.height
+            end
+
+            item.save
           end
         end
       end
