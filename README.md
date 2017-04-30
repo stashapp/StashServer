@@ -13,13 +13,17 @@ So what does stash do?
 
 In the future:
 
-* GraphQL API with mobile app
+* Mobile App
 
 That's it, pretty simple.  Right now all metadata must be input manually, but in the future I hope to build a scraper to make input less tedious.
 
 ## Notes
 
 * This isn't too user friendly for right now... Will improve in the future.
+
+## Slack
+
+I created a Slack channel to discuss the project.  [Click here to join.](https://join.slack.com/stash-project/shared_invite/MTc2Nzg0NjAyNzg4LTE0OTM1ODU4MTgtNDcwODRiMGIwYQ)
 
 # Dependencies
 
