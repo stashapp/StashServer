@@ -4,8 +4,10 @@ class PerformersController < ApplicationController
   before_action :set_performer, only: [:show, :edit, :update, :image]
 
   def index
+    whitelist = params.slice(:filter_favorites)
     @performers = Performer
                     .search_for(params[:q])
+                    .filter(whitelist)
                     .page(params[:page])
 
     respond_to do |format|
@@ -62,7 +64,7 @@ class PerformersController < ApplicationController
     end
 
     def performer_params
-      params.fetch(:performer).permit(:name, :url, :birthdate, :ethnicity, :country, :eye_color, :height, :measurements, :fake_tits, :career_length, :tattoos, :piercings, :aliases, :twitter, :instagram)
+      params.fetch(:performer).permit(:name, :url, :birthdate, :ethnicity, :country, :eye_color, :height, :measurements, :fake_tits, :career_length, :tattoos, :piercings, :aliases, :twitter, :instagram, :favorite)
     end
 
     def update_image

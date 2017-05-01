@@ -3,5 +3,5 @@ class Studio < ApplicationRecord
 
   scoped_search on: [:name]
 
-  default_scope { order(name: :desc) }
+  default_scope { order(name: :asc) }
 end

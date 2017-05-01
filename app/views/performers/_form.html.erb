@@ -1,8 +1,22 @@
 <h4 class="ui dividing header">Performer Information</h4>
 <div class="field">
-  <div class="field">
-    <label>Name</label>
-    <%= f.text_field :name, placeholder: 'Name' %>
+  <div class="fields">
+    <div class="fourteen wide field">
+      <label>Name</label>
+      <%= f.text_field :name, placeholder: 'Name' %>
+    </div>
+    <div class="two wide field">
+      <label>Favorite</label>
+      <div class="ui fluid search selection dropdown">
+        <%= f.hidden_field :favorite %>
+        <i class="dropdown icon"></i>
+        <div class="default text">Favorite</div>
+        <div class="menu">
+          <div class="item" data-value="false">No</div>
+          <div class="item" data-value="true">Yes</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="field">

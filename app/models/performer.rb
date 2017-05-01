@@ -1,4 +1,6 @@
 class Performer < ApplicationRecord
+  include Filterable
+
   has_and_belongs_to_many :scenes
   has_and_belongs_to_many :galleries
 
@@ -7,6 +9,10 @@ class Performer < ApplicationRecord
   scoped_search on: [:name, :checksum, :birthdate]
 
   default_scope { order(name: :asc) }
+  scope :filter_favorites, -> (favorite) {
+    fav = favorite.first == "true"
+    where(favorite: fav)
+  }
 
   def age(date: Date.today)
     a = date.year - birthdate.year

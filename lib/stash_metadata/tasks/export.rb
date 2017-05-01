@@ -80,6 +80,7 @@ module StashMetadata
           json[:tattoos] = performer.tattoos if performer.tattoos
           json[:piercings] = performer.piercings if performer.piercings
           json[:aliases] = performer.aliases if performer.aliases
+          json[:favorite] = performer.favorite
 
           next if json.empty?
 

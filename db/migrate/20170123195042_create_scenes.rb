@@ -52,6 +52,7 @@ class CreateScenes < ActiveRecord::Migration[5.0]
       t.string :tattoos
       t.string :piercings
       t.string :aliases
+      t.boolean :favorite, default: false, null: false
 
       t.timestamps
     end

@@ -29,6 +29,7 @@ module StashMetadata
           performer.tattoos = json['tattoos']
           performer.piercings = json['piercings']
           performer.aliases = json['aliases']
+          performer.favorite = json['favorite']
 
           path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
           performer.image = File.read(path)

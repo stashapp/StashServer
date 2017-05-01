@@ -36,6 +36,10 @@ $(function() {
     fullTextSearch: true
   });
 
+  $('#favorite-filter').dropdown({
+    forceSelection: false
+  });
+
   $('#clear-gallery-button').on('click', function() {
     $('#gallery-filter').dropdown('clear');
   });
@@ -60,6 +64,7 @@ $(function() {
     filter_performers: decodeURIComponent($.urlParam('filter_performers')).split(','),
     filter_tags: decodeURIComponent($.urlParam('filter_tags')).split(','),
     filter_rating: decodeURIComponent($.urlParam('filter_rating')),
-    filter_missing: decodeURIComponent($.urlParam('filter_missing'))
+    filter_missing: decodeURIComponent($.urlParam('filter_missing')),
+    filter_favorites: decodeURIComponent($.urlParam('filter_favorites'))
   });
 });

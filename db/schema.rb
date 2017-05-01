@@ -48,8 +48,9 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.string   "tattoos"
     t.string   "piercings"
     t.string   "aliases"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.boolean  "favorite",                      default: false, null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
   end
 
   create_table "performers_scenes", id: false, force: :cascade do |t|

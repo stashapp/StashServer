@@ -8,6 +8,30 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="column">
+        <h5>Favorited</h5>
+        <div id="favorite-filter" class="ui fluid selection dropdown">
+          <input name="filter_favorites" type="hidden">
+          <i class="dropdown icon"></i>
+          <div class="default text"><i class="like icon"></i>Favorited</div>
+          <div class="menu">
+            <div class="item" data-value=""></div>
+            <div class="item" data-value="false">No</div>
+            <div class="item" data-value="true">Yes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="one column centered row">
+      <%= link_to 'Clear', performers_path, class: 'ui button' %>
+      <button class="ui primary submit button">
+        Filter
+      </button>
+    </div>
+
   </div>
 </form>
 
