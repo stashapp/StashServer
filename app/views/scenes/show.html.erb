@@ -85,7 +85,7 @@ $(function() {
       <%= link_to "View All", gallery_path(@scene.gallery), class: 'sub header' %>
     </h3>
     <div class="ui four centered stackable link cards">
-      <% 4.times do |i| %>
+      <% [@scene.gallery.files.count, 4].min.times do |i| %>
       <div class="card">
         <%= link_to "", gallery_file_path(@scene.gallery, index: i), class: 'small gallery image', style: "background-image:url(#{gallery_file_path(@scene.gallery, index: i)});" %>
         <div class="content">

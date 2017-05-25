@@ -18,7 +18,7 @@
     <% end %>
     <div class="description">
       <% if scene.details %>
-        <%= scene.details.truncate(300, omission: '... (continued)') %>
+        <p class="pre"><%= scene.details.truncate(300, omission: '... (continued)') %></p>
       <% else %>
         <%= "No Details" %>
       <% end %>

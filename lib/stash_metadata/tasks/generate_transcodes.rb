@@ -18,7 +18,7 @@ module StashMetadata
           percent = 0.0
           temp_file_path = File.join(STASH_TRANSCODE_DIRECTORY, 'tmp', "#{scene.checksum}.mp4")
 
-          video.transcode(temp_file_path, %w(-c:v libx264 -profile:v high -level 4.2 -preset superfast -crf 23 -c:a aac)) { |progress|
+          video.transcode(temp_file_path, %w(-c:v libx264 -profile:v high -level 4.2 -preset superfast -crf 23 -vf scale=iw:-2 -c:a aac)) { |progress|
             rounded = progress.round(2)
             if rounded > percent
               StashMetadata.logger.info("Progress: #{rounded}")
