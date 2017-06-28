@@ -4,6 +4,8 @@ module StashMetadata
 
       def self.start
         FileUtils.mkdir_p(STASH_VTT_DIRECTORY) unless File.directory?(STASH_VTT_DIRECTORY)
+        tmp_dir = File.join(STASH_VTT_DIRECTORY, 'tmp')
+        FileUtils.mkdir_p(tmp_dir) unless File.directory?(tmp_dir)
 
         Scene.all.each { |scene|
           path = File.join(STASH_VTT_DIRECTORY, "#{scene.checksum}_thumbs.vtt")
