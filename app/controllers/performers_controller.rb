@@ -5,15 +5,11 @@ class PerformersController < ApplicationController
 
   def index
     whitelist = params.slice(:filter_favorites)
+    @performers_json = Performer.search_for(params[:q])
     @performers = Performer
                     .search_for(params[:q])
                     .filter(whitelist)
                     .page(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @performers.to_json }
-    end
   end
 
   def show

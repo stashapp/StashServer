@@ -4,6 +4,7 @@ class ScenesController < ApplicationController
 
   def index
     whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags, :filter_rating, :filter_missing)
+    @scenes_json = Scene.search_for(params[:q])
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(whitelist)
