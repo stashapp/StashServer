@@ -4,12 +4,12 @@ class ScenesController < ApplicationController
 
   def index
     whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags, :filter_rating, :filter_missing)
-    @scenes_json = Scene.search_for(params[:q])
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(whitelist)
                 .reorder(sort_column + ' ' + sort_direction)
                 .page(params[:page])
+                .per(params[:per_page])
   end
 
   def show
