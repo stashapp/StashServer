@@ -1,1 +1,4 @@
-json.array! @performers_json, partial: 'performers/performer', as: :performer
+json.count @performers.total_count
+json.data do
+  json.array! @performers, partial: 'performers/performer', as: :performer
+end
