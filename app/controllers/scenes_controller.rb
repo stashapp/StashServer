@@ -1,52 +1,39 @@
 class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :preview, :vtt, :chapter_vtt, :playlist]
-  before_action :split_commas, only: [:update]
 
   def index
-    whitelist = params.slice(:filter_studios, :filter_performers, :filter_tags, :filter_rating, :filter_missing)
+    whitelist = params.slice(:rating, :resolution, :studio_id, :tag_id)
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(whitelist)
-                .reorder(sort_column + ' ' + sort_direction)
-                .page(params[:page])
-                .per(params[:per_page])
+                .sortable(params, default: 'path')
+                .pageable(params)
   end
 
   def show
   end
 
-  # GET /scenes/1/edit
-  def edit
-  end
-
   # PATCH/PUT /scenes/1
   def update
     @scene.attributes = scene_params
-    if params[:scene] && params[:scene][:gallery_id] && !params[:scene][:gallery_id].empty?
-      @scene.gallery = Gallery.find(params[:scene][:gallery_id])
-    end
-    respond_to do |format|
-      if @scene.save
-        format.html { redirect_to @scene, notice: 'Scene was successfully updated.' }
+
+    if params[:gallery_id]
+      if params[:gallery_id] != 0
+        @scene.gallery = Gallery.find(params[:gallery_id])
       else
-        format.html { render :edit }
+        @scene.gallery = nil
       end
     end
+
+    @scene.save!
   end
 
   def wall
-    @scenes = Scene.search_for(params[:q]).limit(40).reorder('RANDOM()')
+    @scenes = Scene.search_for(params[:q]).limit(20).reorder('RANDOM()')
   end
 
   def stream
-    path = @scene.path
-
-    transcode = File.join(StashMetadata::STASH_TRANSCODE_DIRECTORY, "#{@scene.checksum}.mp4")
-    if File.exist?(transcode)
-      path = transcode
-    end
-
-    send_file path, disposition: 'inline'
+    send_file @scene.stream_file_path, disposition: 'inline'
   end
 
   def screenshot
@@ -68,7 +55,8 @@ class ScenesController < ApplicationController
     if File.exist?(path)
       send_file path, disposition: 'inline'
     else
-      render nothing: true, status: 404
+      # TODO: custom exception
+      render json: {}, status: :not_found
     end
   end
 
@@ -86,12 +74,6 @@ class ScenesController < ApplicationController
   def chapter_vtt
     respond_to do |format|
       format.vtt { render inline: @scene.chapter_vtt }
-    end
-  end
-
-  def playlist
-    respond_to do |format|
-      format.m3u8 { render inline: stream_url(@scene) }
     end
   end
 
@@ -117,22 +99,7 @@ class ScenesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def scene_params
-      params.fetch(:scene).permit(:title, :details, :url, :date, :rating, :studio_id, performer_ids: [], tag_ids: [])
-    end
-
-    def split_commas
-      if params[:scene]
-        params[:scene][:performer_ids] = params[:scene][:performer_ids].split(",") if params[:scene][:performer_ids]
-        params[:scene][:tag_ids] = params[:scene][:tag_ids].split(",") if params[:scene][:tag_ids]
-      end
-    end
-
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ?  params[:direction] : 'asc'
-    end
-
-    def sort_column
-      Scene.column_names.include?(params[:sort]) ? params[:sort] : 'path'
+      params.permit(:title, :details, :url, :date, :rating, :studio_id, performer_ids: [], tag_ids: [])
     end
 
 end

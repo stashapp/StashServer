@@ -13,13 +13,13 @@
 ActiveRecord::Schema.define(version: 20170123195042) do
 
   create_table "galleries", force: :cascade do |t|
-    t.string   "title"
-    t.string   "path"
-    t.string   "checksum"
-    t.string   "ownable_type"
-    t.integer  "ownable_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string "title"
+    t.string "path"
+    t.string "checksum"
+    t.string "ownable_type"
+    t.integer "ownable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["ownable_type", "ownable_id"], name: "index_galleries_on_ownable_type_and_ownable_id"
   end
 
@@ -31,26 +31,26 @@ ActiveRecord::Schema.define(version: 20170123195042) do
   end
 
   create_table "performers", force: :cascade do |t|
-    t.binary   "image",         limit: 2097152
-    t.string   "checksum"
-    t.string   "name"
-    t.string   "url"
-    t.string   "twitter"
-    t.string   "instagram"
-    t.date     "birthdate"
-    t.string   "ethnicity"
-    t.string   "country"
-    t.string   "eye_color"
-    t.string   "height"
-    t.string   "measurements"
-    t.string   "fake_tits"
-    t.string   "career_length"
-    t.string   "tattoos"
-    t.string   "piercings"
-    t.string   "aliases"
-    t.boolean  "favorite",                      default: false, null: false
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.binary "image", limit: 2097152
+    t.string "checksum"
+    t.string "name"
+    t.string "url"
+    t.string "twitter"
+    t.string "instagram"
+    t.date "birthdate"
+    t.string "ethnicity"
+    t.string "country"
+    t.string "eye_color"
+    t.string "height"
+    t.string "measurements"
+    t.string "fake_tits"
+    t.string "career_length"
+    t.string "tattoos"
+    t.string "piercings"
+    t.string "aliases"
+    t.boolean "favorite", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "performers_scenes", id: false, force: :cascade do |t|
@@ -61,45 +61,47 @@ ActiveRecord::Schema.define(version: 20170123195042) do
   end
 
   create_table "scenes", force: :cascade do |t|
-    t.string   "title"
-    t.string   "details"
-    t.string   "url"
-    t.date     "date"
-    t.integer  "rating"
-    t.string   "path"
-    t.string   "checksum"
-    t.string   "size"
-    t.decimal  "duration",    precision: 7, scale: 2
-    t.string   "video_codec"
-    t.string   "audio_codec"
-    t.integer  "width"
-    t.integer  "height"
-    t.integer  "studio_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.string "title"
+    t.string "details"
+    t.string "url"
+    t.date "date"
+    t.integer "rating"
+    t.string "path"
+    t.string "checksum"
+    t.string "size"
+    t.decimal "duration", precision: 7, scale: 2
+    t.string "video_codec"
+    t.string "audio_codec"
+    t.integer "width"
+    t.integer "height"
+    t.integer "studio_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["path"], name: "index_scenes_on_path", unique: true
     t.index ["studio_id"], name: "index_scenes_on_studio_id"
   end
 
   create_table "studios", force: :cascade do |t|
-    t.string   "name"
-    t.string   "url"
+    t.binary "image", limit: 1048576
+    t.string "checksum"
+    t.string "name"
+    t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.string   "taggable_type"
-    t.integer  "taggable_id"
-    t.integer  "tag_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
     t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name"
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tags_on_name"

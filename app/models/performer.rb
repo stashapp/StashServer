@@ -5,6 +5,7 @@ class Performer < ApplicationRecord
   has_and_belongs_to_many :galleries
 
   validate :image_exists
+  validates_uniqueness_of :checksum
 
   scoped_search on: [:name, :checksum, :birthdate]
 

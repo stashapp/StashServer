@@ -32,10 +32,29 @@ module StashMetadata
           performer.favorite = json['favorite']
 
           path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
-          performer.image = File.read(path)
+          if File.exist?(path)
+            performer.image = File.read(path)
+          else
+            performer.image = Base64.decode64(json['image'])
+          end
 
           performer.save
         }
+
+        mappings['studios'].each { |studioJSON|
+          checksum = studioJSON['checksum']
+          name = studioJSON['name']
+          json = StashMetadata::JSON.studio checksum
+          next unless checksum && name && json
+
+          studio = Studio.new
+          studio.checksum = checksum
+          studio.name = name
+          studio.url = json['url']
+          studio.image = Base64.decode64(json['image'])
+
+          studio.save
+        } if mappings['studios']
 
         mappings['galleries'].each { |galleryJSON|
           checksum = galleryJSON['checksum']
@@ -57,7 +76,7 @@ module StashMetadata
                 if performer
                   gallery.performers.push(performer)
                 else
-                  StashMetadata.logger.warning("Performer does not exist! #{performer_name}")
+                  StashMetadata.logger.warn("Performer does not exist! #{performer_name}")
                 end
               }
             end
@@ -70,7 +89,7 @@ module StashMetadata
           checksum = sceneJSON['checksum']
           path = sceneJSON['path']
           unless checksum && path
-            StashMetadata.logger.warning("Scene mapping without checksum and path! #{sceneJSON}")
+            StashMetadata.logger.warn("Scene mapping without checksum and path! #{sceneJSON}")
             next
           end
 
@@ -92,8 +111,15 @@ module StashMetadata
               if studio
                 scene.studio = studio
               else
-                StashMetadata.logger.info("Created new studio #{studio_name}")
-                scene.studio = Studio.create(name: studio_name)
+                StashMetadata.logger.warn("Studio does not exist! #{studio_name}.  Creating...")
+                # If there is no checksum, then it's an older studio.  Add some junk data for the image.
+                # The user can update later.
+                studio = Studio.new
+                studio.name = studio_name
+                studio.image = studio.name
+                studio.checksum = Digest::MD5.hexdigest(studio.name)
+                studio.save!
+                scene.studio = studio
               end
             end
 
@@ -103,7 +129,7 @@ module StashMetadata
               if gallery
                 scene.gallery = gallery
               else
-                StashMetadata.logger.warning("Gallery does not exist! #{gallery_checksum}")
+                StashMetadata.logger.warn("Gallery does not exist! #{gallery_checksum}")
               end
             end
 
@@ -114,13 +140,14 @@ module StashMetadata
                 if performer
                   scene.performers.push(performer)
                 else
-                  StashMetadata.logger.warning("Performer does not exist! #{performer_name}")
+                  StashMetadata.logger.warn("Performer does not exist! #{performer_name}")
                 end
               }
             end
 
             tag_names = json['tags']
             if tag_names
+              scene.save! # Save so that the taggings have an id for the scene relation
               tag_names.each { |tag_name|
                 scene.add_tag(tag_name)
               }
@@ -140,7 +167,7 @@ module StashMetadata
 
           end
 
-          scene.save
+          scene.save!
         }
 
       end

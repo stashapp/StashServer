@@ -22,6 +22,21 @@ module StashMetadata
       end
     end
 
+    def self.thumb zip:, index:
+      cache_key = "#{File.basename(zip)}_#{index}_thumb"
+      cache_path = File.expand_path(ENV['stash_cache'])
+      file_path = File.join(cache_path, cache_key)
+      if File.exists?(file_path)
+        return file_path
+      else
+        data = self.extract(zip: zip, index: index)
+        image = MiniMagick::Image.read(data)
+        image.resize('512x512')
+        image.write(file_path)
+        return file_path
+      end
+    end
+
     def self.files zip:
       ::Zip::File.open(zip) do |zip_file|
         files = sorted_files(zip_file: zip_file)

@@ -1,4 +1,4 @@
-class CreateScenes < ActiveRecord::Migration[5.0]
+class CreateScenes < ActiveRecord::Migration[5.1]
   def change
 
     # ------
@@ -80,6 +80,8 @@ class CreateScenes < ActiveRecord::Migration[5.0]
     # -------
 
     create_table :studios do |t|
+      t.binary :image, limit: 1.megabytes
+      t.string :checksum
       t.string :name
       t.string :url
 

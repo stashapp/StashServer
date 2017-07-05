@@ -3,8 +3,12 @@ module StashMetadata
     module Scan
 
       def self.start
-        glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{mp4,mov,wmv,zip}")
+        @manager = StashMetadata::Manager.instance
+        @manager.current = 1
+
+        glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{m4v,mp4,mov,wmv,zip}")
         scan_paths = Dir[glob_path]
+        @manager.total = scan_paths.count
         StashMetadata.logger.info("Starting scan of #{scan_paths.count} files")
         scan_paths.each do |path|
           if File.extname(path) == '.zip'
@@ -16,6 +20,7 @@ module StashMetadata
           item = klass.find_by(path: path)
           if item
             make_screenshots(path: item.path, checksum: item.checksum) if klass == Scene
+            @manager.current += 1
             next # We already have this item in the database, keep going
           end
 
@@ -28,10 +33,12 @@ module StashMetadata
           item = klass.find_by(checksum: checksum)
           if item
             StashMetadata.logger.info("#{path} already exists.  Updating path...")
+            @manager.log(message: "#{path} already exists.  Updating path...")
             item.path = path
             item.save
           else
             StashMetadata.logger.info("#{path} doesn't exist.  Creating new item...")
+            @manager.log(message: "#{path} doesn't exist.  Creating new item...")
             item = klass.new(path: path, checksum: checksum)
 
             if klass == Scene
@@ -46,6 +53,8 @@ module StashMetadata
 
             item.save
           end
+
+          @manager.current += 1
         end
       end
 

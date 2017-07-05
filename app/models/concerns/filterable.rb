@@ -11,7 +11,7 @@ module Filterable
     # URL params. Make sure you don't pass stuff directly from the web without
     # whitelisting only the params you care about first!
     def filter(params)
-      params.stringify_keys!
+      params = params.stringify_keys
       results = self.where(nil) # create an anonymous scope
       params.each do |key, value|
         if value.present?
