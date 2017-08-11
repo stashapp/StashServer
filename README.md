@@ -21,8 +21,16 @@ That's it, pretty simple.  Right now all metadata must be input manually, but in
 
 1) Download / clone this repository
 2) Install [docker](https://store.docker.com/search?offering=community&type=edition)
-3) Edit `.env` with paths for data, metadata, and cache
+3) Create a file named ".env" with the following contents and edit the paths:
+```
+STASH_DATA=/path/to/media
+STASH_METADATA=/path/to/save/metadata
+STASH_CACHE=/path/for/cache/files
+```
 4) Run the `start_docker.rb` ruby script
+5) Visit *server ip*:8008 in your browser
+
+Right now scanning and importing isn't build into the UI, so you will still need to use the rake tasks described below.  Use this command to log into the docker container `docker exec -it stash /bin/bash` and then you should be able to run the rake tasks.
 
 ## Slack
 
