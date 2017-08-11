@@ -3,6 +3,10 @@ module StashMetadata
     module Scan
 
       def self.start
+        FileUtils.mkdir_p(STASH_SCREENSHOTS_DIRECTORY) unless File.directory?(STASH_SCREENSHOTS_DIRECTORY)
+        tmp_dir = File.join(STASH_SCREENSHOTS_DIRECTORY, 'tmp')
+        FileUtils.mkdir_p(tmp_dir) unless File.directory?(tmp_dir)
+
         @manager = StashMetadata::Manager.instance
         @manager.current = 1
 
