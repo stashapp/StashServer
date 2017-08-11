@@ -48,8 +48,8 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-  if ENV['stash_cache']
-    config.cache_store = :file_store, File.expand_path(ENV['stash_cache'])
+  if ENV['stash_cache_directory']
+    config.cache_store = :file_store, File.expand_path(ENV['stash_cache_directory'])
   else
     config.cache_store = :memory_store
   end

@@ -172,6 +172,8 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
+    tzinfo-data (1.2017.2)
+      tzinfo (>= 1.0.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -202,7 +204,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3
   streamio-ffmpeg (~> 3.0.2)
-  tzinfo-data
+  tzinfo-data (= 1.2017.2)
 
 BUNDLED WITH
    1.15.1

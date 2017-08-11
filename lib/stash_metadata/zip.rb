@@ -24,7 +24,7 @@ module StashMetadata
 
     def self.thumb zip:, index:
       cache_key = "#{File.basename(zip)}_#{index}_thumb"
-      cache_path = File.expand_path(ENV['stash_cache'])
+      cache_path = File.expand_path(ENV['stash_cache_directory'])
       file_path = File.join(cache_path, cache_key)
       if File.exists?(file_path)
         return file_path
