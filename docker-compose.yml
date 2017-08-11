@@ -1,0 +1,15 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+      - "4001:4001"
+      - "8008:8008"
+    env_file:
+      - .env
+    volumes:
+      - ${STASH_DATA}:${STASH_DATA}:ro
+      - ${STASH_METADATA}:${STASH_METADATA}
+      - ${STASH_CACHE}:${STASH_CACHE}

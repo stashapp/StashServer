@@ -1,3 +1,5 @@
+require 'mini_magick'
+
 class GalleriesController < ApplicationController
   before_action :set_gallery, only: [:show, :edit, :update, :file]
   before_action :split_commas, only: [:update]
@@ -5,25 +7,17 @@ class GalleriesController < ApplicationController
   def index
     @galleries = Gallery
                   .search_for(params[:q])
-                  .page(params[:page])
+                  .sortable(params, default: 'path')
+                  .pageable(params)
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @galleries.to_json }
+    if params[:scene_id]
+      scene = Scene.find(params[:scene_id])
+      @galleries = Gallery.unowned.select { |gallery| gallery.path.include?(File.dirname(scene.path)) }
+      @galleries.push(scene.gallery) unless scene.gallery.nil?
     end
   end
 
   def show
-    per_page = 30
-    files = @gallery.files
-    @images = Kaminari.paginate_array(files).page(params[:page]).per(per_page)
-    @count = files.count
-    if params[:page] && params[:page].to_i > 1
-      i = params[:page].to_i - 1
-      @offset = per_page * i
-    else
-      @offset = 0
-    end
   end
 
   def edit
@@ -42,11 +36,15 @@ class GalleriesController < ApplicationController
   def file
     index = params[:index].to_i
     file = @gallery.files[index]
-    data = StashMetadata::Zip.extract(zip: @gallery.path, index: index)
-    if data
-      send_data data, filename: file.name, disposition: 'inline'
+
+    if params[:thumb]
+      file_path = StashMetadata::Zip.thumb(zip: @gallery.path, index: index)
+      raise ActionController::RoutingError.new('Not Found') unless file_path
+      send_file file_path, filename: file.name, disposition: 'inline'
     else
-      raise ActionController::RoutingError.new('Not Found')
+      data = StashMetadata::Zip.extract(zip: @gallery.path, index: index)
+      raise ActionController::RoutingError.new('Not Found') unless data
+      send_data data, filename: file.name, disposition: 'inline'
     end
   end
 
