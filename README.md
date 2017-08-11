@@ -17,9 +17,12 @@ In the future:
 
 That's it, pretty simple.  Right now all metadata must be input manually, but in the future I hope to build a scraper to make input less tedious.
 
-## Notes
+# Docker Install
 
-* This isn't too user friendly for right now... Will improve in the future.
+1) Download / clone this repository
+2) Install [docker](https://store.docker.com/search?offering=community&type=edition)
+3) Edit `.env` with paths for data, metadata, and cache
+4) Run the `start_docker.rb` ruby script
 
 ## Slack
 
@@ -49,7 +52,7 @@ stash_directory: ''
 stash_metadata_directory: ''
 
 # The location to store cache files
-stash_cache: ''
+stash_cache_directory: ''
 ```
 
 ## NGINX

@@ -1,52 +1,31 @@
 class PerformersController < ApplicationController
-  include ServerImages
+  include ImageProcessor
 
-  before_action :set_performer, only: [:show, :edit, :update, :image]
+  before_action :set_performer, only: [:show, :update, :image]
 
   def index
     whitelist = params.slice(:filter_favorites)
     @performers = Performer
                     .search_for(params[:q])
                     .filter(whitelist)
-                    .page(params[:page])
-                    .per(params[:per_page])
+                    .sortable(params, default: 'name')
+                    .pageable(params)
   end
 
   def show
   end
 
-  def new
-    @performer = Performer.new
-  end
-
   def create
     @performer = Performer.new
     @performer.attributes = performer_params
-    update_image
-
-    respond_to do |format|
-      if @performer.save
-        format.html { redirect_to @performer, notice: 'Performer was successfully created.' }
-      else
-        format.html { render :new }
-      end
-    end
-  end
-
-  def edit
+    process_image(params: params, object: @performer)
+    @performer.save!
   end
 
   def update
     @performer.attributes = performer_params
-    update_image
-
-    respond_to do |format|
-      if @performer.save
-        format.html { redirect_to @performer, notice: 'Performer was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
-    end
+    process_image(params: params, object: @performer)
+    @performer.save!
   end
 
   def image
@@ -60,14 +39,6 @@ class PerformersController < ApplicationController
     end
 
     def performer_params
-      params.fetch(:performer).permit(:name, :url, :birthdate, :ethnicity, :country, :eye_color, :height, :measurements, :fake_tits, :career_length, :tattoos, :piercings, :aliases, :twitter, :instagram, :favorite)
-    end
-
-    def update_image
-      if params[:image_path] && params[:image_path].start_with?(StashMetadata::STASH_DIRECTORY)
-        checksum = Digest::MD5.file(params[:image_path]).hexdigest
-        @performer.image = File.read(params[:image_path])
-        @performer.checksum = checksum
-      end
+      params.permit(:name, :url, :birthdate, :ethnicity, :country, :eye_color, :height, :measurements, :fake_tits, :career_length, :tattoos, :piercings, :aliases, :twitter, :instagram, :favorite)
     end
 end

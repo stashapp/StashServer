@@ -47,6 +47,18 @@ module StashMetadata
       write_json path: path, json: json
     end
 
+    def self.studio checksum
+      path = File.join(StashMetadata::STASH_STUDIOS_DIRECTORY, "#{checksum}.json")
+      return nil unless File.exist? path
+      return parse path
+    end
+
+    def self.save_studio checksum:, json:
+      path = File.join(StashMetadata::STASH_STUDIOS_DIRECTORY, "#{checksum}.json")
+      StashMetadata.logger.info "Saving studio to #{checksum}.json..."
+      write_json path: path, json: json
+    end
+
     private
 
     def self.parse json_file

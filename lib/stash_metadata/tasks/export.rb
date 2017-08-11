@@ -6,8 +6,9 @@ module StashMetadata
         FileUtils.mkdir_p(STASH_SCENES_DIRECTORY)     unless File.directory?(STASH_SCENES_DIRECTORY)
         FileUtils.mkdir_p(STASH_GALLERIES_DIRECTORY)  unless File.directory?(STASH_GALLERIES_DIRECTORY)
         FileUtils.mkdir_p(STASH_PERFORMERS_DIRECTORY) unless File.directory?(STASH_PERFORMERS_DIRECTORY)
+        FileUtils.mkdir_p(STASH_STUDIOS_DIRECTORY)    unless File.directory?(STASH_STUDIOS_DIRECTORY)
 
-        mappings = {performers: [], galleries: [], scenes: []}
+        mappings = {performers: [], studios: [], galleries: [], scenes: []}
 
         Scene.all.each do |scene|
           mappings[:scenes].push({path: scene.path, checksum: scene.checksum})
@@ -81,6 +82,7 @@ module StashMetadata
           json[:piercings] = performer.piercings if performer.piercings
           json[:aliases] = performer.aliases if performer.aliases
           json[:favorite] = performer.favorite
+          json[:image] = Base64.encode64(performer.image)
 
           next if json.empty?
 
@@ -91,11 +93,26 @@ module StashMetadata
             StashMetadata.logger.info("WRITE\nJSON: #{json}\nFILE #{performerJSON}\n\n\n--------") # Dry run
           else
             StashMetadata::JSON.save_performer(checksum: performer.checksum, json: json)
+          end
+        end
 
-            image_path = File.join(STASH_PERFORMERS_DIRECTORY, "#{performer.checksum}.jpg")
-            unless File.exist?(image_path)
-              File.write(image_path, performer.image)
-            end
+        Studio.all.each do |studio|
+          mappings[:studios].push({name: studio.name, checksum: studio.checksum})
+
+          json = {}
+          json[:name] = studio.name if studio.name
+          json[:url] = studio.url if studio.url
+          json[:image] = Base64.encode64(studio.image)
+
+          next if json.empty?
+
+          studioJSON = StashMetadata::JSON.studio(studio.checksum)
+          next if studioJSON && studioJSON == json.as_json
+
+          if args[:dry_run]
+            StashMetadata.logger.info("WRITE\nJSON: #{json}\nFILE #{studioJSON}\n\n\n--------") # Dry run
+          else
+            StashMetadata::JSON.save_studio(checksum: studio.checksum, json: json)
           end
         end
 
@@ -120,10 +137,14 @@ module StashMetadata
         glob = File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "*.json")
         Dir[glob].each do |path|
           checksum = File.basename(path, '.json')
+
+          # Delete any old images
+          image_path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
+          File.delete(image_path) if File.exist?(image_path)
+
           next if Performer.find_by(checksum: checksum)
 
           StashMetadata.logger.info("Performer cleanup removing #{checksum}")
-          File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg"))
           File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.json"))
         end
       end

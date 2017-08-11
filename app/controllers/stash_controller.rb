@@ -3,6 +3,16 @@ class StashController < ApplicationController
   def dashboard
   end
 
+  def status
+    @manager = StashMetadata::Manager.instance
+  end
+
+  def scan
+    @manager = StashMetadata::Manager.instance
+    @manager.scan
+    head :no_content
+  end
+
   def search
     @scenes = Scene.search_for(params[:q])
     @performers = Performer.search_for(params[:q])
@@ -66,10 +76,6 @@ class StashController < ApplicationController
         }
       }
     }.to_json
-  end
-
-  def graphql
-    render json: StashSchema.execute(params.fetch('query'), context: {})
   end
 
 end
