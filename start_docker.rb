@@ -10,9 +10,9 @@ cache = ENV['STASH_CACHE']
 -d \
 --name stash \
 --env-file .env \
--v #{data}:#{data} \
--v #{metadata}:#{metadata} \
--v #{cache}:#{cache} \
+-v '#{data}':'#{data}':ro \
+-v '#{metadata}':'#{metadata}' \
+-v '#{cache}':'#{cache}' \
 -p 3000:3000 \
 -p 4000:4000 \
 -p 4001:4001 \
