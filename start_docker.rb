@@ -9,6 +9,7 @@ cache = ENV['STASH_CACHE']
 `docker run \
 -d \
 --name stash \
+--restart unless-stopped \
 --env-file .env \
 -v '#{data}':'#{data}':ro \
 -v '#{metadata}':'#{metadata}' \

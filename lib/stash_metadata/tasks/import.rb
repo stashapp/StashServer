@@ -6,11 +6,13 @@ module StashMetadata
         mappings = StashMetadata::JSON.mappings
         return unless mappings
 
-        mappings['performers'].each { |performerJSON|
+        mappings['performers'].each.with_index(1) { |performerJSON, index|
           checksum = performerJSON['checksum']
           name = performerJSON['name']
           json = StashMetadata::JSON.performer checksum
           next unless checksum && name && json
+
+          StashMetadata.logger.info("Importing performer #{index} of #{mappings['performers'].count}")
 
           performer = Performer.new
           performer.checksum = checksum
@@ -41,11 +43,13 @@ module StashMetadata
           performer.save
         }
 
-        mappings['studios'].each { |studioJSON|
+        mappings['studios'].each.with_index(1) { |studioJSON, index|
           checksum = studioJSON['checksum']
           name = studioJSON['name']
           json = StashMetadata::JSON.studio checksum
           next unless checksum && name && json
+
+          StashMetadata.logger.info("Importing studio #{index} of #{mappings['studios'].count}")
 
           studio = Studio.new
           studio.checksum = checksum
@@ -56,10 +60,12 @@ module StashMetadata
           studio.save
         } if mappings['studios']
 
-        mappings['galleries'].each { |galleryJSON|
+        mappings['galleries'].each.with_index(1) { |galleryJSON, index|
           checksum = galleryJSON['checksum']
           path = galleryJSON['path']
           next unless checksum && path
+
+          StashMetadata.logger.info("Importing gallery #{index} of #{mappings['galleries'].count}")
 
           gallery = Gallery.new
           gallery.checksum = checksum
@@ -85,13 +91,15 @@ module StashMetadata
           gallery.save
         }
 
-        mappings['scenes'].each { |sceneJSON|
+        mappings['scenes'].each.with_index(1) { |sceneJSON, index|
           checksum = sceneJSON['checksum']
           path = sceneJSON['path']
           unless checksum && path
             StashMetadata.logger.warn("Scene mapping without checksum and path! #{sceneJSON}")
             next
           end
+
+          StashMetadata.logger.info("Importing scene #{index} of #{mappings['scenes'].count}")
 
           scene = Scene.new
           scene.checksum = checksum
