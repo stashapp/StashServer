@@ -72,9 +72,7 @@ class ScenesController < ApplicationController
   end
 
   def chapter_vtt
-    respond_to do |format|
-      format.vtt { render inline: @scene.chapter_vtt }
-    end
+    render inline: @scene.chapter_vtt
   end
 
   private

@@ -24,6 +24,15 @@ module StashMetadata
           json[:performers] = get_names(scene.performers) unless get_names(scene.performers).empty?
           json[:tags] = get_names(scene.tags) unless get_names(scene.tags).empty?
 
+          if scene.scene_markers.count > 0
+            json[:markers] = []
+            scene.scene_markers.each { |marker|
+              json[:markers].push({title: marker.title, seconds: marker.seconds})
+            }
+          elsif !json[:markers].nil?
+            json.delete(:markers)
+          end
+
           json[:file] = {}
           json[:file][:size] = scene.size
           json[:file][:duration] = scene.duration

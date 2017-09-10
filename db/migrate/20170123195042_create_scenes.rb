@@ -30,6 +30,14 @@ class CreateScenes < ActiveRecord::Migration[5.1]
     end
     add_index :scenes, :path, unique: true
 
+    create_table :scene_markers do |t|
+      t.string :title
+      t.decimal :seconds
+      t.references :scene, foreign_key: true
+
+      t.timestamps
+    end
+
     # ----------
     # Performers
     # ----------

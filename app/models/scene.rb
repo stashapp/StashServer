@@ -7,6 +7,7 @@ class Scene < ApplicationRecord
 
   has_and_belongs_to_many :performers
   has_one :gallery, as: :ownable
+  has_many :scene_markers, dependent: :destroy
   belongs_to :studio, optional: true
 
   scoped_search on: [:title, :details, :path, :checksum]
@@ -88,17 +89,11 @@ class Scene < ApplicationRecord
   end
 
   def chapter_vtt
-    # TODO Get real chapter markers working here
-    markers = [100, 400, 800]
-    messages = ["First message", "Seconds", "Third message here"]
-
-    i = 0
-    vtt = ["WEBVTT",""]
-    markers.count do |seconds|
-      vtt.push("#{get_vtt_time(seconds)} --> #{get_vtt_time(seconds)}")
-      vtt.push(messages[i])
+    vtt = ["WEBVTT", ""]
+    scene_markers.each do |scene_marker|
+      vtt.push("#{get_vtt_time(scene_marker.seconds)} --> #{get_vtt_time(scene_marker.seconds)}")
+      vtt.push(scene_marker.title)
       vtt.push("")
-      i = i + 1
     end
 
     vtt.join("\n")

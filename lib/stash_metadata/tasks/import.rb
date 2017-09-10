@@ -161,6 +161,14 @@ module StashMetadata
               }
             end
 
+            markers = json['markers']
+            if markers
+              markers.each { |marker|
+                # TODO verify this works
+                scene.scene_markers.create(marker)
+              }
+            end
+
             file_info = json['file']
             if file_info
               scene.size = file_info['size']

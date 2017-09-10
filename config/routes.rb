@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get 'scenes/wall', to: 'scenes#wall', as: :scene_wall
   get 'scenes/:id', to: 'scenes#vtt', id: /.*_thumbs.vtt|.*_sprite.jpg/
-  resources :scenes, except: [:create, :new, :destroy], defaults: { format: 'json' }
+  resources :scenes, except: [:create, :new, :destroy], defaults: { format: 'json' } do
+    resources :scene_markers, only: [:index, :create, :destroy], controller: 'scene_markers', defaults: { format: 'json' }
+  end
   get 'scenes/:id/stream', to: 'scenes#stream', as: :stream
   get 'scenes/:id/screenshot', to: 'scenes#screenshot', as: :screenshot
   get 'scenes/:id/screenshot/:seconds', to: 'scenes#screenshot'

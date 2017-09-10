@@ -7,8 +7,12 @@ json.paths do
   json.preview scene_preview_path(scene.id)
   json.stream stream_path(scene.id)
   json.vtt scene_path(scene.checksum) + "_thumbs.vtt"
+  json.chapters_vtt scene_chapter_vtt_path(scene.id)
 end
 json.is_streamable scene.is_streamable
+json.scene_markers do
+  json.array! scene.scene_markers, partial: 'scene_markers/scene_marker', as: :scene_marker
+end
 json.gallery_id(scene.gallery.id) unless scene.gallery.nil?
 json.studio_id scene.studio_id
 json.tag_ids do

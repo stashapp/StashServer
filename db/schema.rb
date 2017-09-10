@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.index ["scene_id"], name: "index_performers_scenes_on_scene_id"
   end
 
+  create_table "scene_markers", force: :cascade do |t|
+    t.string "title"
+    t.decimal "seconds"
+    t.integer "scene_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["scene_id"], name: "index_scene_markers_on_scene_id"
+  end
+
   create_table "scenes", force: :cascade do |t|
     t.string "title"
     t.string "details"
