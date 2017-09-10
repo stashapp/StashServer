@@ -41,6 +41,14 @@ class Scene < ApplicationRecord
       where('height < 240')
     end
   }
+  scope :has_markers, -> (has_markers) {
+    has_markers = has_markers.first if has_markers.is_a?(Array)
+    if has_markers == 'true'
+      joins(:scene_markers).group('scenes.id').having('count(scene_id) > 0')
+    else
+      left_outer_joins(:scene_markers).where(scene_markers: {id: nil})
+    end
+  }
   scope :studio_id, -> (studio_id) { where studio_id: studio_id }
   scope :tag_id, -> (tag_id) { joins(:tags).where('tags.id == ?', tag_id).distinct }
 
