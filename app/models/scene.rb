@@ -11,6 +11,7 @@ class Scene < ApplicationRecord
   belongs_to :studio, optional: true
 
   scoped_search on: [:title, :details, :path, :checksum]
+  scoped_search relation: :scene_markers, on: :title
 
   default_scope { order(path: :asc) }
   scope :filter_studios, -> (studio_ids) { where studio_id: studio_ids }

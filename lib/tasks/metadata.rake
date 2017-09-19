@@ -30,4 +30,9 @@ namespace :metadata do
     StashMetadata::Tasks::GenerateTranscodes.start
   end
 
+  desc "Generates marker previews"
+  task generate_marker_previews: :environment do
+    StashMetadata::Tasks::GenerateMarkerPreviews.start
+  end
+
 end
