@@ -10,7 +10,7 @@ module StashMetadata
         @manager = StashMetadata::Manager.instance
         @manager.current = 1
 
-        glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{m4v,mp4,mov,wmv,zip}")
+        glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{zip,m4v,mp4,mov,wmv}")
         scan_paths = Dir[glob_path]
         @manager.total = scan_paths.count
         StashMetadata.logger.info("Starting scan of #{scan_paths.count} files")
