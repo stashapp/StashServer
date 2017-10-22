@@ -2,6 +2,13 @@ class SceneMarkersController < ApplicationController
   before_action :set_scene, only: [:index, :create, :update, :destroy]
   before_action :set_scene_marker, only: [:destroy, :stream]
 
+  # GET /markers
+  def markers
+    @scene_markers = SceneMarker.search_for(params[:q])
+                                .sortable(params, default: 'title')
+                                .select(:title).distinct.pluck(:title)
+  end
+
   # GET /markers/wall
   def wall
     @scene_markers = SceneMarker.search_for(params[:q]).limit(20).reorder('RANDOM()')

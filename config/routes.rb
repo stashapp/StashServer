@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'scenes/:id/screenshot/:seconds', to: 'scenes#screenshot'
   get 'scenes/:id/preview', to: 'scenes#preview', as: :scene_preview
   get 'scenes/:id/vtt/chapter', to: 'scenes#chapter_vtt', defaults: { format: :vtt }, as: :scene_chapter_vtt
+  get 'markers', to: 'scene_markers#markers', as: :markers, defaults: { format: 'json' }
   get 'markers/wall', to: 'scene_markers#wall', as: :markers_wall, defaults: { format: 'json' }
 
   resources :galleries, except: [:create, :new, :destroy]
