@@ -163,8 +163,8 @@ module StashMetadata
 
             markers = json['markers']
             if markers
+              scene.save! # Save so that the marker can be created
               markers.each { |marker|
-                # TODO verify this works
                 scene.scene_markers.create(marker)
               }
             end

@@ -2,7 +2,7 @@ class ScenesController < ApplicationController
   before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :preview, :vtt, :chapter_vtt, :playlist]
 
   def index
-    whitelist = params.slice(:rating, :resolution, :has_markers, :studio_id, :tag_id)
+    whitelist = params.slice(:rating, :resolution, :has_markers, :is_missing, :studio_id, :tag_id)
     @scenes = Scene
                 .search_for(params[:q])
                 .filter(whitelist)

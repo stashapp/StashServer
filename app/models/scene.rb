@@ -17,13 +17,6 @@ class Scene < ApplicationRecord
   scope :filter_studios, -> (studio_ids) { where studio_id: studio_ids }
   scope :filter_performers, -> (performer_ids) { joins(:performers).where('performers.id IN (?)', performer_ids).distinct }
   scope :filter_tags, -> (tag_ids) { joins(:tags).where('tags.id IN (?)', tag_ids).distinct }
-  scope :filter_missing, -> (missing) {
-    if missing.first == 'gallery'
-      missing_gallery
-    else
-      where missing.first.to_sym => nil
-    end
-  }
 
   scope :rating, -> (rating) { where('rating == ?', rating) }
   scope :resolution, -> (resolution) {
@@ -48,6 +41,13 @@ class Scene < ApplicationRecord
       joins(:scene_markers).group('scenes.id').having('count(scene_id) > 0')
     else
       left_outer_joins(:scene_markers).where(scene_markers: {id: nil})
+    end
+  }
+  scope :is_missing, -> (missing) {
+    if missing.first == 'gallery'
+      missing_gallery
+    else
+      where missing.first.to_sym => nil
     end
   }
   scope :studio_id, -> (studio_id) { where studio_id: studio_id }
