@@ -5,8 +5,9 @@ class SceneMarkersController < ApplicationController
   # GET /markers
   def markers
     @scene_markers = SceneMarker.search_for(params[:q])
-                                .sortable(params, default: 'title')
-                                .select(:title).distinct.pluck(:title)
+                                .sortable({}, default: 'title')
+                                .group(:title).count.map { |e| {title: e[0], count: e[1]} }
+    @scene_markers.sort_by! { |e| e[:count] }.reverse! if params[:sort] == 'count'
   end
 
   # GET /markers/wall
