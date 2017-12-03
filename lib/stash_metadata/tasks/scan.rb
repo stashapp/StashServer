@@ -32,7 +32,13 @@ module StashMetadata
           checksum = Digest::MD5.file(path).hexdigest
           StashMetadata.logger.debug("Checksum calculated: #{checksum}")
 
-          make_screenshots(path: path, checksum: checksum) if klass == Scene
+          begin
+            make_screenshots(path: path, checksum: checksum) if klass == Scene
+          rescue
+            StashMetadata.logger.error("Error encoutered generating screenshots for #{path}. Skipping.")
+            next
+          end
+
 
           item = klass.find_by(checksum: checksum)
           if item
