@@ -18,6 +18,7 @@ module Taggable
     tag = Tag.where(name: tag_name.strip).first_or_create!
     if !tags.find_by(id: tag.id)
       tags << tag
+      touch
     end
   end
 
@@ -25,11 +26,13 @@ module Taggable
     tag = has_tag(tag_name)
     if tag
       tags.destroy(tag)
+      touch
     end
   end
 
   def remove_all_tags
     tags.destroy_all
+    touch
   end
 
   def all_tags=(names)

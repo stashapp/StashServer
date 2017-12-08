@@ -8,7 +8,7 @@ class Scene < ApplicationRecord
   has_and_belongs_to_many :performers
   has_one :gallery, as: :ownable, dependent: :nullify
   has_many :scene_markers, dependent: :destroy
-  belongs_to :studio, optional: true
+  belongs_to :studio, optional: true, touch: true
 
   scoped_search on: [:title, :details, :path, :checksum]
   scoped_search relation: :scene_markers, on: :title

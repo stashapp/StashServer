@@ -1,3 +1,5 @@
+require 'filemagic'
+
 class PerformersController < ApplicationController
   include ImageProcessor
 
@@ -13,6 +15,8 @@ class PerformersController < ApplicationController
   end
 
   def show
+    fresh_when(@performer)
+    expires_in 10.minute
   end
 
   def create
@@ -29,7 +33,13 @@ class PerformersController < ApplicationController
   end
 
   def image
-    send_data @performer.image, disposition: 'inline'
+    if stale?(@performer)
+      type = FileMagic.new(FileMagic::MAGIC_MIME).buffer(@performer.image)
+
+      expires_in 1.week
+      response.headers['Content-Length'] = @performer.image.size.to_s
+      send_data @performer.image, disposition: 'inline', type: type
+    end
   end
 
   private

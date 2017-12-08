@@ -1,3 +1,5 @@
+require 'filemagic'
+
 class StudiosController < ApplicationController
   include ImageProcessor
 
@@ -22,6 +24,8 @@ class StudiosController < ApplicationController
 
   # GET /studios/:id
   def show
+    fresh_when(@studio)
+    expires_in 10.minute
   end
 
   # PUT/PATCH /studios/:id
@@ -39,7 +43,13 @@ class StudiosController < ApplicationController
   end
 
   def image
-    send_data @studio.image, disposition: 'inline'
+    if stale?(@studio)
+      type = FileMagic.new(FileMagic::MAGIC_MIME).buffer(@studio.image)
+
+      expires_in 1.week
+      response.headers['Content-Length'] = @studio.image.size.to_s
+      send_data @studio.image, disposition: 'inline', type: type
+    end
   end
 
   private
