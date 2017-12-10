@@ -78,4 +78,21 @@ class StashController < ApplicationController
     }.to_json
   end
 
+
+  def stats
+
+    render json: {
+      success: true,
+      results: {
+        totals: {
+          tags: Tag.count,
+          scenes: Scene.count,
+          performers: Performer.count,
+          studios: Studio.count,
+          markers: SceneMarker.count
+        }
+      }
+    }.to_json
+  end
+
 end
