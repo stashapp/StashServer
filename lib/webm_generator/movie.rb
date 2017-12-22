@@ -13,7 +13,7 @@ module WebmGenerator
       @info = FFMPEG::Movie.new(path)
       @path = path
       @output_width = options[:output_width] ||= 640
-      @output_filename = options[:output_filename] ||= "#{File.basename(@path, File.extname(@path))}.webm"
+      @output_filename = options[:output_filename] ||= "#{File.basename(@path, File.extname(@path))}.mp4"
       @output_directory = options[:output_directory] ||= "output/"
       @chunk_count = 12
 
@@ -35,7 +35,7 @@ module WebmGenerator
     end
 
     def generate
-      Dir.glob("#{@output_directory}/tmp/preview*.webm") do |image|
+      Dir.glob("#{@output_directory}/tmp/preview*.mp4") do |image|
         File.delete(image)
       end
 
@@ -49,7 +49,7 @@ module WebmGenerator
       open("#{@output_directory}/tmp/files.txt", 'w') do |f|
         @chunk_count.times do |i|
           num = "%.3d" % i
-          filename = "preview#{num}.webm"
+          filename = "preview#{num}.mp4"
           f.puts("file '#{filename}'")
         end
       end
@@ -62,8 +62,8 @@ module WebmGenerator
       @chunk_count.times do |i|
         time = i * step_size
         num = "%.3d" % i
-        filename = "preview#{num}.webm"
-        cmd = "ffmpeg -v quiet -ss #{time} -t 0.75 -i \"#{@path}\" -codec:v libvpx-vp9 -crf 7 -b:v 700k -threads 4 -vf scale=#{@output_width}:-1 -an '#{File.join(@output_directory, 'tmp', filename)}'"
+        filename = "preview#{num}.mp4"
+        cmd = "ffmpeg -v quiet -ss #{time} -t 0.75 -i \"#{@path}\" -c:v libx264 -profile:v high -level 4.2 -preset veryslow -crf 21 -threads 4 -vf scale=#{@output_width}:-2 -c:a aac -b:a 128k '#{File.join(@output_directory, 'tmp', filename)}'"
         system(cmd)
       end
 

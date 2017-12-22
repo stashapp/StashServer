@@ -4,11 +4,13 @@ Rails.application.routes.draw do
   resources :scenes, except: [:create, :new, :destroy], defaults: { format: 'json' } do
     resources :scene_markers, only: [:index, :create, :destroy], controller: 'scene_markers', defaults: { format: 'json' }
     get 'scene_markers/:id/stream', to: 'scene_markers#stream', as: :markers_stream, defaults: { format: 'mp4' }
+    get 'scene_markers/:id/preview', to: 'scene_markers#preview', as: :markers_preview, defaults: { format: 'webp' }
   end
   get 'scenes/:id/stream', to: 'scenes#stream', as: :stream
   get 'scenes/:id/screenshot', to: 'scenes#screenshot', as: :screenshot
   get 'scenes/:id/screenshot/:seconds', to: 'scenes#screenshot'
   get 'scenes/:id/preview', to: 'scenes#preview', as: :scene_preview
+  get 'scenes/:id/webp', to: 'scenes#webp', as: :scene_webp
   get 'scenes/:id/vtt/chapter', to: 'scenes#chapter_vtt', defaults: { format: :vtt }, as: :scene_chapter_vtt
   get 'markers', to: 'scene_markers#markers', as: :markers, defaults: { format: 'json' }
   get 'markers/wall', to: 'scene_markers#wall', as: :markers_wall, defaults: { format: 'json' }

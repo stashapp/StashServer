@@ -1,5 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :preview, :vtt, :chapter_vtt, :playlist]
+  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :preview, :webp, :vtt, :chapter_vtt, :playlist]
 
   def index
     whitelist = params.slice(:rating, :resolution, :has_markers, :is_missing, :studio_id, :tag_id)
@@ -29,7 +29,7 @@ class ScenesController < ApplicationController
   end
 
   def wall
-    @scenes = Scene.search_for(params[:q]).limit(20).reorder('RANDOM()')
+    @scenes = Scene.search_for(params[:q]).limit(80).reorder('RANDOM()')
   end
 
   def stream
@@ -51,12 +51,23 @@ class ScenesController < ApplicationController
   end
 
   def preview
-    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.webm")
+    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.mp4")
     if File.exist?(path)
       send_file path, disposition: 'inline'
     else
       # TODO: custom exception
       render json: {}, status: :not_found
+    end
+  end
+
+  def webp
+    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.webp")
+    if File.exist?(path)
+      send_file path, disposition: 'inline'
+    else
+      # # TODO: custom exception
+      # render json: {}, status: :not_found
+      screenshot
     end
   end
 

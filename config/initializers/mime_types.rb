@@ -11,3 +11,4 @@ Mime::Type.register "video/x-ms-wmv", :wmv
 Mime::Type.register "video/webm", :webm
 Mime::Type.register "text/vtt", :vtt
 Mime::Type.register "application/x-mpegURL", :m3u8
+Mime::Type.register "image/webp", :webp

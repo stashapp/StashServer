@@ -1,6 +1,6 @@
 class SceneMarkersController < ApplicationController
   before_action :set_scene, only: [:index, :create, :update, :destroy]
-  before_action :set_scene_marker, only: [:destroy, :stream]
+  before_action :set_scene_marker, only: [:destroy, :stream, :preview]
 
   # GET /markers
   def markers
@@ -12,7 +12,7 @@ class SceneMarkersController < ApplicationController
 
   # GET /markers/wall
   def wall
-    @scene_markers = SceneMarker.search_for(params[:q]).limit(20).reorder('RANDOM()')
+    @scene_markers = SceneMarker.search_for(params[:q]).limit(80).reorder('RANDOM()')
   end
 
   # GET /scenes/:scene_id/scene_markers
@@ -34,6 +34,11 @@ class SceneMarkersController < ApplicationController
   # GET /scenes/:scene_id/scene_markers/:id/stream
   def stream
     send_file @scene_marker.stream_file_path, disposition: 'inline'
+  end
+
+  # GET /scenes/:scene_id/scene_markers/:id/preview
+  def preview
+    send_file @scene_marker.stream_preview_path, disposition: 'inline'
   end
 
   private

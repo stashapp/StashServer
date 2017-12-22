@@ -41,7 +41,7 @@ I created a Slack channel to discuss the project.  [Click here to join.](https:/
 * Ruby (Rails)
 * NGINX (For handling video streams)
 * FFMPEG (Compiled with libvpx for mouse over previews)
-  - macOS: `brew install ffmpeg --with-libvpx --with-opus`
+  - macOS: `brew install ffmpeg --with-libvpx --with-opus --with-x265 --with-webp`
 * ImageMagick
 
 # Setup

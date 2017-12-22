@@ -6,6 +6,7 @@ json.paths do
   json.screenshot screenshot_path(scene.id)
   json.preview scene_preview_path(scene.id)
   json.stream stream_path(scene.id)
+  json.webp scene_webp_path(scene.id)
   json.vtt scene_path(scene.checksum) + "_thumbs.vtt"
   json.chapters_vtt scene_chapter_vtt_path(scene.id)
 end
