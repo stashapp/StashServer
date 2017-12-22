@@ -6,7 +6,7 @@ class Scene < ApplicationRecord
   validates_uniqueness_of :checksum, :path
 
   has_and_belongs_to_many :performers
-  has_one :gallery, as: :ownable
+  has_one :gallery, as: :ownable, dependent: :nullify
   has_many :scene_markers, dependent: :destroy
   belongs_to :studio, optional: true
 
