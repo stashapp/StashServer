@@ -118,6 +118,8 @@ The following rake tasks are included.
   * This will generate sprites and VTT files to provide video scrubbing previews.
 * `$ rails metadata:generate_previews`
   * This will generate webm preview files
+* `$ rails metadata:generate_marker_previews`
+  * This will generate webm preview files for scene markers
 
 # Questions
 
