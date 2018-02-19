@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123195042) do
+ActiveRecord::Schema.define(version: 20180208194156) do
 
   create_table "galleries", force: :cascade do |t|
     t.string "title"
@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 20170123195042) do
   end
 
   create_table "scene_markers", force: :cascade do |t|
-    t.string "title"
-    t.decimal "seconds"
-    t.integer "scene_id"
+    t.string "title", null: false
+    t.decimal "seconds", null: false
+    t.integer "scene_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["scene_id"], name: "index_scene_markers_on_scene_id"
