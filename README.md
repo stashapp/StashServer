@@ -43,6 +43,8 @@ I created a Slack channel to discuss the project.  [Click here to join.](https:/
 * FFMPEG (Compiled with libvpx for mouse over previews)
   - macOS: `brew install ffmpeg --with-libvpx --with-opus --with-x265 --with-webp`
 * ImageMagick
+* libmagic
+  - macOS; `brew install libmagic`
 
 # Setup
 
