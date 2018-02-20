@@ -1,5 +1,5 @@
 class SceneMarker < ApplicationRecord
-  belongs_to :scene
+  belongs_to :scene, touch: true
   default_scope { order(seconds: :asc) }
   scoped_search on: [:title, :scene_id]
 

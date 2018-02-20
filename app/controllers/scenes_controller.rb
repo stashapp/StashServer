@@ -11,6 +11,8 @@ class ScenesController < ApplicationController
   end
 
   def show
+    fresh_when(@scene)
+    expires_in 10.minute
   end
 
   # PATCH/PUT /scenes/1
@@ -40,12 +42,16 @@ class ScenesController < ApplicationController
     path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.jpg")
     thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.thumb.jpg")
 
+    expires_in 1.week
+
     if params[:seconds]
       data = @scene.screenshot(seconds: params[:seconds], width: params[:width])
       send_data data, filename: 'screenshot.jpg', disposition: 'inline'
     elsif File.exist?(thumb_path) && params[:width] && params[:width].to_i < 400
+      response.headers['Content-Length'] = File.size(thumb_path).to_s
       send_file thumb_path, disposition: 'inline'
     else
+      response.headers['Content-Length'] = File.size(path).to_s
       send_file path, disposition: 'inline'
     end
   end

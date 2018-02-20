@@ -18,6 +18,8 @@ class GalleriesController < ApplicationController
   end
 
   def show
+    fresh_when(@gallery)
+    expires_in 10.minute
   end
 
   def edit
