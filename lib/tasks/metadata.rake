@@ -35,4 +35,8 @@ namespace :metadata do
     StashMetadata::Tasks::GenerateMarkerPreviews.start
   end
 
+  desc "Cleanup generated files for missing scenes"
+  task cleanup: :environment do
+    StashMetadata::Tasks::Cleanup.start
+  end
 end
