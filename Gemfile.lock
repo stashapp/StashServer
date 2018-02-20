@@ -150,7 +150,7 @@ GEM
     rspec-support (3.7.1)
     ruby-filemagic (0.7.2)
     ruby_dep (1.5.0)
-    rubyzip (1.2.0)
+    rubyzip (1.2.1)
     scoped_search (4.0.0)
       activerecord (>= 4.2.0)
     shoulda-matchers (3.1.2)
@@ -200,7 +200,7 @@ DEPENDENCIES
   rails (~> 5.1.2)
   rspec-rails (~> 3.6)
   ruby-filemagic (~> 0.7)
-  rubyzip (= 1.2.0)
+  rubyzip (= 1.2.1)
   scoped_search (~> 4.0.0)
   shoulda-matchers (~> 3.1)
   spring
