@@ -35,6 +35,14 @@ namespace :metadata do
     StashMetadata::Tasks::GenerateMarkerPreviews.start
   end
 
+  desc "Generates all"
+  task generate_all: :environment do
+    StashMetadata::Tasks::GenerateSprites.start
+    StashMetadata::Tasks::GeneratePreviews.start
+    StashMetadata::Tasks::GenerateMarkerPreviews.start
+    StashMetadata::Tasks::GenerateTranscodes.start
+  end
+
   desc "Cleanup generated files for missing scenes"
   task cleanup: :environment do
     StashMetadata::Tasks::Cleanup.start

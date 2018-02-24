@@ -80,6 +80,12 @@ stash_cache_directory: ''
       location /__send_file_accel {
         internal;
         alias /;
+
+        if ($http_origin) {
+          add_header 'Access-Control-Allow-Origin' "$http_origin";
+          add_header 'Access-Control-Allow-Methods' 'GET';
+          add_header 'Access-Control-Allow-Headers' 'Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+        }
       }
 
       location / {
@@ -119,9 +125,13 @@ The following rake tasks are included.
 * `$ rails metadata:generate_sprites`
   * This will generate sprites and VTT files to provide video scrubbing previews.
 * `$ rails metadata:generate_previews`
-  * This will generate webm preview files
+  * This will generate mp4 preview files
 * `$ rails metadata:generate_marker_previews`
-  * This will generate webm preview files for scene markers
+  * This will generate mp4 preview files for scene markers
+* `$ rails metadata:generate_transcodes`
+  * This will create mp4 transcodes of files not compatible with HTML5 video.  (ex. wmv)
+* `$ rails metadata:generate_all`
+  * This generates all of the above in one command.
 
 # Questions
 
