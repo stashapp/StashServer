@@ -4,7 +4,7 @@ class SceneMarker < ApplicationRecord
   scoped_search on: [:title, :scene_id]
 
   validates :title, presence: true
-  validates :seconds, numericality: { only_integer: true }
+  validates :seconds, numericality: true
 
   def stream_file_path
     return File.join(StashMetadata::STASH_TRANSCODE_DIRECTORY, scene.checksum, "#{seconds.to_i}.mp4")
