@@ -30,10 +30,6 @@ class ScenesController < ApplicationController
     @scene.save!
   end
 
-  def wall
-    @scenes = Scene.search_for(params[:q]).limit(80).reorder('RANDOM()')
-  end
-
   def stream
     send_file @scene.stream_file_path, disposition: 'inline'
   end

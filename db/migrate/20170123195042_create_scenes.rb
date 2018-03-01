@@ -31,9 +31,9 @@ class CreateScenes < ActiveRecord::Migration[5.1]
     add_index :scenes, :path, unique: true
 
     create_table :scene_markers do |t|
-      t.string :title
-      t.decimal :seconds
-      t.references :scene, foreign_key: true
+      t.string :title, null: false
+      t.decimal :seconds, null: false
+      t.references :scene, foreign_key: true, null: false
 
       t.timestamps
     end
