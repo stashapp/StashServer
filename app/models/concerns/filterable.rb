@@ -14,7 +14,7 @@ module Filterable
       params = params.stringify_keys
       results = self.where(nil) # create an anonymous scope
       params.each do |key, value|
-        if value.present?
+        if value.present? || (value.is_a?(TrueClass) || value.is_a?(FalseClass)) # TODO: Added this boolean check, test this...
           value = value.split(',') if value.is_a? String
           results = results.public_send(key, value)
         end

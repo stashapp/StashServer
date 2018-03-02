@@ -2,7 +2,12 @@ module Pageable
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def pageable params
+    def pageable parameters
+      params = parameters
+      if !parameters[:filter].nil?
+        params = parameters[:filter]
+      end
+
       if params[:all]
         params[:page] = 1
         params[:per_page] = self.count

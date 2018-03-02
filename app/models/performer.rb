@@ -11,10 +11,7 @@ class Performer < ApplicationRecord
   scoped_search on: [:name, :checksum, :birthdate]
 
   default_scope { order(name: :asc) }
-  scope :filter_favorites, -> (favorite) {
-    fav = favorite.first == "true"
-    where(favorite: fav)
-  }
+  scope :filter_favorites, -> (favorite) { where(favorite: favorite) }
 
   def age(date: Date.today)
     a = date.year - birthdate.year

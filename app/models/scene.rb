@@ -52,6 +52,7 @@ class Scene < ApplicationRecord
   }
   scope :studio_id, -> (studio_id) { where studio_id: studio_id }
   scope :tag_id, -> (tag_id) { joins(:tags).where('tags.id = ?', tag_id).distinct }
+  scope :performer_id, -> (performer_id) { joins(:performers).where('performers.id = ?', performer_id).distinct }
 
   scope :missing_gallery, -> () { joins('LEFT OUTER JOIN galleries ON galleries.ownable_id = scenes.id').where('galleries.ownable_id IS NULL') }
 
