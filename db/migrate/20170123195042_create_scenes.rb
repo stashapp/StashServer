@@ -1,6 +1,5 @@
 class CreateScenes < ActiveRecord::Migration[5.1]
   def change
-
     # ------
     # Scenes
     # ------
@@ -131,6 +130,5 @@ class CreateScenes < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
-
   end
 end

@@ -12,7 +12,7 @@ module StashMetadata
       def self.clean_directory(dir)
         StashMetadata.logger.info("Cleaning #{dir}")
 
-        Dir.foreach(dir) {|f|
+        Dir.foreach(dir) { |f|
           if /([a-f0-9]{32})/.match(f)
             unless Scene.exists?(checksum: $1)
               StashMetadata.logger.info("Scene for checksum no longer exists: #{$1}")

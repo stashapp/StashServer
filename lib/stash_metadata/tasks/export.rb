@@ -8,10 +8,10 @@ module StashMetadata
         FileUtils.mkdir_p(STASH_PERFORMERS_DIRECTORY) unless File.directory?(STASH_PERFORMERS_DIRECTORY)
         FileUtils.mkdir_p(STASH_STUDIOS_DIRECTORY)    unless File.directory?(STASH_STUDIOS_DIRECTORY)
 
-        mappings = {performers: [], studios: [], galleries: [], scenes: []}
+        mappings = { performers: [], studios: [], galleries: [], scenes: [] }
 
         Scene.all.each do |scene|
-          mappings[:scenes].push({path: scene.path, checksum: scene.checksum})
+          mappings[:scenes].push(path: scene.path, checksum: scene.checksum)
 
           json = {}
           json[:title] = scene.title if scene.title
@@ -27,7 +27,7 @@ module StashMetadata
           if scene.scene_markers.count > 0
             json[:markers] = []
             scene.scene_markers.each { |marker|
-              json[:markers].push({title: marker.title, seconds: marker.seconds})
+              json[:markers].push(title: marker.title, seconds: marker.seconds)
             }
           elsif !json[:markers].nil?
             json.delete(:markers)
@@ -52,7 +52,7 @@ module StashMetadata
         end
 
         Gallery.all.each do |gallery|
-          mappings[:galleries].push({path: gallery.path, checksum: gallery.checksum})
+          mappings[:galleries].push(path: gallery.path, checksum: gallery.checksum)
 
           json = {}
           json[:title] = gallery.title if gallery.title
@@ -72,7 +72,7 @@ module StashMetadata
 
         clean_performers
         Performer.all.each do |performer|
-          mappings[:performers].push({name: performer.name, checksum: performer.checksum})
+          mappings[:performers].push(name: performer.name, checksum: performer.checksum)
 
           json = {}
           json[:name] = performer.name if performer.name
@@ -106,7 +106,7 @@ module StashMetadata
         end
 
         Studio.all.each do |studio|
-          mappings[:studios].push({name: studio.name, checksum: studio.checksum})
+          mappings[:studios].push(name: studio.name, checksum: studio.checksum)
 
           json = {}
           json[:name] = studio.name if studio.name
@@ -130,33 +130,33 @@ module StashMetadata
 
       private
 
-      def self.get_names(objects)
-        return nil unless objects
+        def self.get_names(objects)
+          return nil unless objects
 
-        objects.reduce([]) { |names, object|
-          unless object.name.nil?
-            names << object.name
-          end
+          objects.reduce([]) { |names, object|
+            unless object.name.nil?
+              names << object.name
+            end
 
-          names
-        }
-      end
-
-      def self.clean_performers
-        glob = File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "*.json")
-        Dir[glob].each do |path|
-          checksum = File.basename(path, '.json')
-
-          # Delete any old images
-          image_path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
-          File.delete(image_path) if File.exist?(image_path)
-
-          next if Performer.find_by(checksum: checksum)
-
-          StashMetadata.logger.info("Performer cleanup removing #{checksum}")
-          File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.json"))
+            names
+          }
         end
-      end
+
+        def self.clean_performers
+          glob = File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "*.json")
+          Dir[glob].each do |path|
+            checksum = File.basename(path, '.json')
+
+            # Delete any old images
+            image_path = File.join(STASH_PERFORMERS_DIRECTORY, "#{checksum}.jpg")
+            File.delete(image_path) if File.exist?(image_path)
+
+            next if Performer.find_by(checksum: checksum)
+
+            StashMetadata.logger.info("Performer cleanup removing #{checksum}")
+            File.delete(File.join(StashMetadata::STASH_PERFORMERS_DIRECTORY, "#{checksum}.json"))
+          end
+        end
 
     end
   end

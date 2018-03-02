@@ -40,7 +40,7 @@ class Scene < ApplicationRecord
     if has_markers == 'true'
       joins(:scene_markers).group('scenes.id').having('count(scene_id) > 0')
     else
-      left_outer_joins(:scene_markers).where(scene_markers: {id: nil})
+      left_outer_joins(:scene_markers).where(scene_markers: { id: nil })
     end
   }
   scope :is_missing, -> (missing) {

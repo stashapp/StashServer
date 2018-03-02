@@ -2,7 +2,7 @@ module Pageable
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def pageable parameters
+    def pageable(parameters)
       params = parameters
       if !parameters[:filter].nil?
         params = parameters[:filter]

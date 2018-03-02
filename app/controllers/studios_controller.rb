@@ -16,7 +16,7 @@ class StudiosController < ApplicationController
 
   private
 
-  def set_studio
-    @studio = Studio.find(params[:id])
-  end
+    def set_studio
+      @studio = Studio.find(params[:id])
+    end
 end

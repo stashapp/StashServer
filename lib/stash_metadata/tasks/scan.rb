@@ -70,26 +70,26 @@ module StashMetadata
 
       private
 
-      def self.make_screenshots(path:, checksum:)
-        thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.thumb.jpg")
-        normal_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
+        def self.make_screenshots(path:, checksum:)
+          thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.thumb.jpg")
+          normal_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
 
-        if File.exist?(thumb_path) && File.exist?(normal_path)
-          StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
-          return
+          if File.exist?(thumb_path) && File.exist?(normal_path)
+            StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
+            return
+          end
+
+          movie = StashMetadata::FFMPEG.metadata(path: path)
+          make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
+          make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
         end
 
-        movie = StashMetadata::FFMPEG.metadata(path: path)
-        make_screenshot(movie: movie, path: thumb_path, quality: 5, width: 320)
-        make_screenshot(movie: movie, path: normal_path, quality: 2, width: movie.width)
-      end
-
-      def self.make_screenshot(movie:, path:, quality:, width:)
-        time = movie.duration * 0.2
-        transcoder_options = { input_options: { v: 'quiet', ss: "#{time}" } }
-        options = { screenshot: true, quality: quality, custom: %W(-vf scale='#{width}:-1') }
-        movie.transcode(path, options, transcoder_options)
-      end
+        def self.make_screenshot(movie:, path:, quality:, width:)
+          time = movie.duration * 0.2
+          transcoder_options = { input_options: { v: 'quiet', ss: "#{time}" } }
+          options = { screenshot: true, quality: quality, custom: %W(-vf scale='#{width}:-1') }
+          movie.transcode(path, options, transcoder_options)
+        end
 
     end
   end

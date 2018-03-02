@@ -19,7 +19,7 @@ Types::GalleryType = GraphQL::ObjectType.define do
     description 'The files in the gallery'
     resolve ->(gallery, args, ctx) {
       gallery.files.map.with_index { |file, i|
-        {index: i, name: file.name, path: ctx[:routes].gallery_file_url(gallery, index: i, host: ctx[:base_url])}
+        { index: i, name: file.name, path: ctx[:routes].gallery_file_url(gallery, index: i, host: ctx[:base_url]) }
       }
     }
   end

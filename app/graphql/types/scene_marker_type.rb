@@ -1,5 +1,5 @@
 Types::SceneMarkerType = GraphQL::ObjectType.define do
-  name 'SceneMarkerType' #TODO rename SceneMarker
+  name 'SceneMarkerType' # TODO rename SceneMarker
   description 'A scene marker...'
 
   # Fields - `!` marks a field as "non-null"

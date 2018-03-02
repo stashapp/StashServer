@@ -31,17 +31,17 @@ Layout/ElseAlignment:
 Layout/EmptyLineAfterMagicComment:
   Enabled: true
 
-# In a regular class definition, no empty lines around the body.
-Layout/EmptyLinesAroundClassBody:
-  Enabled: true
+# # In a regular class definition, no empty lines around the body.
+# Layout/EmptyLinesAroundClassBody:
+#   Enabled: true
 
 # In a regular method definition, no empty lines around the body.
 Layout/EmptyLinesAroundMethodBody:
   Enabled: true
 
-# In a regular module definition, no empty lines around the body.
-Layout/EmptyLinesAroundModuleBody:
-  Enabled: true
+# # In a regular module definition, no empty lines around the body.
+# Layout/EmptyLinesAroundModuleBody:
+#   Enabled: true
 
 Layout/FirstParameterIndentation:
   Enabled: true
@@ -91,15 +91,15 @@ Style/DefWithParentheses:
 Style/MethodDefParentheses:
   Enabled: true
 
-Style/FrozenStringLiteralComment:
-  Enabled: false # TODO: Turn this on
-  EnforcedStyle: always
-  Exclude:
-    - 'actionview/test/**/*.builder'
-    - 'actionview/test/**/*.ruby'
-    - 'actionpack/test/**/*.builder'
-    - 'actionpack/test/**/*.ruby'
-    - 'activestorage/db/migrate/**/*.rb'
+# Style/FrozenStringLiteralComment:
+#   Enabled: true
+#   EnforcedStyle: always
+#   Exclude:
+#     - 'actionview/test/**/*.builder'
+#     - 'actionview/test/**/*.ruby'
+#     - 'actionpack/test/**/*.builder'
+#     - 'actionpack/test/**/*.ruby'
+#     - 'activestorage/db/migrate/**/*.rb'
 
 # Use `foo {}` not `foo{}`.
 Layout/SpaceBeforeBlockBraces:
@@ -116,10 +116,10 @@ Layout/SpaceInsideHashLiteralBraces:
 Layout/SpaceInsideParens:
   Enabled: true
 
-# Check quotes usage according to lint rule below.
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
+# # Check quotes usage according to lint rule below.
+# Style/StringLiterals:
+#   Enabled: true
+#   EnforcedStyle: double_quotes
 
 # Detect hard tabs, no hard tabs.
 Layout/Tab:
@@ -148,9 +148,9 @@ Lint/EndAlignment:
 Lint/RequireParentheses:
   Enabled: true
 
-Style/RedundantReturn:
-  Enabled: true
-  AllowMultipleReturnValues: true
+# Style/RedundantReturn:
+#   Enabled: true
+#   AllowMultipleReturnValues: true
 
 Style/Semicolon:
   Enabled: true

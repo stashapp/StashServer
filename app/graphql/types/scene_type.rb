@@ -28,7 +28,7 @@ Types::SceneType = GraphQL::ObjectType.define do
     end
 
     field :stream, types.String do
-      resolve ->(scene, args, ctx) { ctx[:routes].stream_url(scene.id, host: ctx[:base_url]) + '.mp4' } #TODO extension
+      resolve ->(scene, args, ctx) { ctx[:routes].stream_url(scene.id, host: ctx[:base_url]) + '.mp4' } # TODO extension
     end
 
     field :webp, types.String do

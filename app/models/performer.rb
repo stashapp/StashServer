@@ -20,8 +20,8 @@ class Performer < ApplicationRecord
 
   private
 
-  def image_exists
-    errors.add(:image, "is empty") unless image
-  end
+    def image_exists
+      errors.add(:image, "is empty") unless image
+    end
 
 end

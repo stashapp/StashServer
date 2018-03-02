@@ -15,8 +15,8 @@ Resolvers::MarkerStrings = GraphQL::Field.define do
 
   resolve -> (obj, args, ctx) {
     markers = SceneMarker.search_for(args[:q])
-                         .sortable({}, default: 'title')
-                         .group(:title).count.map { |e| {id: e[0], title: e[0], count: e[1]} }
+                         .sortable({}, { default: 'title' })
+                         .group(:title).count.map { |e| { id: e[0], title: e[0], count: e[1] } }
     markers.sort_by! { |e| e[:count] }.reverse! if args[:sort] == 'count'
     return markers
   }

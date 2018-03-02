@@ -1,7 +1,7 @@
 module StashMetadata
   module Zip
 
-    def self.extract zip:, index:, output: nil
+    def self.extract(zip:, index:, output: nil)
       cache_key = "#{File.basename(zip)}_#{index}"
       unless Rails.cache.read(cache_key).nil? || output
         return Rails.cache.read(cache_key)
@@ -22,7 +22,7 @@ module StashMetadata
       end
     end
 
-    def self.thumb zip:, index:
+    def self.thumb(zip:, index:)
       cache_key = "#{File.basename(zip)}_#{index}_thumb"
       cache_path = File.expand_path(ENV['stash_cache_directory'])
       file_path = File.join(cache_path, cache_key)
@@ -37,7 +37,7 @@ module StashMetadata
       end
     end
 
-    def self.files zip:
+    def self.files(zip:)
       ::Zip::File.open(zip) do |zip_file|
         files = sorted_files(zip_file: zip_file)
         return files
@@ -46,11 +46,11 @@ module StashMetadata
 
     private
 
-    def self.sorted_files zip_file:
-      files = zip_file.glob('**.jpg', File::FNM_CASEFOLD) + zip_file.glob('**.png', File::FNM_CASEFOLD) + zip_file.glob('**.gif', File::FNM_CASEFOLD)
-      files = files.delete_if { |file| file.name.include? "__MACOSX"}
-      return Naturally.sort_by(files, :name)
-    end
+      def self.sorted_files(zip_file:)
+        files = zip_file.glob('**.jpg', File::FNM_CASEFOLD) + zip_file.glob('**.png', File::FNM_CASEFOLD) + zip_file.glob('**.gif', File::FNM_CASEFOLD)
+        files = files.delete_if { |file| file.name.include? "__MACOSX" }
+        return Naturally.sort_by(files, :name)
+      end
 
   end
 end

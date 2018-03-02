@@ -31,17 +31,17 @@ module StashMetadata
       (@current / @total.to_f) * 100
     end
 
-    def log message:
+    def log(message:)
       @logs.unshift(message)
     end
 
     private
 
-    def idle
-      @status = :idle
-      @message = "Waiting..."
-      @current = 0
-      @total = 0
-    end
+      def idle
+        @status = :idle
+        @message = "Waiting..."
+        @current = 0
+        @total = 0
+      end
   end
 end

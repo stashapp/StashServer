@@ -2,7 +2,7 @@ module Sortable
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def sortable parameters, default:
+    def sortable(parameters, default:)
       params = parameters.symbolize_keys
       params[:sort] = default if params[:sort].nil?
       sort_direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'

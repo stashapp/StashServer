@@ -185,7 +185,6 @@ module StashMetadata
 
           scene.save!
         }
-
       end
 
     end

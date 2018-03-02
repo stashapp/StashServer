@@ -14,15 +14,15 @@ class SceneMarkersController < ApplicationController
 
   private
 
-  def scene_marker_params
-    params.permit(:title, :seconds)
-  end
+    def scene_marker_params
+      params.permit(:title, :seconds)
+    end
 
-  def set_scene
-    @scene = Scene.find(params[:scene_id])
-  end
+    def set_scene
+      @scene = Scene.find(params[:scene_id])
+    end
 
-  def set_scene_marker
-    @scene_marker = SceneMarker.find(params[:id])
-  end
+    def set_scene_marker
+      @scene_marker = SceneMarker.find(params[:id])
+    end
 end
