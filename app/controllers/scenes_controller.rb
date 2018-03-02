@@ -1,34 +1,5 @@
 class ScenesController < ApplicationController
-  before_action :set_scene, only: [:show, :edit, :update, :stream, :screenshot, :preview, :webp, :vtt, :chapter_vtt, :playlist]
-
-  def index
-    whitelist = params.slice(:rating, :resolution, :has_markers, :is_missing, :studio_id, :tag_id)
-    @scenes = Scene
-                .search_for(params[:q])
-                .filter(whitelist)
-                .sortable(params, default: 'path')
-                .pageable(params)
-  end
-
-  def show
-    fresh_when(@scene)
-    expires_in 10.minute
-  end
-
-  # PATCH/PUT /scenes/1
-  def update
-    @scene.attributes = scene_params
-
-    if params[:gallery_id]
-      if params[:gallery_id] != 0
-        @scene.gallery = Gallery.find(params[:gallery_id])
-      else
-        @scene.gallery = nil
-      end
-    end
-
-    @scene.save!
-  end
+  before_action :set_scene, only: [:stream, :screenshot, :preview, :webp, :vtt, :chapter_vtt, :playlist]
 
   def stream
     send_file @scene.stream_file_path, disposition: 'inline'
@@ -106,11 +77,6 @@ class ScenesController < ApplicationController
       else
         @scene = Scene.find(params[:id])
       end
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def scene_params
-      params.permit(:title, :details, :url, :date, :rating, :studio_id, performer_ids: [], tag_ids: [])
     end
 
 end

@@ -22,7 +22,5 @@ Rails.application.routes.draw do
   get 'status', to: 'stash#status', defaults: { format: :json }, as: :status
   get 'scan', to: 'stash#scan', defaults: { format: :json }, as: :scan
 
-  get 'search', to: 'stash#search', defaults: { format: :json }, as: :search
-
   root to: 'graphql#execute'
 end
