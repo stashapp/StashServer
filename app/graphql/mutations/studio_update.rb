@@ -1,3 +1,5 @@
+include ImageProcessor
+
 Mutations::StudioUpdate = GraphQL::Relay::Mutation.define do
   name 'StudioUpdate'
 
@@ -13,7 +15,7 @@ Mutations::StudioUpdate = GraphQL::Relay::Mutation.define do
     studio.name = input[:name]
     studio.url  = input[:url]
 
-    ImageProcessor::process_image(params: input, object: studio)
+    process_image(params: input, object: studio)
 
     studio.save!
 

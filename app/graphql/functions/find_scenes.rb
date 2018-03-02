@@ -23,7 +23,7 @@ class Functions::FindScenes < Functions::FindRecords
 
     argument :rating,       types.Int,      'Filter by rating'
     argument :resolution,   ResolutionEnum, 'Filter by resolution'
-    argument :has_markers,  types.Boolean,  'Filter to only include scenes which have markers'
+    argument :has_markers,  types.String,   'Filter to only include scenes which have markers. `true` or `false`'
     argument :is_missing,   types.String,   'Filter to only include scenes missing this property'
     argument :studio_id,    types.ID,       'Filter to only include scenes with this studio'
     argument :tag_id,       types.ID,       'Filter to only include scenes with this tag'

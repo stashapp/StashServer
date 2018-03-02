@@ -1,3 +1,5 @@
+include ImageProcessor
+
 Mutations::PerformerCreate = GraphQL::Relay::Mutation.define do
 
   name 'PerformerCreate'
@@ -41,7 +43,7 @@ Mutations::PerformerCreate = GraphQL::Relay::Mutation.define do
     performer.instagram     = input[:measurements]
     performer.favorite      = input[:favorite]
 
-    ImageProcessor::process_image(params: input, object: performer)
+    process_image(params: input, object: performer)
 
     performer.save!
 
