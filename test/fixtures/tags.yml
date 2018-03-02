@@ -1,0 +1,4 @@
+<% 10.times do |i| %>
+tag_<%= i %>:
+  name: <%= "Tag #{i}" %>
+<% end %>

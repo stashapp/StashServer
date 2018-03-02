@@ -1,4 +1,5 @@
 include ImageProcessor
+include InputHelper
 
 Mutations::StudioUpdate = GraphQL::Relay::Mutation.define do
   name 'StudioUpdate'
@@ -11,9 +12,8 @@ Mutations::StudioUpdate = GraphQL::Relay::Mutation.define do
   return_field :studio, Types::StudioType
 
   resolve ->(obj, input, ctx) {
-    studio      = Studio.find(input[:id])
-    studio.name = input[:name]
-    studio.url  = input[:url]
+    studio = Studio.find(input[:id])
+    studio.attributes = validate_input(input: input, type: Studio)
 
     process_image(params: input, object: studio)
 

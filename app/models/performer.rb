@@ -1,7 +1,6 @@
 class Performer < ApplicationRecord
   include Filterable
 
-  after_save :touch
   has_and_belongs_to_many :scenes
   has_and_belongs_to_many :galleries
 

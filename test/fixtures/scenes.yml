@@ -1,0 +1,18 @@
+scene:
+  checksum: '9e107d9d372bb6826bd81d3542a419d6'
+  title: 'Scene Title'
+  details: 'Details'
+  url: 'http://google.com'
+  date: '2000-12-31'
+  rating: 5
+  path: '/sample/path.mp4'
+  
+  # file:
+  #   size: '100'
+  #   duration: 20
+
+  # scne_markers:
+  # gallery:
+  # studio:
+  # tags: [tag_1, tag_2]
+  # performers:

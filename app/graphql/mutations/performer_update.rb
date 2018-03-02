@@ -1,4 +1,5 @@
 include ImageProcessor
+include InputHelper
 
 Mutations::PerformerUpdate = GraphQL::Relay::Mutation.define do
 
@@ -26,23 +27,8 @@ Mutations::PerformerUpdate = GraphQL::Relay::Mutation.define do
   return_field :performer, Types::PerformerType
 
   resolve ->(obj, input, ctx) {
-    performer               = Performer.find(input[:id])
-    performer.name          = input[:name]
-    performer.url           = input[:url]
-    performer.birthdate     = input[:birthdate]
-    performer.ethnicity     = input[:ethnicity]
-    performer.country       = input[:country]
-    performer.eye_color     = input[:eye_color]
-    performer.height        = input[:height]
-    performer.measurements  = input[:measurements]
-    performer.fake_tits     = input[:fake_tits]
-    performer.career_length = input[:career_length]
-    performer.tattoos       = input[:tattoos]
-    performer.piercings     = input[:piercings]
-    performer.aliases       = input[:aliases]
-    performer.twitter       = input[:twitter]
-    performer.instagram     = input[:measurements]
-    performer.favorite      = input[:favorite]
+    performer = Performer.find(input[:id])
+    performer.attributes = validate_input(input: input, type: Performer)
 
     process_image(params: input, object: performer)
 
