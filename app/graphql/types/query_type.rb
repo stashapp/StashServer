@@ -21,6 +21,7 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :markerStrings, field: Resolvers::MarkerStrings
   field :validGalleriesForScene, field: Resolvers::ValidGalleriesForScene
+  field :stats, field: Resolvers::Stats
 
   field :allPerformers, !types[Types::PerformerType] do
     resolve -> (obj, args, ctx) { Performer.all }
