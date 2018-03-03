@@ -56,7 +56,7 @@ class ScenesController < ApplicationController
   end
 
   def chapter_vtt
-    render inline: @scene.chapter_vtt
+    send_data @scene.chapter_vtt, disposition: 'inline'
   end
 
   private
