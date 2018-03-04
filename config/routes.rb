@@ -20,8 +20,5 @@ Rails.application.routes.draw do
 
   get 'studios/:id/image', to: 'studios#image', as: :studio_image
 
-  get 'status', to: 'stash#status', defaults: { format: :json }, as: :status
-  get 'scan', to: 'stash#scan', defaults: { format: :json }, as: :scan
-
   root to: 'graphql#execute'
 end

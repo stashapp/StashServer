@@ -53,7 +53,7 @@ module StashMetadata
       end
 
       def trigger
-        StashApiSchema.subscriptions.trigger('metadataUpdate', {}, {job_id: @job_id, message: @message, progress: progress, logs: @logs}.to_json)
+        StashApiSchema.subscriptions.trigger('metadataUpdate', {}, { job_id: @job_id, message: @message, progress: progress, logs: @logs }.to_json)
       end
   end
 end
