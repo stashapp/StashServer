@@ -41,17 +41,17 @@ module StashMetadata
 
     def info(message)
       StashMetadata.logger.info(message)
-      add_log(message)
+      add_log({type: :info, message: message})
     end
 
     def debug(message)
       StashMetadata.logger.debug(message)
-      add_log(message)
+      add_log({type: :debug, message: message})
     end
 
     def error(message)
       StashMetadata.logger.error(message)
-      add_log(message)
+      add_log({type: :error, message: message})
     end
 
     private
