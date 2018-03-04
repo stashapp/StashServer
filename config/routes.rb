@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   post '/graphql', to: 'graphql#execute'
+  mount ActionCable.server => '/subscriptions'
 
   get 'scenes/:id', to: 'scenes#vtt', id: /.*_thumbs.vtt|.*_sprite.jpg/
   resources :scenes, except: [:create, :new, :destroy], defaults: { format: 'json' } do

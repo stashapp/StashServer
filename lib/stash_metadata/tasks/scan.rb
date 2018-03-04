@@ -8,13 +8,14 @@ module StashMetadata
         FileUtils.mkdir_p(tmp_dir) unless File.directory?(tmp_dir)
 
         @manager = StashMetadata::Manager.instance
-        @manager.current = 1
+        @manager.current = 0
 
         glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{zip,m4v,mp4,mov,wmv}")
         scan_paths = Dir[glob_path]
         @manager.total = scan_paths.count
         StashMetadata.logger.info("Starting scan of #{scan_paths.count} files")
         scan_paths.each do |path|
+          @manager.log(message: "Path #{path}")
           if File.extname(path) == '.zip'
             klass = Gallery
           else
@@ -39,15 +40,12 @@ module StashMetadata
             next
           end
 
-
           item = klass.find_by(checksum: checksum)
           if item
-            StashMetadata.logger.info("#{path} already exists.  Updating path...")
             @manager.log(message: "#{path} already exists.  Updating path...")
             item.path = path
             item.save
           else
-            StashMetadata.logger.info("#{path} doesn't exist.  Creating new item...")
             @manager.log(message: "#{path} doesn't exist.  Creating new item...")
             item = klass.new(path: path, checksum: checksum)
 

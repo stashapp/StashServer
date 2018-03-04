@@ -23,6 +23,10 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :validGalleriesForScene, field: Resolvers::ValidGalleriesForScene
   field :stats, field: Resolvers::Stats
 
+  field :metadataScan, !types.String, 'Start a scan.  Returns the job ID' do
+    resolve -> (obj, args, ctx) { ScanJob.new.enqueue.job_id }
+  end
+
   field :allPerformers, !types[Types::PerformerType] do
     resolve -> (obj, args, ctx) { Performer.all }
   end

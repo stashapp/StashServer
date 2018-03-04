@@ -1,9 +1,9 @@
 StashApiSchema = GraphQL::Schema.define do
+  use GraphQL::Subscriptions::ActionCableSubscriptions
+
   mutation(Types::MutationType)
   query(Types::QueryType)
-
-  # TODO I'd like to remove this...
-  # resolve_type -> (obj, ctx) { (obj.class.name + 'Type').constantize }
+  subscription(Types::SubscriptionType)
 end
 
 # # https://github.com/rmosolgo/graphql-ruby/blob/master/guides/queries/error_handling.md
