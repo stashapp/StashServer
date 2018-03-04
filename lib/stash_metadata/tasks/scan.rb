@@ -13,9 +13,8 @@ module StashMetadata
         glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{zip,m4v,mp4,mov,wmv}")
         scan_paths = Dir[glob_path]
         @manager.total = scan_paths.count
-        StashMetadata.logger.info("Starting scan of #{scan_paths.count} files")
+        @manager.info("Starting scan of #{scan_paths.count} files")
         scan_paths.each do |path|
-          @manager.log(message: "Path #{path}")
           if File.extname(path) == '.zip'
             klass = Gallery
           else
@@ -29,24 +28,24 @@ module StashMetadata
             next # We already have this item in the database, keep going
           end
 
-          StashMetadata.logger.info("#{path} not found.  Calculating checksum...")
+          @manager.info("#{path} not found.  Calculating checksum...")
           checksum = Digest::MD5.file(path).hexdigest
-          StashMetadata.logger.debug("Checksum calculated: #{checksum}")
+          @manager.debug("Checksum calculated: #{checksum}")
 
           begin
             make_screenshots(path: path, checksum: checksum) if klass == Scene
           rescue
-            StashMetadata.logger.error("Error encoutered generating screenshots for #{path}. Skipping.")
+            @manager.error("Error encoutered generating screenshots for #{path}. Skipping.")
             next
           end
 
           item = klass.find_by(checksum: checksum)
           if item
-            @manager.log(message: "#{path} already exists.  Updating path...")
+            @manager.info(message: "#{path} already exists.  Updating path...")
             item.path = path
             item.save
           else
-            @manager.log(message: "#{path} doesn't exist.  Creating new item...")
+            @manager.info(message: "#{path} doesn't exist.  Creating new item...")
             item = klass.new(path: path, checksum: checksum)
 
             if klass == Scene
@@ -73,7 +72,7 @@ module StashMetadata
           normal_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
 
           if File.exist?(thumb_path) && File.exist?(normal_path)
-            StashMetadata.logger.debug("Screenshots already exist for #{path}.  Skipping...")
+            @manager.debug("Screenshots already exist for #{path}.  Skipping...")
             return
           end
 

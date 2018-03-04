@@ -37,10 +37,21 @@ module StashMetadata
       (@current / @total.to_f) * 100
     end
 
-    def log(message:)
+    # Logging
+
+    def info(message)
       StashMetadata.logger.info(message)
-      @logs.unshift(message)
-      trigger
+      add_log(message)
+    end
+
+    def debug(message)
+      StashMetadata.logger.debug(message)
+      add_log(message)
+    end
+
+    def error(message)
+      StashMetadata.logger.error(message)
+      add_log(message)
     end
 
     private
@@ -50,6 +61,12 @@ module StashMetadata
         @message = "Waiting..."
         @current = 0
         @total = 0
+        trigger
+      end
+
+      def add_log(message)
+        @logs.unshift(message)
+        trigger
       end
 
       def trigger

@@ -1,7 +1,8 @@
 class ScanJob < ApplicationJob
   queue_as :default
 
-  def before_enqueue
+  before_enqueue do |job|
+    @manager = StashMetadata::Manager.instance
     raise('Operation already in progress') unless @manager.status == :idle
   end
 
