@@ -8,6 +8,6 @@ class Gallery < ApplicationRecord
   scope :unowned_in_path, -> (path) { unowned.where('path like ?', "%#{path}%") }
 
   def files
-    StashMetadata::Zip.files(zip: self.path)
+    Stash::ZipUtility.get_files(self.path)
   end
 end

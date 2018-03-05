@@ -7,7 +7,7 @@ class ScanJob < ApplicationJob
   end
 
   def perform(*args)
-    @manager = StashMetadata::Manager.instance
-    @manager.scan(job_id: provider_job_id)
+    @manager = Stash::Manager.instance
+    @manager.scan(job_id: provider_job_id, rake: false)
   end
 end

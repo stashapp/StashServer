@@ -12,39 +12,60 @@ namespace :metadata do
 
   desc "Scan the stash directory for new files"
   task scan: :environment do
-    StashMetadata::Tasks::Scan.start
+    Stash::Manager.instance.scan(job_id: 'rake')
   end
 
   desc "Generates sprites and a VTT file for scrubbing video"
   task generate_sprites: :environment do
-    StashMetadata::Tasks::GenerateSprites.start
+    Stash::Manager.instance.generate(
+      job_id: 'rake',
+      sprites: true,
+      previews: false,
+      markers: false,
+      transcodes: false
+    )
   end
 
   desc "Generates webm files for mouseover previews"
   task generate_previews: :environment do
-    StashMetadata::Tasks::GeneratePreviews.start
+    Stash::Manager.instance.generate(
+      job_id: 'rake',
+      sprites: false,
+      previews: true,
+      markers: false,
+      transcodes: false
+    )
   end
 
   desc "Generates transcodes for videos that dont support HTML5 video"
   task generate_transcodes: :environment do
-    StashMetadata::Tasks::GenerateTranscodes.start
+    Stash::Manager.instance.generate(
+      job_id: 'rake',
+      sprites: false,
+      previews: false,
+      markers: false,
+      transcodes: true
+    )
   end
 
   desc "Generates marker previews"
   task generate_marker_previews: :environment do
-    StashMetadata::Tasks::GenerateMarkerPreviews.start
+    Stash::Manager.instance.generate(
+      job_id: 'rake',
+      sprites: false,
+      previews: false,
+      markers: true,
+      transcodes: false
+    )
   end
 
   desc "Generates all"
   task generate_all: :environment do
-    StashMetadata::Tasks::GenerateSprites.start
-    StashMetadata::Tasks::GeneratePreviews.start
-    StashMetadata::Tasks::GenerateMarkerPreviews.start
-    StashMetadata::Tasks::GenerateTranscodes.start
+    Stash::Manager.instance.generate(job_id: 'rake')
   end
 
   desc "Cleanup generated files for missing scenes"
   task cleanup: :environment do
-    StashMetadata::Tasks::Cleanup.start
+    Stash::Manager.instance.clean(job_id: 'rake')
   end
 end

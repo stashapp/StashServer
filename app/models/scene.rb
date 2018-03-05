@@ -92,7 +92,7 @@ class Scene < ApplicationRecord
     unless Rails.cache.read(cache_key).nil?
       return Rails.cache.read(cache_key)
     else
-      data = StashMetadata::FFMPEG.screenshot(path: path, seconds: seconds, width: width)
+      data = Stash::Movie.screenshot(path: path, seconds: seconds, width: width)
       Rails.cache.write(cache_key, data)
       return data
     end

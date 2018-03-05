@@ -8,13 +8,13 @@ class GalleriesController < ApplicationController
     file = @gallery.files[index]
 
     if params[:thumb]
-      file_path = StashMetadata::Zip.thumb(zip: @gallery.path, index: index)
+      file_path = Stash::ZipUtility.get_thumbnail(gallery: @gallery, index: index)
       raise ActionController::RoutingError.new('Not Found') unless file_path
       send_file file_path, filename: file.name, disposition: 'inline'
     else
-      data = StashMetadata::Zip.extract(zip: @gallery.path, index: index)
-      raise ActionController::RoutingError.new('Not Found') unless data
-      send_data data, filename: file.name, disposition: 'inline'
+      file_path = Stash::ZipUtility.get_image(gallery: @gallery, index: index)
+      raise ActionController::RoutingError.new('Not Found') unless file_path
+      send_file file_path, filename: file.name, disposition: 'inline'
     end
   end
 
