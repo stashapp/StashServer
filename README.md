@@ -30,7 +30,7 @@ STASH_CACHE=/path/for/cache/files
 4) Run the `start_docker.rb` ruby script
 5) Visit *server ip*:8008 in your browser
 
-Right now scanning and importing isn't build into the UI, so you will still need to use the rake tasks described below.  Use this command to log into the docker container `docker exec -it stash /bin/bash` and then you should be able to run the rake tasks.
+To run the rake tasks use this command to log into the docker container `docker exec -it stash /bin/bash` and then you should be able to run the tasks you want.
 
 ## Slack
 
@@ -119,7 +119,7 @@ The following rake tasks are included.
 * `$ rails metadata:import`
   * This will drop the database and import from the metadata folder
 * `$ rails metadata:export`
-  * This will export to the metadata folder.  There is a dry run option: `noglob rails metadata:export[true]`
+  * This will export to the metadata folder.
 * `$ rails metadata:scan`
   * This will scan the stash for new content, generate checksums, add to database, and generate thumbnails.  This can take a while...
 * `$ rails metadata:generate_sprites`
@@ -149,7 +149,3 @@ In the metadata directory after an export you'll see various files and folders..
   * This is used to map scene MD5 hashes to file paths (so you don't have to recalculate the hash on import), performer hashes to a name (so we can keep hashes out of the file content), and gallery hashes for file paths.
 
 I should note that the hash for performers is the MD5 hash of whatever image you used for the performer.
-
-### What's with performer images?
-
-I haven't gotten around to allow remote upload.  Instead stash will look for JPG's in the root or one level deep inside of your stash directory and present those for use.  Just put any images you want to expose to the add / edit screen in a folder called performers or whatever other name you like.

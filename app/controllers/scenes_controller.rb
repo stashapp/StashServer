@@ -6,8 +6,8 @@ class ScenesController < ApplicationController
   end
 
   def screenshot
-    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.jpg")
-    thumb_path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.thumb.jpg")
+    path = File.join(Stash::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.jpg")
+    thumb_path = File.join(Stash::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.thumb.jpg")
 
     expires_in 1.week
 
@@ -24,7 +24,7 @@ class ScenesController < ApplicationController
   end
 
   def preview
-    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.mp4")
+    path = File.join(Stash::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.mp4")
     if File.exist?(path)
       send_file path, disposition: 'inline'
     else
@@ -34,7 +34,7 @@ class ScenesController < ApplicationController
   end
 
   def webp
-    path = File.join(StashMetadata::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.webp")
+    path = File.join(Stash::STASH_SCREENSHOTS_DIRECTORY, "#{@scene.checksum}.webp")
     if File.exist?(path)
       send_file path, disposition: 'inline'
     else
@@ -47,9 +47,9 @@ class ScenesController < ApplicationController
   def vtt
     path = ''
     if params[:format] == :jpg
-      path = File.join(StashMetadata::STASH_VTT_DIRECTORY, "#{@scene.checksum}_sprite.jpg")
+      path = File.join(Stash::STASH_VTT_DIRECTORY, "#{@scene.checksum}_sprite.jpg")
     else
-      path = File.join(StashMetadata::STASH_VTT_DIRECTORY, "#{@scene.checksum}_thumbs.vtt")
+      path = File.join(Stash::STASH_VTT_DIRECTORY, "#{@scene.checksum}_thumbs.vtt")
     end
 
     send_file path, disposition: 'inline'

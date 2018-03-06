@@ -2,12 +2,12 @@ namespace :metadata do
 
   desc "Import JSON metadata"
   task import: ['db:drop', 'db:create', 'db:migrate'] do
-    StashMetadata::Tasks::Import.start
+    Stash::Manager.instance.import(job_id: 'rake')
   end
 
-  desc "Export JSON metadata.  Use 'rails metadata:export[true]' for a dry run."
-  task :export, [:dry_run] => :environment do |t, args|
-    StashMetadata::Tasks::Export.start args
+  desc "Export JSON metadata."
+  task export: :environment do
+    Stash::Manager.instance.export(job_id: 'rake')
   end
 
   desc "Scan the stash directory for new files"

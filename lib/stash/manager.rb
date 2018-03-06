@@ -1,4 +1,6 @@
 require 'singleton'
+require 'rake'
+Rails.application.load_tasks
 
 class Stash::Manager
   include Singleton
@@ -21,6 +23,40 @@ class Stash::Manager
     idle
   end
 
+  def import(job_id:, rake: true)
+    return unless @status == :idle
+    @job_id = job_id
+    @status = :import
+    @message = "Importing..."
+    @logs = []
+    @rake = rake
+
+    try {
+      Rake::Task['db:drop'].invoke
+      Rake::Task['db:create'].invoke
+      Rake::Task['db:migrate'].invoke
+
+      Stash::Tasks::Import.new.start
+    }
+
+    idle
+  end
+
+  def export(job_id:, rake: true)
+    return unless @status == :idle
+    @job_id = job_id
+    @status = :export
+    @message = "Exporting..."
+    @logs = []
+    @rake = rake
+
+    try {
+      Stash::Tasks::Export.new.start
+    }
+
+    idle
+  end
+
   def scan(job_id:, rake: true)
     return unless @status == :idle
     @job_id = job_id
@@ -29,7 +65,7 @@ class Stash::Manager
     @logs = []
     @rake = rake
 
-    glob_path = File.join(StashMetadata::STASH_DIRECTORY, "**", "*.{zip,m4v,mp4,mov,wmv}")
+    glob_path = File.join(Stash::STASH_DIRECTORY, "**", "*.{zip,m4v,mp4,mov,wmv}")
     scan_paths = Dir[glob_path]
     @current = 0
     @total = scan_paths.count
@@ -55,7 +91,7 @@ class Stash::Manager
     return unless @status == :idle
     @job_id = job_id
     @status = :generate
-    @message = "Generating sprites..."
+    @message = "Generating content..."
     @logs = []
     @rake = rake
 
@@ -103,8 +139,10 @@ class Stash::Manager
     @logs = []
     @rake = rake
 
-    # TODO: Clean up more and add progress
-    Stash::Tasks::Clean.new.start
+    try {
+      # TODO: Clean up more and add progress
+      Stash::Tasks::Clean.new.start
+    }
 
     idle
   end
@@ -126,6 +164,11 @@ class Stash::Manager
     add_log(type: :debug, message: message)
   end
 
+  def warn(message)
+    Stash.logger.warn(message)
+    add_log(type: :warn, message: message)
+  end
+
   def error(message)
     Stash.logger.error(message)
     add_log(type: :error, message: message)
@@ -136,10 +179,10 @@ class Stash::Manager
     def idle
       @status = :idle
       @message = "Waiting..."
-      @rake = true
       @current = 0
       @total = 0
       trigger_subscription
+      @rake = true
     end
 
     def add_log(message)

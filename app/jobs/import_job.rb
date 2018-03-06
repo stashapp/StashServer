@@ -1,4 +1,4 @@
-class ScanJob < ApplicationJob
+class ImportJob < ApplicationJob
   queue_as :default
 
   before_enqueue do |job|
@@ -8,6 +8,6 @@ class ScanJob < ApplicationJob
 
   def perform(*args)
     @manager = Stash::Manager.instance
-    @manager.scan(job_id: provider_job_id, rake: false)
+    @manager.import(job_id: provider_job_id, rake: false)
   end
 end

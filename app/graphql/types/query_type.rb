@@ -23,8 +23,20 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :validGalleriesForScene, field: Resolvers::ValidGalleriesForScene
   field :stats, field: Resolvers::Stats
 
+  field :metadataImport, !types.String, 'Start an import.  Returns the job ID' do
+    resolve -> (obj, args, ctx) { ImportJob.new.enqueue.job_id }
+  end
+  field :metadataExport, !types.String, 'Start an export.  Returns the job ID' do
+    resolve -> (obj, args, ctx) { ExportJob.new.enqueue.job_id }
+  end
   field :metadataScan, !types.String, 'Start a scan.  Returns the job ID' do
     resolve -> (obj, args, ctx) { ScanJob.new.enqueue.job_id }
+  end
+  field :metadataGenerate, !types.String, 'Start generating content.  Returns the job ID' do
+    resolve -> (obj, args, ctx) { GenerateJob.new.enqueue.job_id }
+  end
+  field :metadataClean, !types.String, 'Clean metadata.  Returns the job ID' do
+    resolve -> (obj, args, ctx) { CleanJob.new.enqueue.job_id }
   end
 
   field :allPerformers, !types[Types::PerformerType] do

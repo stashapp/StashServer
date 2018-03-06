@@ -17,7 +17,6 @@ class GalleriesController < ApplicationController
 
       raise ActionController::RoutingError.new('Not Found') unless file_path
 
-      type = FileMagic.new(FileMagic::MAGIC_MIME).file(file_path)
       expires_in 1.week
       response.headers['Content-Length'] = File.size(file_path).to_s
 
