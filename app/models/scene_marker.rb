@@ -7,10 +7,10 @@ class SceneMarker < ApplicationRecord
   validates :seconds, numericality: true
 
   def stream_file_path
-    return File.join(StashMetadata::STASH_TRANSCODE_DIRECTORY, scene.checksum, "#{seconds.to_i}.mp4")
+    return File.join(Stash::STASH_MARKERS_DIRECTORY, scene.checksum, "#{seconds.to_i}.mp4")
   end
 
   def stream_preview_path
-    return File.join(StashMetadata::STASH_TRANSCODE_DIRECTORY, scene.checksum, "#{seconds.to_i}.webp")
+    return File.join(Stash::STASH_MARKERS_DIRECTORY, scene.checksum, "#{seconds.to_i}.webp")
   end
 end
