@@ -17,6 +17,6 @@ GraphQL::Errors.configure(StashApiSchema) do
   end
 
   rescue_from StandardError do |exception|
-    GraphQL::ExecutionError.new(exception.message)
+    GraphQL::ExecutionError.new("#{exception.inspect} --> #{exception.backtrace.first}")
   end
 end

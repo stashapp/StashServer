@@ -14,24 +14,24 @@ class Stash::Scraper::Freeones < Stash::Scraper::MechanizeScraper
 
     result = {}
     result[:url]           = page.uri.to_s
-    result[:name]          = strip(params[param_indexes[:name]].text)
-    result[:ethnicity]     = get_ethnicity(strip(params[param_indexes[:ethnicity]].text))
-    result[:country]       = strip(params[param_indexes[:country]].text)
-    result[:eye_color]     = strip(params[param_indexes[:eye_color]].text)
-    result[:measurements]  = strip(params[param_indexes[:measurements]].text)
-    result[:fake_tits]     = strip(params[param_indexes[:fake_tits]].text)
-    result[:career_length] = strip(params[param_indexes[:career_length]].text.gsub(/\([\s\S]*/, ''))
-    result[:tattoos]       = strip(params[param_indexes[:tattoos]].text)
-    result[:piercings]     = strip(params[param_indexes[:piercings]].text)
-    result[:aliases]       = strip(params[param_indexes[:aliases]].text)
+    result[:name]          = param_value(params, param_indexes[:name])
+    result[:ethnicity]     = get_ethnicity(param_value(params, param_indexes[:ethnicity]))
+    result[:country]       = param_value(params, param_indexes[:country])
+    result[:eye_color]     = param_value(params, param_indexes[:eye_color])
+    result[:measurements]  = param_value(params, param_indexes[:measurements])
+    result[:fake_tits]     = param_value(params, param_indexes[:fake_tits])
+    result[:career_length] = param_value(params, param_indexes[:career_length]).gsub(/\([\s\S]*/, '')
+    result[:tattoos]       = param_value(params, param_indexes[:tattoos])
+    result[:piercings]     = param_value(params, param_indexes[:piercings])
+    result[:aliases]       = param_value(params, param_indexes[:aliases])
 
-    birth = strip(params[param_indexes[:birthdate]].text.gsub(/ \(\d* years old\)/, ''))
+    birth = param_value(params, param_indexes[:birthdate]).gsub(/ \(\d* years old\)/, '')
     if birth != 'Unknown' && !birth.blank?
       birthdate = Date.parse(birth)
       result[:birthdate] = birthdate.strftime('%F')
     end
 
-    height = strip(params[param_indexes[:height]].text)
+    height = param_value(params, param_indexes[:height])
     match = /heightcm = "(.*)"\;/.match(height)
     if !match[1].nil?
       result[:height] = match[1]
@@ -44,7 +44,7 @@ class Stash::Scraper::Freeones < Stash::Scraper::MechanizeScraper
     end
 
     instagram_element = page.search('.instagram a').first
-    instagram_url = instagram_element.first[:href] unless instagram_element.nil?
+    instagram_url = instagram_element[:href] unless instagram_element.nil?
     if !instagram_url.blank?
       result[:instagram] = URI(instagram_url).path.gsub('/', '')
     end
@@ -53,6 +53,11 @@ class Stash::Scraper::Freeones < Stash::Scraper::MechanizeScraper
   end
 
   private
+
+    def param_value(params, param_index)
+      return '' if param_index.nil?
+      strip(params[param_index].text)
+    end
 
     def get_ethnicity(ethnicity)
       case ethnicity
