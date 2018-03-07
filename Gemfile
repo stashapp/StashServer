@@ -47,6 +47,9 @@ gem 'tzinfo-data', '1.2017.2'
 gem 'graphql', '1.7.4'
 gem 'graphql-errors', '0.1.0'
 
+# Scraper
+gem 'mechanize', '2.7.5'
+
 # gem 'passenger', '5.1.2', require: "phusion_passenger/rack_handler"
 gem 'kaminari', '~> 1.0.1'
 gem 'scoped_search', '~> 4.0.0'

@@ -23,6 +23,16 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :validGalleriesForScene, field: Resolvers::ValidGalleriesForScene
   field :stats, field: Resolvers::Stats
 
+  # Scrapers
+  field :scrapeFreeones, Types::ScrapedPerformerType, 'Scrape a performer using Freeones' do
+    argument :performer_name, !types.String, 'The full performer name to search for'
+    resolve -> (obj, args, ctx) {
+      scraper = Stash::Scraper::Freeones.new
+      scraper.get_performer(args[:performer_name])
+    }
+  end
+
+  # Metadata
   field :metadataImport, !types.String, 'Start an import.  Returns the job ID' do
     resolve -> (obj, args, ctx) { ImportJob.new.enqueue.job_id }
   end
@@ -39,6 +49,7 @@ Types::QueryType = GraphQL::ObjectType.define do
     resolve -> (obj, args, ctx) { CleanJob.new.enqueue.job_id }
   end
 
+  # Get everything
   field :allPerformers, !types[Types::PerformerType] do
     resolve -> (obj, args, ctx) { Performer.all }
   end
