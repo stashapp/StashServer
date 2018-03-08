@@ -1,14 +1,14 @@
 class Stash::Scraper::Freeones < Stash::Scraper::MechanizeScraper
   def get_performer(performer_name)
     page = @mechanize.get("https://www.freeones.com/search/?t=1&q=#{performer_name}&view=thumbs")
-    link = page.links.find { |link| link.text.downcase == performer_name.downcase }
-    return nil unless link
+    performer_link = page.links.find { |link| link.text.downcase == performer_name.downcase }
+    return nil unless performer_link
 
-    page = link.click
-    link = page.links.find { |link| link.text.include?('biography') }
-    return nil unless link
+    page = performer_link.click
+    bio_link = page.links.find { |link| link.text.include?('biography') }
+    return nil unless bio_link
 
-    page = link.click
+    page = bio_link.click
     params = page.search('.paramvalue')
     param_indexes = get_indexes(page.search('.paramname'))
 
@@ -50,6 +50,12 @@ class Stash::Scraper::Freeones < Stash::Scraper::MechanizeScraper
     end
 
     return result
+  end
+
+  def get_performer_names(query)
+    page = @mechanize.get("https://www.freeones.com/suggestions.php?q=#{query}&t=1")
+    elements = page.search('.suggestion')
+    return elements.map { |element| element.text.strip }
   end
 
   private

@@ -31,6 +31,13 @@ Types::QueryType = GraphQL::ObjectType.define do
       scraper.get_performer(args[:performer_name])
     }
   end
+  field :scrapeFreeonesPerformerList, !types[types.String], 'Scrape a list of performers from a query' do
+    argument :query, !types.String, 'Seach quer for performer names'
+    resolve -> (obj, args, ctx) {
+      scraper = Stash::Scraper::Freeones.new
+      scraper.get_performer_names(args[:query])
+    }
+  end
 
   # Metadata
   field :metadataImport, !types.String, 'Start an import.  Returns the job ID' do
