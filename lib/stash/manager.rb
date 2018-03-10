@@ -71,6 +71,7 @@ class Stash::Manager
     @total = scan_paths.count
     info("Starting scan of #{scan_paths.count} files")
     scan_paths.each { |path|
+      @current += 1
       try {
         scan_task = Stash::Tasks::Scan.new(path: path)
         scan_task.start

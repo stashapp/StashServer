@@ -66,7 +66,8 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
       tmp_path = File.join(temp_path, @image_filename)
       return if File.exist?(image_output_path)
 
-      cmd = "ffmpeg -v quiet -i '#{@path}' -y -c:v libwebp -lossless 1 -q:v 70 -compression_level 6 -preset default -loop 0 -threads 4 -vf scale=#{@width}:-2,fps=12 -an '#{tmp_path}'"
+      video_output_path = File.join(@output_directory, @video_filename)
+      cmd = "ffmpeg -v quiet -i '#{video_output_path}' -y -c:v libwebp -lossless 1 -q:v 70 -compression_level 6 -preset default -loop 0 -threads 4 -vf scale=#{@width}:-2,fps=12 -an '#{tmp_path}'"
       if system(cmd)
         FileUtils.mv(tmp_path, image_output_path)
         @manager.info("Created image preview #{image_output_path}")
