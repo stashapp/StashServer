@@ -26,14 +26,14 @@ class Stash::Tasks::Scan < Stash::Tasks::Base
     item = @klass.find_by(checksum: checksum)
     if item
       @manager.info("#{@path} already exists.  Updating path...")
-      item.path = path
+      item.path = @path
       item.save
     else
       @manager.info("#{@path} doesn't exist.  Creating new item...")
       item = @klass.new(path: @path, checksum: checksum)
 
       if @klass == Scene
-        video = FFMPEG::Movie.new(path)
+        video = FFMPEG::Movie.new(@path)
         item.size        = video.size
         item.duration    = video.duration
         item.video_codec = video.video_codec
@@ -65,8 +65,8 @@ class Stash::Tasks::Scan < Stash::Tasks::Base
     end
 
     def calculate_checksum
-      @manager.info("#{path} not found.  Calculating checksum...")
-      checksum = Digest::MD5.file(path).hexdigest
+      @manager.info("#{@path} not found.  Calculating checksum...")
+      checksum = Digest::MD5.file(@path).hexdigest
       @manager.debug("Checksum calculated: #{checksum}")
       return checksum
     end
@@ -76,7 +76,7 @@ class Stash::Tasks::Scan < Stash::Tasks::Base
       normal_path = File.join(Stash::STASH_SCREENSHOTS_DIRECTORY, "#{checksum}.jpg")
 
       if File.exist?(thumb_path) && File.exist?(normal_path)
-        @manager.debug("Screenshots already exist for #{path}.  Skipping...")
+        # Screenshots already exist for this path... skipping
         return
       end
 
