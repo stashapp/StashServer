@@ -9,7 +9,7 @@ class StudiosController < ApplicationController
       type = FileMagic.new(FileMagic::MAGIC_MIME).buffer(@studio.image)
 
       expires_in 1.week
-      response.headers['Content-Length'] = @studio.image.size.to_s
+      response.headers['Content-Length'] = @studio.image.bytesize.to_s
       send_data @studio.image, disposition: 'inline', type: type
     end
   end
