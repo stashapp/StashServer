@@ -26,6 +26,7 @@ That's it, pretty simple.  Right now all metadata must be input manually, but in
 STASH_DATA=/path/to/media
 STASH_METADATA=/path/to/save/metadata
 STASH_CACHE=/path/for/cache/files
+STASH_DOWNLOADS=/path/to/downloads
 ```
 4) Run the `start_docker.rb` ruby script
 5) Visit *server ip*:8008 in your browser
@@ -40,11 +41,19 @@ I created a Slack channel to discuss the project.  [Click here to join.](https:/
 
 * Ruby (Rails)
 * NGINX (For handling video streams)
-* FFMPEG (Compiled with libvpx for mouse over previews)
+* FFMPEG (Compiled with some extra flags)
   - macOS: `brew install ffmpeg --with-libvpx --with-opus --with-x265 --with-webp`
 * ImageMagick
 * libmagic
-  - macOS; `brew install libmagic`
+  - macOS: `brew install libmagic`
+
+### Optional for scraping
+
+* chromedriver
+  - macOS: `brew install chromedriver`
+* aria2
+  - macOS: `brew install aria2`
+* curl
 
 # Setup
 
@@ -63,6 +72,9 @@ stash_metadata_directory: ''
 
 # The location to store cache files
 stash_cache_directory: ''
+
+# The location to store scraped downloads
+stash_downloads_directory: ''
 ```
 
 ## NGINX

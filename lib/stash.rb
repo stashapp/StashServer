@@ -6,6 +6,7 @@ module Stash
   STASH_DIRECTORY             = File.expand_path(ENV['stash_directory'])
   STASH_METADATA_DIRECTORY    = File.expand_path(ENV['stash_metadata_directory'])
   STASH_CACHE_DIRECTORY       = File.expand_path(ENV['stash_cache_directory'])
+  STASH_DOWNLOADS_DIRECTORY   = File.expand_path(ENV['stash_downloads_directory'])
   STASH_PERFORMERS_DIRECTORY  = File.join(STASH_METADATA_DIRECTORY, 'performers')
   STASH_SCENES_DIRECTORY      = File.join(STASH_METADATA_DIRECTORY, 'scenes')
   STASH_GALLERIES_DIRECTORY   = File.join(STASH_METADATA_DIRECTORY, 'galleries')

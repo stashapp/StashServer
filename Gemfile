@@ -49,6 +49,7 @@ gem 'graphql-errors', '0.1.0'
 
 # Scraper
 gem 'mechanize', '2.7.5'
+gem 'selenium-webdriver', '3.10.0'
 
 # gem 'passenger', '5.1.2', require: "phusion_passenger/rack_handler"
 gem 'kaminari', '~> 1.0.1'
