@@ -1,6 +1,5 @@
 require 'singleton'
 require 'rake'
-Rails.application.load_tasks
 
 class Stash::Manager
   include Singleton
@@ -32,9 +31,12 @@ class Stash::Manager
     @rake = rake
 
     try {
-      Rake::Task['db:drop'].invoke
-      Rake::Task['db:create'].invoke
-      Rake::Task['db:migrate'].invoke
+      if !rake
+        Rails.application.load_tasks
+        Rake::Task['db:drop'].invoke
+        Rake::Task['db:create'].invoke
+        Rake::Task['db:migrate'].invoke
+      end
 
       Stash::Tasks::Import.new.start
     }
@@ -209,7 +211,7 @@ class Stash::Manager
     rescue ScriptError => e
       error("#{e.inspect} --> #{e.backtrace.first}")
     rescue => e
-      error(e.inspect)
+      error("#{e.inspect} --> #{e.backtrace.first}")
     rescue Exception => e
       idle
       raise e
