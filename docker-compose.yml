@@ -13,3 +13,4 @@ services:
       - ${STASH_DATA}:${STASH_DATA}:ro
       - ${STASH_METADATA}:${STASH_METADATA}
       - ${STASH_CACHE}:${STASH_CACHE}
+      - ${STASH_DOWNLOADS}:${STASH_DOWNLOADS}
