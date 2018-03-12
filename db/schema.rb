@@ -90,6 +90,25 @@ ActiveRecord::Schema.define(version: 20170123195042) do
     t.index ["studio_id"], name: "index_scenes_on_studio_id"
   end
 
+  create_table "scraped_items", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "url"
+    t.date "date"
+    t.string "rating"
+    t.string "tags"
+    t.string "models"
+    t.integer "episode"
+    t.string "gallery_filename"
+    t.string "gallery_url"
+    t.string "video_filename"
+    t.string "video_url"
+    t.integer "studio_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["studio_id"], name: "index_scraped_items_on_studio_id"
+  end
+
   create_table "studios", force: :cascade do |t|
     t.binary "image", limit: 1048576
     t.string "checksum"

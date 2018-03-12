@@ -130,5 +130,27 @@ class CreateScenes < ActiveRecord::Migration[5.1]
 
       t.timestamps
     end
+
+    # -------------
+    # Scraped Items
+    # -------------
+
+    create_table :scraped_items do |t|
+      t.string :title
+      t.string :description
+      t.string :url
+      t.date :date
+      t.string :rating
+      t.string :tags
+      t.string :models
+      t.integer :episode
+      t.string :gallery_filename
+      t.string :gallery_url
+      t.string :video_filename
+      t.string :video_url
+      t.references :studio, foreign_key: true, null: false
+
+      t.timestamps
+    end
   end
 end
