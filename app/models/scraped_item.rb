@@ -4,12 +4,12 @@ class ScrapedItem < ApplicationRecord
   validates :title, :url, :date, :video_filename, :gallery_filename, presence: true
 
   def scene
-    scenes = Scene.where('path like ?', "%/#{video_filename}")
+    scenes = Scene.where('path like ?', "%/#{video_filename}").select { |scene| scene.studio.nil? || scene.studio.id == studio.id }
     if scenes.count == 1
       return scenes.first
     elsif scenes.count > 1
-      scenes = Scene.where('path like ?', "%#{studio.name}%/#{video.filename}")
-      return scene.first if scenes.count == 1
+      scenes = Scene.where('path like ?', "%#{studio.name}%/#{video_filename}")
+      return scenes.first if scenes.count == 1
     else
       return nil
     end
@@ -37,7 +37,7 @@ class ScrapedItem < ApplicationRecord
     end
     if !tags.blank?
       details += "Tags: #{tags}\n"
-      valid_tags = video.tags.split(', ').map { |tag|
+      valid_tags = tags.split(', ').map { |tag|
         next if tag.strip.titleize == 'Sexy'
         Tag.where(name: tag.strip.titleize).first
       }.compact

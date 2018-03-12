@@ -53,6 +53,13 @@ module Stash::Scraper
       raise "Override download"
     end
 
+    def populate
+      scraped_items.each { |item|
+        next if item.scene.nil?
+        item.populate_scene
+      }
+    end
+
     def go_to_current_page
       @driver.get(current_page_url)
       @manager.info("Page #{@page}")
