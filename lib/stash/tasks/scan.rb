@@ -1,5 +1,6 @@
 class Stash::Tasks::Scan < Stash::Tasks::Base
   def initialize(path:)
+    super()
     @path = path
   end
 

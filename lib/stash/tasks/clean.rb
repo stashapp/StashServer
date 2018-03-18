@@ -1,6 +1,6 @@
 class Stash::Tasks::Clean < Stash::Tasks::Base
   def initialize
-    super
+    super()
   end
 
   def start

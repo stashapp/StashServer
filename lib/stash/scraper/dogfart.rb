@@ -79,19 +79,28 @@ class Stash::Scraper::Dogfart < Stash::Scraper::SeleniumScraper
             scraped_item.populate_scene
           else
             ScrapedItem.create(item)
+            @manager.debug("Used cURL to scrape the filename. Waiting 2.5 minutes... #{item[:video_url]}")
+            sleep(60 * 2.5)
           end
         }
       }
 
       @page += 1
-      sleep(60 * 5)
+      @manager.debug("Waiting 1 minute before going to next page num #{@page}...")
+      sleep(60) # Wait another minute before going to the next page
       break if @page > page_count
     }
   end
 
   def download
+    authenticate
+    @subdomain = URI.parse(@driver.current_url).host.split('.').first
+
     scraped_items.each { |item|
       next unless item.scene.nil?
+      old_subdomain = URI.parse(item.url).host.split('.').first
+      item.url = item.url.gsub(old_subdomain, @subdomain)
+
       @driver.get(item.url)
 
       elements = []

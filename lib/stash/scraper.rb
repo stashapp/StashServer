@@ -12,17 +12,43 @@ module Stash::Scraper
   end
 
   class SeleniumScraper < Base
-    def initialize(studio:, page: 1)
+    def initialize(studio:, page: 1, action: :scrape)
       @manager = Stash::Manager.instance
 
-      chrome_profile = File.join(Stash::STASH_METADATA_DIRECTORY, 'chrome')
-      options = Selenium::WebDriver::Chrome::Options.new(args: ["user-data-dir=#{chrome_profile}"]) #'headless',
-      @driver = Selenium::WebDriver.for(:chrome, options: options)
-      @driver.manage.timeouts.implicit_wait = 5
-      @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+      case action
+      when String
+        @action = action.to_sym
+      when Symbol
+        @action = action
+      else
+        raise "Invalid action type"
+      end
+
+      raise "Invalid action.  Use scrape, download, or populate." unless [:scrape, :download, :populate].include?(@action)
+
+      unless @action == :populate
+        chrome_profile = File.join(Stash::STASH_METADATA_DIRECTORY, 'chrome')
+        options = Selenium::WebDriver::Chrome::Options.new(args: ["user-data-dir=#{chrome_profile}"]) #'headless',
+        @driver = Selenium::WebDriver.for(:chrome, options: options)
+        @driver.manage.timeouts.implicit_wait = 5
+        @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+      end
 
       @studio = studio
       @page = page
+    end
+
+    def start
+      case @action
+      when :scrape
+        scrape
+      when :download
+        download
+      when :populate
+        populate
+      else
+        raise "Invalid action"
+      end
     end
 
     def authenticated?
@@ -56,6 +82,8 @@ module Stash::Scraper
     def populate
       scraped_items.each { |item|
         next if item.scene.nil?
+        next unless item.scene.studio.nil?
+        @manager.info("Populating #{item.title}")
         item.populate_scene
       }
     end
@@ -81,9 +109,9 @@ module Stash::Scraper
       retry
     rescue ScriptError => e
       @manager.error("#{e.inspect} --> #{e.backtrace.first}")
+      raise e
     rescue => e
       @manager.error("#{e.inspect} --> #{e.backtrace.first}")
-    rescue Exception => e
       raise e
     end
 

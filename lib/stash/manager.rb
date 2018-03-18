@@ -150,6 +150,22 @@ class Stash::Manager
     idle
   end
 
+  def scrape(job_id:, scraper:, rake: true)
+    return unless @status == :idle
+    @job_id = job_id
+    @status = :scrape
+    @message = "Scraping..."
+    @logs = []
+    @rake = rake
+
+    try {
+      # TODO: Clean up more and add progress
+      scraper.start
+    }
+
+    idle
+  end
+
   def progress
     return 0 if @total == 0
     (@current / @total.to_f) * 100
