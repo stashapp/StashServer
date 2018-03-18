@@ -10,7 +10,8 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
   end
 
   def generate
-    Dir.glob("#{@output_directory}/tmp/preview*.mp4") do |file|
+    glob_path = File.join(temp_path, 'preview*.mp4')
+    Dir.glob(glob_path) do |file|
       File.delete(file)
     end
 
@@ -27,9 +28,12 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
       File.join(@output_directory, 'tmp')
     end
 
+    def concat_file_path
+      File.join(temp_path, 'files.txt')
+    end
+
     def generate_concat_file
-      path = File.join(temp_path, 'files.txt')
-      open(path, 'w') do |f|
+      open(concat_file_path, 'w') do |f|
         @chunk_count.times do |i|
           num = "%.3d" % i
           filename = "preview#{num}.mp4"
@@ -48,12 +52,12 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
         num = "%.3d" % i
         filename = "preview#{num}.mp4"
         chunk_output_path = File.join(temp_path, filename)
-        cmd = "ffmpeg -v quiet -ss #{time} -t 0.75 -i \"#{@path}\" -c:v libx264 -profile:v high -level 4.2 -preset veryslow -crf 21 -threads 4 -vf scale=#{@width}:-2 -c:a aac -b:a 128k '#{chunk_output_path}'"
+        cmd = "ffmpeg -v quiet -ss #{time} -t 0.75 -i '#{@path}' -y -c:v libx264 -profile:v high -level 4.2 -preset veryslow -crf 21 -threads 4 -vf scale=#{@width}:-2 -c:a aac -b:a 128k '#{chunk_output_path}'"
         system(cmd)
       end
 
       video_output_path = File.join(@output_directory, @video_filename)
-      cmd = "ffmpeg -v quiet -f concat -i '#{@output_directory}/tmp/files.txt' -c copy '#{video_output_path}'"
+      cmd = "ffmpeg -v quiet -f concat -i '#{concat_file_path}' -y -c copy '#{video_output_path}'"
       if system(cmd)
         @manager.info("Created video preview #{video_output_path}")
       else

@@ -15,7 +15,8 @@ class GraphqlChannel < ApplicationCable::Channel
     result = StashApiSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
 
     payload = {
-      result: result.subscription? ? nil : result.to_h,
+      # NOTE: Changed from nil to {} because the JS client was erroring
+      result: result.subscription? ? {} : result.to_h,
       more: result.subscription?
     }
 

@@ -4,6 +4,7 @@ class Stash::Movie::Base
     @path = path
     @info = FFMPEG::Movie.new(@path)
     raise Errno::ENOENT, "The file '#{@path}' does not exist" unless File.exists?(@path)
+    raise Errno::EINVAL, "The file '#{@path}' is not a valid video" unless @info.valid?
   end
 
   protected
@@ -12,7 +13,7 @@ class Stash::Movie::Base
       video_streams = @info.metadata[:streams].select { |stream| stream.key?(:codec_type) && (stream[:codec_type] === 'video') }
       video_stream = video_streams.first
       if video_stream.nil?
-        raise Errno::EINVAL, "No valid video stream for file '#{path}'"
+        raise Errno::EINVAL, "No valid video stream for file '#{@path}'"
       end
 
       @frame_rate = @info.frame_rate || video_stream[:r_frame_rate].to_i
