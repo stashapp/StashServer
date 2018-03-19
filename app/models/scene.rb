@@ -46,6 +46,8 @@ class Scene < ApplicationRecord
   scope :is_missing, -> (missing) {
     if missing.first == 'gallery'
       missing_gallery
+    elsif missing.first == 'performers'
+      missing_performers
     else
       where missing.first.to_sym => nil
     end
@@ -55,6 +57,7 @@ class Scene < ApplicationRecord
   scope :performer_id, -> (performer_id) { joins(:performers).where('performers.id = ?', performer_id).distinct }
 
   scope :missing_gallery, -> () { joins('LEFT OUTER JOIN galleries ON galleries.ownable_id = scenes.id').where('galleries.ownable_id IS NULL') }
+  scope :missing_performers, -> () { left_outer_joins(:performers).where(performers: { id: nil }) }
 
   def mime_type
     return Mime::Type.lookup_by_extension(File.extname(path).delete('.')).to_s

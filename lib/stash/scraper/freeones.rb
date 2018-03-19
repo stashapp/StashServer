@@ -20,7 +20,7 @@ class Stash::Scraper::Freeones < Stash::Scraper::MechanizeScraper
     result[:eye_color]     = param_value(params, param_indexes[:eye_color])
     result[:measurements]  = param_value(params, param_indexes[:measurements])
     result[:fake_tits]     = param_value(params, param_indexes[:fake_tits])
-    result[:career_length] = param_value(params, param_indexes[:career_length]).gsub(/\([\s\S]*/, '')
+    result[:career_length] = param_value(params, param_indexes[:career_length]).gsub(/\([\s\S]*/, '').strip
     result[:tattoos]       = param_value(params, param_indexes[:tattoos])
     result[:piercings]     = param_value(params, param_indexes[:piercings])
     result[:aliases]       = param_value(params, param_indexes[:aliases])

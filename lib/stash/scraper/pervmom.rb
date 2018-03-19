@@ -72,11 +72,11 @@ class Stash::Scraper::Pervmom < Stash::Scraper::SeleniumScraper
 
   def download
     scraped_items.each { |item|
-      next unless item.scene.nil?
+      next unless item.scene.nil? || item.gallery.nil?
       @driver.get(item.url)
       item.update(file_info)
-      download_gallery(item)
-      download_scene(item)
+      download_gallery(item) if item.gallery.nil?
+      download_scene(item) if item.scene.nil?
     }
   end
 
