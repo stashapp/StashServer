@@ -11,6 +11,8 @@ module Sortable
       if params[:sort].include?('_count')
         t_name = params[:sort].split('_').first.pluralize
         left_joins(t_name.to_sym).group(:id).reorder("COUNT(#{t_name}.id) #{sort_direction}")
+      elsif params[:sort] == 'filesize'
+        reorder("cast(#{table_name}.size as integer) #{sort_direction}")
       else
         reorder("#{table_name}.#{sort_column}" + ' ' + sort_direction)
       end
