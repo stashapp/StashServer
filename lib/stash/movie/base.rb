@@ -19,7 +19,7 @@ class Stash::Movie::Base
       @frame_rate = @info.frame_rate || video_stream[:r_frame_rate].to_i
       @number_of_frames = video_stream[:nb_frames].to_i
       if @number_of_frames == 0
-        @number_of_frames = `ffmpeg -nostats -i #{@path} -vcodec copy -f rawvideo -y /dev/null 2>&1 | grep frame | awk '{split($0,a,"fps")}END{print a[1]}' | sed 's/.*= *//'`.to_i
+        @number_of_frames = `ffmpeg -nostats -i "#{@path}" -vcodec copy -f rawvideo -y /dev/null 2>&1 | grep frame | awk '{split($0,a,"fps")}END{print a[1]}' | sed 's/.*= *//'`.to_i
         if @number_of_frames == 0
           @number_of_frames = @frame_rate * @info.duration
         end

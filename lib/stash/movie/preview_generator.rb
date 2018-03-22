@@ -52,12 +52,12 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
         num = "%.3d" % i
         filename = "preview#{num}.mp4"
         chunk_output_path = File.join(temp_path, filename)
-        cmd = "ffmpeg -v quiet -ss #{time} -t 0.75 -i '#{@path}' -y -c:v libx264 -profile:v high -level 4.2 -preset veryslow -crf 21 -threads 4 -vf scale=#{@width}:-2 -c:a aac -b:a 128k '#{chunk_output_path}'"
+        cmd = "ffmpeg -v quiet -ss #{time} -t 0.75 -i \"#{@path}\" -y -c:v libx264 -profile:v high -level 4.2 -preset veryslow -crf 21 -threads 4 -vf scale=#{@width}:-2 -c:a aac -b:a 128k '#{chunk_output_path}'"
         system(cmd)
       end
 
       video_output_path = File.join(@output_directory, @video_filename)
-      cmd = "ffmpeg -v quiet -f concat -i '#{concat_file_path}' -y -c copy '#{video_output_path}'"
+      cmd = "ffmpeg -v quiet -f concat -i '#{concat_file_path}' -y -c copy \"#{video_output_path}\""
       if system(cmd)
         @manager.info("Created video preview #{video_output_path}")
       else
@@ -71,7 +71,7 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
       return if File.exist?(image_output_path)
 
       video_output_path = File.join(@output_directory, @video_filename)
-      cmd = "ffmpeg -v quiet -i '#{video_output_path}' -y -c:v libwebp -lossless 1 -q:v 70 -compression_level 6 -preset default -loop 0 -threads 4 -vf scale=#{@width}:-2,fps=12 -an '#{tmp_path}'"
+      cmd = "ffmpeg -v quiet -i \"#{video_output_path}\" -y -c:v libwebp -lossless 1 -q:v 70 -compression_level 6 -preset default -loop 0 -threads 4 -vf scale=#{@width}:-2,fps=12 -an \"#{tmp_path}\""
       if system(cmd)
         FileUtils.mv(tmp_path, image_output_path)
         @manager.info("Created image preview #{image_output_path}")

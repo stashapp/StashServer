@@ -29,7 +29,7 @@ class Stash::Tasks::GenerateMarkers < Stash::Tasks::Base
       marker_path = File.join(scene_markers_path, "#{marker.seconds.to_i.to_s}.webp")
       tmp_marker_path = File.join(temp_path, "#{marker.seconds.to_i.to_s}.webp")
       if !File.exist?(marker_path)
-        cmd = "ffmpeg -v quiet -ss #{marker.seconds.to_i} -t 5 -i '#{@scene.path}' -c:v libwebp -lossless 1 -q:v 70 -compression_level 6 -preset default -loop 0 -threads 4 -vf scale=#{output_width}:-2,fps=12 -an '#{tmp_marker_path}'"
+        cmd = "ffmpeg -v quiet -ss #{marker.seconds.to_i} -t 5 -i \"#{@scene.path}\" -c:v libwebp -lossless 1 -q:v 70 -compression_level 6 -preset default -loop 0 -threads 4 -vf scale=#{output_width}:-2,fps=12 -an '#{tmp_marker_path}'"
         @manager.info("Creating marker image #{marker_path}")
         unless system(cmd)
           @manager.error("Error running ffmpeg #{$?}")
