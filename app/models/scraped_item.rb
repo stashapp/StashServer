@@ -1,7 +1,7 @@
 class ScrapedItem < ApplicationRecord
   belongs_to :studio
 
-  validates :title, :url, :date, :video_filename, :gallery_filename, presence: true
+  validates :title, :url, :date, :video_filename, presence: true
 
   def scene
     scenes = Scene.where('path like ?', "%/#{video_filename}").select { |scene| scene.studio.nil? || scene.studio.id == studio.id }
@@ -16,7 +16,7 @@ class ScrapedItem < ApplicationRecord
   end
 
   def gallery
-    return nil if scene.nil?
+    return nil if scene.nil? || gallery_filename.blank?
     scene_path = File.dirname(scene.path)
     gallery_path = File.join(scene_path, gallery_filename)
     return Gallery.find_by(path: gallery_path)

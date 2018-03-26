@@ -32,6 +32,7 @@ module Stash::Scraper
         @driver = Selenium::WebDriver.for(:chrome, options: options)
         @driver.manage.timeouts.implicit_wait = 5
         @wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+        @short_wait = Selenium::WebDriver::Wait.new(timeout: 5)
       end
 
       @studio = studio
@@ -118,6 +119,8 @@ module Stash::Scraper
     protected
 
       def download_gallery(scraped_item)
+        return if scraped_item.gallery_filename.blank?
+
         path = File.join(Stash::STASH_DOWNLOADS_DIRECTORY, scraped_item.gallery_filename)
         if File.exist?(path)
           @manager.info("Already downloaded #{scraped_item.gallery_filename}.")
