@@ -1,11 +1,14 @@
 class Stash::Movie::PreviewGenerator < Stash::Movie::Base
   def initialize(path:, video_filename:, image_filename:, output_directory:)
-    super(path: path)
     @width = 640
     @video_filename = video_filename
     @image_filename = image_filename
     @output_directory = output_directory
     @chunk_count = 12
+
+    path = transcode_path if transcode_exists?
+    super(path: path)
+
     configure
   end
 
@@ -23,6 +26,14 @@ class Stash::Movie::PreviewGenerator < Stash::Movie::Base
   end
 
   private
+
+    def transcode_exists?
+      File.exist?(transcode_path)
+    end
+
+    def transcode_path
+      File.join(Stash::STASH_TRANSCODE_DIRECTORY, @video_filename)
+    end
 
     def temp_path
       File.join(@output_directory, 'tmp')

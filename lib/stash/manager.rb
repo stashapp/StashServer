@@ -102,6 +102,13 @@ class Stash::Manager
     Scene.all.each { |scene|
       @current += 1
 
+      if transcodes
+        try {
+          transcode_task = Stash::Tasks::GenerateTranscode.new(scene: scene)
+          transcode_task.start
+        }
+      end
+
       if sprites
         try {
           sprite_task = Stash::Tasks::GenerateSprite.new(scene: scene)
@@ -120,13 +127,6 @@ class Stash::Manager
         try {
           marker_task = Stash::Tasks::GenerateMarkers.new(scene: scene)
           marker_task.start
-        }
-      end
-
-      if transcodes
-        try {
-          transcode_task = Stash::Tasks::GenerateTranscode.new(scene: scene)
-          transcode_task.start
         }
       end
     }
