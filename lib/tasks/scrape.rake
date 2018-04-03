@@ -30,6 +30,14 @@ namespace :scrape do
     scrape_task_start(args, 'Public Agent', Stash::Scraper::Fakehub)
   end
 
+  task :povd, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'POVD', Stash::Scraper::Whalemember)
+  end
+
+  task :tiny4k, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Tiny 4K', Stash::Scraper::Whalemember)
+  end
+
   def scrape_task_get_studio(args)
     studio = Studio.find_by(name: args[:name])
     raise "Invalid studio!" if studio.nil?
