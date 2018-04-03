@@ -16,6 +16,7 @@ module Stash
   STASH_MARKERS_DIRECTORY     = File.join(STASH_METADATA_DIRECTORY, 'markers')
   STASH_TRANSCODE_DIRECTORY   = File.join(STASH_METADATA_DIRECTORY, 'transcodes')
   STASH_MAPPINGS_FILE         = File.join(STASH_METADATA_DIRECTORY, 'mappings.json')
+  STASH_SCRAPED_FILE          = File.join(STASH_METADATA_DIRECTORY, 'scraped.json')
 
   VALID_HTML5_CODECS          = ['h264', 'h265', 'vp8', 'vp9']
 

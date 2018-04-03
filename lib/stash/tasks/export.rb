@@ -11,6 +11,9 @@ class Stash::Tasks::Export < Stash::Tasks::Base
     export_studios
 
     Stash::JSONUtility.save_mappings(json: @mappings)
+
+    export_scraped
+
     return nil
   end
 
@@ -132,6 +135,31 @@ class Stash::Tasks::Export < Stash::Tasks::Base
 
         Stash::JSONUtility.save_gallery(checksum: gallery.checksum, json: json)
       end
+    end
+
+    def export_scraped
+      results = []
+      ScrapedItem.all.each do |scraped_item|
+        json = {}
+
+        json[:title]            = scraped_item.title            unless scraped_item.title.blank?
+        json[:description]      = scraped_item.description      unless scraped_item.description.blank?
+        json[:url]              = scraped_item.url              unless scraped_item.url.blank?
+        json[:date]             = scraped_item.date             unless scraped_item.date.blank?
+        json[:rating]           = scraped_item.rating           unless scraped_item.rating.blank?
+        json[:tags]             = scraped_item.tags             unless scraped_item.tags.blank?
+        json[:models]           = scraped_item.models           unless scraped_item.models.blank?
+        json[:episode]          = scraped_item.episode          unless scraped_item.episode.blank?
+        json[:gallery_filename] = scraped_item.gallery_filename unless scraped_item.gallery_filename.blank?
+        json[:gallery_url]      = scraped_item.gallery_url      unless scraped_item.gallery_url.blank?
+        json[:video_filename]   = scraped_item.video_filename   unless scraped_item.video_filename.blank?
+        json[:video_url]        = scraped_item.video_url        unless scraped_item.video_url.blank?
+        json[:studio]           = scraped_item.studio.name
+        json[:updated_at]       = scraped_item.updated_at
+
+        results.push(json)
+      end
+      Stash::JSONUtility.save_scraped(json: results)
     end
 
     def get_names(objects)

@@ -11,6 +11,16 @@ module Stash::JSONUtility
     write_json path: Stash::STASH_MAPPINGS_FILE, json: json
   end
 
+  def self.scraped
+    return nil unless File.exist? Stash::STASH_SCRAPED_FILE
+    return parse Stash::STASH_SCRAPED_FILE
+  end
+
+  def self.save_scraped(json:)
+    @@manager.info "Saving scraped file..."
+    write_json path: Stash::STASH_SCRAPED_FILE, json: json
+  end
+
   def self.performer(checksum)
     path = File.join(Stash::STASH_PERFORMERS_DIRECTORY, "#{checksum}.json")
     return nil unless File.exist? path
