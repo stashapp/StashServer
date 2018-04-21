@@ -38,6 +38,14 @@ namespace :scrape do
     scrape_task_start(args, 'Tiny 4K', Stash::Scraper::Whalemember)
   end
 
+  task :strandedteens, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Stranded Teens', Stash::Scraper::Mofos)
+  end
+
+  task :portagloryhole, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'PortaGloryhole', Stash::Scraper::Portagloryhole)
+  end
+
   def scrape_task_get_studio(args)
     studio = Studio.find_by(name: args[:name])
     raise "Invalid studio!" if studio.nil?
