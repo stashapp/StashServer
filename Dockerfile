@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:0.9.24
+FROM phusion/passenger-full:0.9.30
 
 # Set correct environment variables.
 ENV HOME /root
@@ -27,7 +27,7 @@ RUN yarn global add gulp
 RUN yarn global add @angular/cli
 
 # Set the newest ruby version
-RUN bash -lc 'rvm --default use ruby-2.4.1'
+RUN bash -lc 'rvm --default use ruby-2.4.4'
 
 # Expose Nginx HTTP service
 EXPOSE 80 3000 4000 4001 8008
