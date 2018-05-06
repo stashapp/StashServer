@@ -22,6 +22,10 @@ namespace :scrape do
     scrape_task_start_scrape(scraper, args)
   end
 
+  task :bffs, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'BFFs', Stash::Scraper::Bffs)
+  end
+
   task :faketaxi, [:action, :page, :name] => [:environment] do |task, args|
     scrape_task_start(args, 'Fake Taxi', Stash::Scraper::Fakehub)
   end
@@ -36,6 +40,18 @@ namespace :scrape do
 
   task :tiny4k, [:action, :page, :name] => [:environment] do |task, args|
     scrape_task_start(args, 'Tiny 4K', Stash::Scraper::Whalemember)
+  end
+
+  task :lubed, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Lubed', Stash::Scraper::Whalemember)
+  end
+
+  task :castingcouchx, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Casting Couch X', Stash::Scraper::Whalemember)
+  end
+
+  task :publicpickups, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Public Pickups', Stash::Scraper::Mofos)
   end
 
   task :strandedteens, [:action, :page, :name] => [:environment] do |task, args|

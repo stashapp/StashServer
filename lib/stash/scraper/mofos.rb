@@ -28,7 +28,7 @@ class Stash::Scraper::Mofos < Stash::Scraper::SeleniumScraper
 
   def page_count
     # TODO
-    25
+    26
   end
 
   def scrape

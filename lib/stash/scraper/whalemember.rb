@@ -30,7 +30,7 @@ class Stash::Scraper::Whalemember < Stash::Scraper::SeleniumScraper
   def authenticate
     @driver.get(auth_url)
     unless authenticated?
-      @driver.find_element(xpath: ".//a[contains(@href, 'login')]").click
+      # @driver.find_element(xpath: ".//a[contains(@href, 'login')]").click
       byebug #TODO
     end
   end
