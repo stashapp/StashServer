@@ -31,6 +31,9 @@ RUN yarn global add @angular/cli
 # Set the newest ruby version
 RUN bash -lc 'rvm --default use ruby-2.4.4'
 
+# Fix broken bundler
+RUN gem install bundler
+
 # Expose Nginx HTTP service
 EXPOSE 80 3000 4000 4001 8008
 
