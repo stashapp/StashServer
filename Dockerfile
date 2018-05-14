@@ -39,6 +39,7 @@ EXPOSE 80 3000 4000 4001 8008
 
 # Start Nginx / Passenger
 RUN rm -f /etc/service/nginx/down
+RUN rm -f /etc/service/redis/down
 
 # Remove the default site
 RUN rm /etc/nginx/sites-enabled/default
