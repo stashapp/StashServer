@@ -1,10 +1,18 @@
-class Stash::Scraper::Bffs < Stash::Scraper::SeleniumScraper
+class Stash::Scraper::TeamSkeetPremium < Stash::Scraper::SeleniumScraper
   def authenticated?
     return !@driver.title.include?('Login')
   end
 
   def auth_url
-    return 'http://members.bffs.com/'
+    if @studio.name == 'BFFs'
+      return 'http://members.bffs.com/'
+    elsif @studio.name == 'PervMom'
+      return 'http://members.pervmom.com/'
+    elsif @studio.name == 'Shoplyfter'
+      return 'http://members.shoplyfter.com/'
+    else
+      byebug
+    end
   end
 
   def authenticate
@@ -15,7 +23,7 @@ class Stash::Scraper::Bffs < Stash::Scraper::SeleniumScraper
   end
 
   def current_page_url
-    return "http://members.bffs.com/sort/most-recent?page=#{@page}"
+    return "#{auth_url}sort/most-recent?page=#{@page}"
   end
 
   def page_count
@@ -35,7 +43,8 @@ class Stash::Scraper::Bffs < Stash::Scraper::SeleniumScraper
       go_to_current_page
       max_page = page_count
 
-      elements = @driver.find_elements(xpath: ".//a[contains(@href, 'members.bffs.com/trailer/')]")
+      href = auth_url.gsub('http://', '')
+      elements = @driver.find_elements(xpath: ".//a[contains(@href, '#{href}trailer/')]")
       items = elements.map { |e|
         {
           url: e.attribute(:href)
@@ -50,13 +59,14 @@ class Stash::Scraper::Bffs < Stash::Scraper::SeleniumScraper
           item[:title] = @driver.find_element(xpath: ".//div[@class='contents2 main-text']").text.strip
           date = @driver.find_element(xpath: ".//span[contains(text(), 'DATE PUBLISHED')]").text.strip.gsub('DATE PUBLISHED: ', '')
           item[:date] = Date::strptime(date, '%m/%d/%Y').strftime('%F')
-          item[:rating] = @driver.find_element(xpath: ".//span[@class='thumbs-percentage']").text.strip
+          unless @studio.name == 'PervMom'
+            item[:rating] = @driver.find_element(xpath: ".//span[@class='thumbs-percentage']").text.strip
+          end
           item[:description] = @driver.find_element(class: 'story-cointainer').text.strip.gsub("\nRead more", '')
 
           item.merge!(file_info)
 
           item[:studio] = @studio
-
           scraped_item = ScrapedItem.find_by(date: item[:date], video_filename: item[:video_filename])
           if scraped_item
             scraped_item.update(item)

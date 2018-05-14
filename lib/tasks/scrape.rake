@@ -15,15 +15,15 @@ namespace :scrape do
   end
 
   task :pervmom, [:action, :page, :name] => [:environment] do |task, args|
-    args.with_defaults(action: 'scrape', page: 1, name: 'PervMom')
-
-    studio = scrape_task_get_studio(args)
-    scraper = Stash::Scraper::Pervmom.new(studio: studio, page: args[:page].to_i, action: args[:action])
-    scrape_task_start_scrape(scraper, args)
+    scrape_task_start(args, 'PervMom', Stash::Scraper::TeamSkeetPremium)
   end
 
   task :bffs, [:action, :page, :name] => [:environment] do |task, args|
-    scrape_task_start(args, 'BFFs', Stash::Scraper::Bffs)
+    scrape_task_start(args, 'BFFs', Stash::Scraper::TeamSkeetPremium)
+  end
+
+  task :shoplyfter, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Shoplyfter', Stash::Scraper::TeamSkeetPremium)
   end
 
   task :faketaxi, [:action, :page, :name] => [:environment] do |task, args|
