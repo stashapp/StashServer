@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:0.9.24
+FROM phusion/passenger-full:0.9.30
 
 # Set correct environment variables.
 ENV HOME /root
@@ -20,14 +20,19 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 
 # Install dependencies from apt-get
-RUN apt-get update -qq && apt-get install -y ffmpeg imagemagick yarn libmagic-dev
+RUN add-apt-repository -y ppa:mc3man/xerus-media && apt-get update -qq \
+  && apt-get install -y --no-install-recommends ffmpeg imagemagick libmagic-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 # Install global node modules
 RUN yarn global add gulp
 RUN yarn global add @angular/cli
 
 # Set the newest ruby version
-RUN bash -lc 'rvm --default use ruby-2.4.1'
+RUN bash -lc 'rvm --default use ruby-2.4.4'
+
+# Fix broken bundler
+RUN gem install bundler
 
 # Expose Nginx HTTP service
 EXPOSE 80 3000 4000 4001 8008
