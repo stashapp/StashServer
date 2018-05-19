@@ -20,9 +20,20 @@ module Stash
 
   VALID_HTML5_CODECS          = ['h264', 'h265', 'vp8', 'vp9']
 
+  class StashLoggerFormatter < Logger::Formatter
+    Format = "%s, [%s#%d] %5s -- %s: %s"
+
+    def call(severity, time, progname, msg)
+      m = msg2str(msg)
+      m << "\n" unless m[-1] == "\r"
+      Format % [severity[0..0], format_datetime(time), $$, severity, progname, m.rjust(80)]
+    end
+  end
+
   def self.logger
     return @logger if @logger
     logger = Logger.new(STDOUT)
+    logger.formatter = StashLoggerFormatter.new
     logger.level = Logger::INFO
     @logger = logger
   end

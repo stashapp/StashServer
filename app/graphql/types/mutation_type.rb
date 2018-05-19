@@ -3,7 +3,8 @@ Types::MutationType = GraphQL::ObjectType.define do
 
   field :sceneUpdate, field: Mutations::SceneUpdate.field
 
-  field :sceneMarkerCreate, function: Mutations::SceneMarkerCreate.new
+  field :sceneMarkerCreate, field: Mutations::SceneMarkerCreate.field
+  field :sceneMarkerUpdate, field: Mutations::SceneMarkerUpdate.field
   field :sceneMarkerDestroy, function: Mutations::SceneMarkerDestroy.new
 
   field :performerCreate, field: Mutations::PerformerCreate.field

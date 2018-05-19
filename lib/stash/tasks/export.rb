@@ -45,7 +45,13 @@ class Stash::Tasks::Export < Stash::Tasks::Base
         if scene.scene_markers.count > 0
           json[:markers] = []
           scene.scene_markers.each { |marker|
-            json[:markers].push(title: marker.title, seconds: marker.seconds)
+            marker_json = {
+              title: marker.title,
+              seconds: marker.seconds,
+              primary_tag: marker.primary_tag.name,
+              tags: get_names(marker.tags)
+            }
+            json[:markers].push(marker_json)
           }
         elsif !json[:markers].nil?
           json.delete(:markers)

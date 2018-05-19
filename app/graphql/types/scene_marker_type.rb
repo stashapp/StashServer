@@ -1,5 +1,5 @@
 Types::SceneMarkerType = GraphQL::ObjectType.define do
-  name 'SceneMarkerType' # TODO rename SceneMarker
+  name 'SceneMarker'
   description 'A scene marker...'
 
   # Fields - `!` marks a field as "non-null"
@@ -7,6 +7,8 @@ Types::SceneMarkerType = GraphQL::ObjectType.define do
   field :scene,           !Types::SceneType
   field :title,           !types.String
   field :seconds,         !types.Float
+  field :primary_tag,     !Types::TagType
+  field :tags,            !types[Types::TagType]
 
   field :stream, !types.String do
     description 'The path to stream this marker'

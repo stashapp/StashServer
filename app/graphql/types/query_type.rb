@@ -7,6 +7,8 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :findScene, field: Resolvers::FindScene
   field :findScenes, function: Functions::FindScenes.new
 
+  field :findSceneMarkers, function: Functions::FindSceneMarkers.new
+
   field :findPerformer, field: Resolvers::FindPerformer
   field :findPerformers, function: Functions::FindPerformers.new
 
@@ -16,12 +18,15 @@ Types::QueryType = GraphQL::ObjectType.define do
   field :findGallery, field: Resolvers::FindGallery
   field :findGalleries, function: Functions::FindGalleries.new
 
+  field :findTag, field: Resolvers::FindTag
+
   field :markerWall, function: Functions::MarkerWall.new
   field :sceneWall, function: Functions::SceneWall.new
 
   field :markerStrings, field: Resolvers::MarkerStrings
   field :validGalleriesForScene, field: Resolvers::ValidGalleriesForScene
   field :stats, field: Resolvers::Stats
+  field :sceneMarkerTags, field: Resolvers::SceneMarkerTags
 
   # Scrapers
   field :scrapeFreeones, Types::ScrapedPerformerType, 'Scrape a performer using Freeones' do
@@ -67,5 +72,9 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :allTags, !types[Types::TagType] do
     resolve -> (obj, args, ctx) { Tag.all }
+  end
+
+  field :allSceneMarkers, !types[Types::SceneMarkerType] do
+    resolve -> (obj, args, ctx) { SceneMarker.all }
   end
 end

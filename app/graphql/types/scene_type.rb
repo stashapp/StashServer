@@ -71,4 +71,17 @@ Types::SceneType = GraphQL::ObjectType.define do
   field :studio, Types::StudioType
   field :tags, !types[Types::TagType]
   field :performers, !types[Types::PerformerType]
+
+  # TODO: Remove this.  Apollo has a bug where "scene_marker_tags" query wont work when updating markers.
+  # https://github.com/apollographql/apollo-client/issues/1821
+  field :scene_marker_tags, !types[Types::SceneMarkerTagType] do
+    resolve ->(scene, args, ctx) {
+      tags = {}
+      scene.scene_markers.each { |marker|
+        tags[marker.primary_tag.id] = {tag: marker.primary_tag, scene_markers: []} if tags[marker.primary_tag.id].nil?
+        tags[marker.primary_tag.id][:scene_markers].push(marker)
+      }
+      return tags.values
+    }
+  end
 end

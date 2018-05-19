@@ -1,15 +1,17 @@
-class Mutations::SceneMarkerCreate < GraphQL::Function
-  argument :title, !types.String
-  argument :seconds, !types.Float
-  argument :scene_id, !types.ID
+Mutations::SceneMarkerCreate = GraphQL::Relay::Mutation.define do
+  name 'SceneMarkerCreate'
 
-  type Types::SceneMarkerType
+  input_field :title,           !types.String
+  input_field :seconds,         !types.Float
+  input_field :scene_id,        !types.ID
+  input_field :primary_tag_id,  !types.ID
+  input_field :tag_ids,         types[types.ID]
 
-  # the mutation method
-  # _obj - is parent object, which in this case is nil
-  # args - are the arguments passed
-  # _ctx - is the GraphQL context (which would be discussed later)
-  def call(_obj, args, _ctx)
-    Scene.find(args[:scene_id]).scene_markers.create!(args.to_h)
-  end
+  return_field :scene_marker, Types::SceneMarkerType
+
+  resolve ->(obj, input, ctx) {
+    scene = Scene.find(input[:scene_id])
+    marker = scene.scene_markers.create!(input.to_h)
+    return { scene_marker: marker }
+  }
 end
