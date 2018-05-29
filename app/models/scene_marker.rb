@@ -58,6 +58,27 @@ class SceneMarker < ApplicationRecord
     where(id: ids.uniq)
   }
 
+  scope :scene_tags, -> (scene_tag_ids) {
+    tag_ids = scene_tag_ids.map { |id| id.to_i  }.uniq
+
+    left_outer_joins(scene: [:tags])
+      .where(scene: {taggings: {tag_id: tag_ids}})
+      .group("scene_markers.id")
+      .having("count(taggings.tag_id) = #{scene_tag_ids.length}")
+      .distinct
+  }
+
+  scope :marker_and_scene_tags, -> (marker_tag_ids, scene_tag_ids) {
+    scene_tag_ids = scene_tag_ids.map { |id| id.to_i  }.uniq
+    marker_tag_ids = marker_tag_ids.map { |id| id.to_i  }.uniq
+
+    scene = scene_tags(scene_tag_ids)
+    marker = tags(marker_tag_ids)
+
+    ids = marker.pluck(:id) & scene.pluck(:id)
+    where(id: ids.uniq)
+  }
+
   def stream_file_path
     return File.join(Stash::STASH_MARKERS_DIRECTORY, scene.checksum, "#{seconds.to_i}.mp4")
   end

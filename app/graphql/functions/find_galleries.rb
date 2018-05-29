@@ -12,7 +12,7 @@ class Functions::FindGalleries < Functions::FindRecords
   def call(obj, args, ctx)
     q = query(args)
     galleries = Gallery.search_for(q)
-                       .sortable(args[:filter].to_h, default: 'name')
+                       .sortable(args[:filter].to_h, default: 'title')
                        .pageable(args)
 
     {
