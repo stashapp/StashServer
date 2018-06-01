@@ -13,6 +13,8 @@ module Sortable
         left_joins(t_name.to_sym).group(:id).reorder("COUNT(#{t_name}.id) #{sort_direction}")
       elsif params[:sort] == 'filesize'
         reorder("cast(#{table_name}.size as integer) #{sort_direction}")
+      elsif params[:sort] == 'random'
+        reorder('RANDOM()')
       else
         reorder("#{table_name}.#{sort_column}" + ' ' + sort_direction)
       end
