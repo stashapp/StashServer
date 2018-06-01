@@ -21,13 +21,13 @@ class Functions::FindScenes < Functions::FindRecords
   SceneFilterType = GraphQL::InputObjectType.define do
     name 'SceneFilterType'
 
-    argument :rating,       types.Int,      'Filter by rating'
-    argument :resolution,   ResolutionEnum, 'Filter by resolution'
-    argument :has_markers,  types.String,   'Filter to only include scenes which have markers. `true` or `false`'
-    argument :is_missing,   types.String,   'Filter to only include scenes missing this property'
-    argument :studio_id,    types.ID,       'Filter to only include scenes with this studio'
-    argument :tag_id,       types.ID,       'Filter to only include scenes with this tag'
-    argument :performer_id, types.ID,       'Filter to only include scenes with this performer'
+    argument :rating,       types.Int,       'Filter by rating'
+    argument :resolution,   ResolutionEnum,  'Filter by resolution'
+    argument :has_markers,  types.String,    'Filter to only include scenes which have markers. `true` or `false`'
+    argument :is_missing,   types.String,    'Filter to only include scenes missing this property'
+    argument :studio_id,    types.ID,        'Filter to only include scenes with this studio'
+    argument :tags,         types[types.ID], 'Filter to only include scenes with these tags'
+    argument :performer_id, types.ID,        'Filter to only include scenes with this performer'
   end
 
   type !FindScenesResultType
@@ -44,7 +44,7 @@ class Functions::FindScenes < Functions::FindRecords
                     .pageable(args)
     else
       q = query(args)
-      whitelist = args[:scene_filter].to_h.slice('rating', 'resolution', 'has_markers', 'is_missing', 'studio_id', 'tag_id', 'performer_id')
+      whitelist = args[:scene_filter].to_h.slice('rating', 'resolution', 'has_markers', 'is_missing', 'studio_id', 'tags', 'performer_id')
       scenes = Scene.search_for(q)
                     .filter(whitelist)
                     .sortable(args[:filter].to_h, default: 'path')

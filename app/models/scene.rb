@@ -16,7 +16,6 @@ class Scene < ApplicationRecord
   default_scope { order(path: :asc) }
   scope :filter_studios, -> (studio_ids) { where studio_id: studio_ids }
   scope :filter_performers, -> (performer_ids) { joins(:performers).where('performers.id IN (?)', performer_ids).distinct }
-  scope :filter_tags, -> (tag_ids) { joins(:tags).where('tags.id IN (?)', tag_ids).distinct }
 
   scope :rating, -> (rating) { where('rating = ?', rating) }
   scope :resolution, -> (resolution) {
@@ -54,6 +53,15 @@ class Scene < ApplicationRecord
   }
   scope :studio_id, -> (studio_id) { where studio_id: studio_id }
   scope :tag_id, -> (tag_id) { joins(:tags).where('tags.id = ?', tag_id).distinct }
+  scope :tags, -> (tag_ids) {
+    tag_ids = tag_ids.map { |id| id.to_i  }.uniq
+
+    joins(:tags)
+    .where(tags: { id: tag_ids })
+    .group("scenes.id")
+    .having("count(taggings.tag_id) = #{tag_ids.length}")
+    .distinct
+  }
   scope :performer_id, -> (performer_id) { joins(:performers).where('performers.id = ?', performer_id).distinct }
 
   scope :missing_gallery, -> () { joins('LEFT OUTER JOIN galleries ON galleries.ownable_id = scenes.id').where('galleries.ownable_id IS NULL') }
