@@ -56,10 +56,6 @@ RUN bundle install
 
 # Install the frontend
 RUN git clone https://github.com/StashApp/StashFrontend.git
-RUN cd StashFrontend/semantic \
-    && npm install gulp \
-    && gulp build \
-    && cd ..
 RUN cd StashFrontend && yarn install
 RUN cd StashFrontend \
     && ng build --prod \
