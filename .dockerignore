@@ -3,6 +3,8 @@ db/*.sqlite3
 db/*.sqlite3-journal
 log/*
 tmp/*
+spec/*
 config/application.yml
 Dockerfile
 README.md
+start_docker.rb
