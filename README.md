@@ -2,13 +2,15 @@
 
 **Stash is a rails app which organizes and serves your porn.**
 
+See a demo [here](https://vimeo.com/275537038) (password is stashapp).
+
 I built this as an alternative to "pornganizer".  Pornganizer is great, and I recommend you check it out, it just didn't meet *my* needs.
 
 So what does stash do?
 
 * Acts as a server which provides a web interface to stream your porn
-  - Webm video previews
-  - VTT generation for scrubbing
+  - MP4 video previews
+  - VTT generation for scrubbing thumbnails
 * Allows exporting your metadata into JSON
 
 In the future:
@@ -77,6 +79,10 @@ stash_cache_directory: ''
 stash_downloads_directory: ''
 ```
 
+### Frontend
+
+Be sure to compile and expose the frontend as well.  It can be found [here](https://github.com/StashApp/StashFrontend).
+
 ## NGINX
 
 ### macOS
@@ -118,7 +124,7 @@ stash_downloads_directory: ''
 
 # Usage
 
-Run `rails s` or `passenger start` to boot the app running on port 3000, but don't use it on this port since that will bypass the NGINX reverse proxy we set up above.  Instead, goto http://YOUR_LOCAL_IP_HERE:4000 to visit through the proxy, you should see the web app with no content.
+Run `rails s` to boot the app running on port 3000, but don't use it on this port since that will bypass the NGINX reverse proxy we set up above.  Instead, goto http://YOUR_LOCAL_IP_HERE:4000 to visit through the proxy, you should see the web app with no content.
 
 You're going to want to populate the database by running `rails metadata:scan`.  This will go through the stash folder you configured in the application.yml file and calculate MD5 checksums of everything and add the found scenes and galleries to the database.  This might take some time depending on how much content you have.
 
@@ -158,6 +164,6 @@ In the metadata directory after an export you'll see various files and folders..
 * `performers/#{MD5_HASH}.json`
   * Ditto for performers
 * `mappings.json`
-  * This is used to map scene MD5 hashes to file paths (so you don't have to recalculate the hash on import), performer hashes to a name (so we can keep hashes out of the file content), and gallery hashes for file paths.
+  * This is used to map scene /gallery MD5 hashes to file paths (so you don't have to recalculate the hash on import) and performer hashes to a name.
 
 I should note that the hash for performers is the MD5 hash of whatever image you used for the performer.
