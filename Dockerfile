@@ -64,8 +64,8 @@ RUN cd StashFrontend \
 
 # Clean up packages that aren't needed
 RUN apt-get purge -y libmagic-dev gcc g++ gcc-5 x11-common openjdk-8-jre-headless memcached \
-  mysql-common openssh-sftp-server openssh-server openssh-client passenger-doc m4 git-man bison \
-  apt-get autoremove -y
+    mysql-common openssh-sftp-server openssh-server openssh-client passenger-doc m4 git-man bison \
+ && apt-get autoremove -y
 
 # Add the Rails app
 ADD . $APP_HOME
