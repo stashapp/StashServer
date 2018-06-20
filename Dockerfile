@@ -21,7 +21,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 
 # Install dependencies from apt-get
 RUN add-apt-repository -y ppa:mc3man/xerus-media && apt-get update -qq \
-  && apt-get install -y --no-install-recommends ffmpeg imagemagick libmagic-dev \
+  && apt-get install -y --no-install-recommends ffmpeg imagemagick libmagic-dev yarn \
   && rm -rf /var/lib/apt/lists/*
 
 # Install global node modules
@@ -59,13 +59,13 @@ RUN git clone https://github.com/StashApp/StashFrontend.git
 RUN cd StashFrontend && yarn install
 RUN cd StashFrontend \
     && ng build --prod \
-    && mv dist $APP_FRONTEND_HOME \
+    && mv dist/* $APP_FRONTEND_HOME \
     && chown -R app:app $APP_FRONTEND_HOME
 
 # Clean up packages that aren't needed
 RUN apt-get purge -y libmagic-dev gcc g++ gcc-5 x11-common openjdk-8-jre-headless memcached \
   mysql-common openssh-sftp-server openssh-server openssh-client passenger-doc m4 git-man bison \
-  apt-get autoremove -y
+  && apt-get autoremove -y
 
 # Add the Rails app
 ADD . $APP_HOME

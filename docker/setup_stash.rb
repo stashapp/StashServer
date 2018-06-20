@@ -34,4 +34,5 @@ end
 Dir.chdir(ENV["APP_HOME"]) do
   write_yaml
   import_metadata
+  system "bin/rails db:migrate"
 end

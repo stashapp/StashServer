@@ -167,3 +167,16 @@ In the metadata directory after an export you'll see various files and folders..
   * This is used to map scene /gallery MD5 hashes to file paths (so you don't have to recalculate the hash on import) and performer hashes to a name.
 
 I should note that the hash for performers is the MD5 hash of whatever image you used for the performer.
+
+# Docker Commands for the developer
+
+* `docker rm /stash`
+* `docker build [--no-cache] -t stash .`
+* `docker tag IMAGE_ID stashappdev/stash:latest`
+* `docker images`
+
+*Debug failing build*
+`docker run --rm -it IMAGE_ID /bin/bash`
+
+*Remove all images*
+`docker rmi -f $(docker images -q)`
