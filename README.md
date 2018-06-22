@@ -30,10 +30,13 @@ STASH_METADATA=/path/to/save/metadata
 STASH_CACHE=/path/for/cache/files
 STASH_DOWNLOADS=/path/to/downloads
 ```
-4) Run the `start_docker.rb` ruby script
+4) Run the `start_docker.rb` ruby script to configure the container
 5) Visit *server ip*:8008 in your browser
 
 To run the rake tasks use this command to log into the docker container `docker exec -it stash /bin/bash` and then you should be able to run the tasks you want.
+
+To stop: `docker stop stash`
+To run again: `docker start stash`
 
 ## Slack
 
