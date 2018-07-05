@@ -2,7 +2,7 @@ Mutations::TagUpdate = GraphQL::Relay::Mutation.define do
   name 'TagUpdate'
 
   input_field :id, !types.ID
-  input_field :name, !types.String
+  input_field :name, types.String
 
   return_field :tag, Types::TagType
 

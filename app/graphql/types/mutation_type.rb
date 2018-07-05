@@ -14,5 +14,6 @@ Types::MutationType = GraphQL::ObjectType.define do
   field :studioUpdate, field: Mutations::StudioUpdate.field
 
   field :tagCreate, field: Mutations::TagCreate.field
+  field :tagDestroy, field: Mutations::TagDestroy.field
   field :tagUpdate, field: Mutations::TagUpdate.field
 end
