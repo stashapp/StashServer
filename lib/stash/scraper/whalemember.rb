@@ -22,6 +22,10 @@ class Stash::Scraper::Whalemember < Stash::Scraper::SeleniumScraper
       return "https://lubed.com"
     elsif @studio.name == 'Tiny 4K'
       return "https://tiny4k.com"
+    elsif @studio.name == 'BAEB'
+      return "https://baeb.com"
+    elsif @studio.name == 'Cum 4K'
+      return "https://cum4k.com"
     else
       byebug
     end
@@ -50,6 +54,10 @@ class Stash::Scraper::Whalemember < Stash::Scraper::SeleniumScraper
       return "https://lubed.com/scenes?page=#{@page}&sort=latest"
     elsif @studio.name == 'Tiny 4K'
       return "https://tiny4k.com/scenes?page=#{@page}&sort=latest"
+    elsif @studio.name == 'BAEB'
+      return "https://baeb.com/scenes?page=#{@page}&sort=latest"
+    elsif @studio.name == 'Cum 4K'
+      return "https://cum4k.com/scenes?page=#{@page}&sort=latest"
     else
       byebug
     end
@@ -69,11 +77,19 @@ class Stash::Scraper::Whalemember < Stash::Scraper::SeleniumScraper
       elements = @driver.find_elements(class: 'thumbnail')
       items = elements.map { |e|
         next if e.text.empty?
+
+        rating = nil
+        if @studio.name == 'BAEB'
+          rating = e.find_element(tag_name: 'i').text.strip
+        else
+          rating = e.find_element(class: 'numbers').text.strip.sub("\n", ', ')
+        end
+
         {
           url: e.find_element(xpath: ".//a[starts-with(@href, '/video/')]").attribute(:href),
           models: e.find_elements(xpath: ".//a[starts-with(@href, '/girls/')]").pluck(:text).join(', '),
           date: Date.parse(e.find_element(class: 'text-muted').text.strip),
-          rating: e.find_element(class: 'numbers').text.strip.sub("\n", ', ')
+          rating: rating
         }
       }
       items.compact! if items.include?(nil)

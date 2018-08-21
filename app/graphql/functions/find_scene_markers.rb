@@ -29,6 +29,7 @@ class Functions::FindSceneMarkers < Functions::FindRecords
       marker_tags = whitelist['tags']
       scene_tags  = whitelist['scene_tags']
       scene_markers = scene_markers.marker_and_scene_tags(marker_tags, scene_tags)
+      # todo: this path ignores all other filters
     else
       scene_markers = scene_markers.filter(whitelist)
     end

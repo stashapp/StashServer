@@ -50,6 +50,14 @@ namespace :scrape do
     scrape_task_start(args, 'Casting Couch X', Stash::Scraper::Whalemember)
   end
 
+  task :baeb, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'BAEB', Stash::Scraper::Whalemember)
+  end
+
+  task :cum4k, [:action, :page, :name] => [:environment] do |task, args|
+    scrape_task_start(args, 'Cum 4K', Stash::Scraper::Whalemember)
+  end
+
   task :publicpickups, [:action, :page, :name] => [:environment] do |task, args|
     scrape_task_start(args, 'Public Pickups', Stash::Scraper::Mofos)
   end
