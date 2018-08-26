@@ -40,7 +40,7 @@ Mutations::PerformerCreate = GraphQL::Relay::Mutation.define do
     performer.piercings     = input[:piercings]
     performer.aliases       = input[:aliases]
     performer.twitter       = input[:twitter]
-    performer.instagram     = input[:measurements]
+    performer.instagram     = input[:instagram]
     performer.favorite      = input[:favorite]
 
     process_image(params: input, object: performer)

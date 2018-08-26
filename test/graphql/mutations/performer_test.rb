@@ -14,6 +14,10 @@ class Mutations::PerformerTest < ActiveSupport::TestCase
     input = {
       image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=',
       name: 'Created Performer',
+      url: 'http://google.com',
+      twitter: 'twitterhandle',
+      instagram: 'instagramhandle',
+      measurements: 'measurements',
       favorite: false
     }
 
@@ -21,6 +25,10 @@ class Mutations::PerformerTest < ActiveSupport::TestCase
 
     assert performer.persisted?
     assert_equal 'Created Performer', performer.name
+    assert_equal 'http://google.com', performer.url
+    assert_equal 'twitterhandle', performer.twitter
+    assert_equal 'instagramhandle', performer.instagram
+    assert_equal 'measurements', performer.measurements
   end
 
   test 'creating a performer with existing image fails' do
