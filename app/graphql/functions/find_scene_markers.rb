@@ -13,6 +13,7 @@ class Functions::FindSceneMarkers < Functions::FindRecords
     argument :tag_id, types.ID, 'Filter to only include scene markers with this tag' # todo: remove?
     argument :tags, types[types.ID], 'Filter to only include scene markers with these tags'
     argument :scene_tags, types[types.ID], 'Filter to only include scene markers attached to a scene with these tags'
+    argument :performers, types[types.ID], 'Filter to only include scene markers with these performers'
   end
 
   type !FindSceneMarkersResultType
@@ -21,7 +22,7 @@ class Functions::FindSceneMarkers < Functions::FindRecords
 
   def call(obj, args, ctx)
     q = query(args)
-    whitelist = args[:scene_marker_filter].to_h.slice('tag_id', 'tags', 'scene_tags')
+    whitelist = args[:scene_marker_filter].to_h.slice('tag_id', 'tags', 'scene_tags', 'performers')
 
     scene_markers = SceneMarker.search_for(q)
 

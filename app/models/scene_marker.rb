@@ -79,6 +79,14 @@ class SceneMarker < ApplicationRecord
     where(id: ids.uniq)
   }
 
+  scope :performers, -> (scene_performer_ids) {
+    performer_ids = scene_performer_ids.map { |id| id.to_i  }.uniq
+
+    left_outer_joins(scene: [:performers])
+      .where(scene: {performers: {id: performer_ids}})
+      .distinct
+  }
+
   def stream_file_path
     return File.join(Stash::STASH_MARKERS_DIRECTORY, scene.checksum, "#{seconds.to_i}.mp4")
   end
