@@ -4,6 +4,7 @@ class Stash::Tasks::Clean < Stash::Tasks::Base
   end
 
   def start
+    remove_deleted
     clean_directory(Stash::STASH_SCREENSHOTS_DIRECTORY)
     clean_directory(Stash::STASH_VTT_DIRECTORY)
     clean_directory(Stash::STASH_TRANSCODE_DIRECTORY)
@@ -23,5 +24,17 @@ class Stash::Tasks::Clean < Stash::Tasks::Base
           end
         end
       }
+    end
+
+
+    def remove_deleted
+      @manager.info("Removing metadata for deleted media")
+
+      Scene.all.each do |scene|
+        unless scene.media_exists?
+          @manager.info("Scene #{scene.path} no longer exists.")
+          scene.destroy
+        end
+      end
     end
 end
