@@ -153,6 +153,8 @@ The following rake tasks are included.
   * This will create mp4 transcodes of files not compatible with HTML5 video.  (ex. wmv)
 * `$ rails metadata:generate_all`
   * This generates all of the above in one command.
+* `$ rails metadata:cleanup`
+  * This removes generated data for removed scenes, and deletes scenes who's original media no longer exists.
 
 # Questions
 

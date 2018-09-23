@@ -91,6 +91,10 @@ class Scene < ApplicationRecord
     return file_path
   end
 
+  def media_exists?
+    File.exist?(path)
+  end
+
   def screenshot(seconds: nil, width: nil)
     cache_key = "#{checksum}"
     if seconds
