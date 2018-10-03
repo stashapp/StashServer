@@ -15,6 +15,8 @@ module Sortable
         reorder("cast(#{table_name}.size as integer) #{sort_direction}")
       elsif params[:sort] == 'random'
         reorder('RANDOM()')
+      elsif params[:sort] == 'scenes_updated_at'
+        left_joins(:scene).group(:id).reorder("scenes.updated_at #{sort_direction}")
       else
         reorder("#{table_name}.#{sort_column}" + ' ' + sort_direction)
       end

@@ -41,6 +41,8 @@ class Stash::Tasks::Scan < Stash::Tasks::Base
         item.audio_codec = video.audio_codec
         item.width       = video.width
         item.height      = video.height
+        item.framerate   = video.frame_rate
+        item.bitrate     = video.bitrate
       end
 
       item.save

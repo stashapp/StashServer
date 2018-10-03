@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_16_210129) do
+ActiveRecord::Schema.define(version: 2018_10_03_000009) do
 
   create_table "galleries", force: :cascade do |t|
     t.string "title"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 2018_05_16_210129) do
     t.boolean "favorite", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["checksum"], name: "index_performers_on_checksum"
+    t.index ["name"], name: "index_performers_on_name"
   end
 
   create_table "performers_scenes", id: false, force: :cascade do |t|
@@ -88,6 +90,9 @@ ActiveRecord::Schema.define(version: 2018_05_16_210129) do
     t.integer "studio_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "framerate", precision: 7, scale: 2
+    t.integer "bitrate"
+    t.index ["checksum"], name: "index_scenes_on_checksum"
     t.index ["path"], name: "index_scenes_on_path", unique: true
     t.index ["studio_id"], name: "index_scenes_on_studio_id"
   end
@@ -118,6 +123,8 @@ ActiveRecord::Schema.define(version: 2018_05_16_210129) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["checksum"], name: "index_studios_on_checksum"
+    t.index ["name"], name: "index_studios_on_name"
   end
 
   create_table "taggings", force: :cascade do |t|

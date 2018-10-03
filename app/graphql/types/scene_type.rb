@@ -13,6 +13,8 @@ Types::SceneType = GraphQL::ObjectType.define do
     field :audio_codec,     types.String
     field :width,           types.Int
     field :height,          types.Int
+    field :framerate,       types.Float
+    field :bitrate,         types.Int
   end
 
   ScenePathsType = GraphQL::ObjectType.define do
