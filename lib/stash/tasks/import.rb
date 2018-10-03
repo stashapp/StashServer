@@ -273,6 +273,8 @@ class Stash::Tasks::Import < Stash::Tasks::Base
             scene.audio_codec = file_info['audio_codec']
             scene.width = file_info['width']
             scene.height = file_info['height']
+            scene.framerate = file_info['framerate']
+            scene.bitrate = file_info['bitrate']
           else
             # TODO Get FFMPEG metadata?
           end

@@ -64,6 +64,8 @@ class Stash::Tasks::Export < Stash::Tasks::Base
         json[:file][:audio_codec] = scene.audio_codec
         json[:file][:width]       = scene.width
         json[:file][:height]      = scene.height
+        json[:file][:framerate]   = scene.framerate
+        json[:file][:bitrate]     = scene.bitrate
 
         sceneJSON = Stash::JSONUtility.scene(scene.checksum)
         next if sceneJSON == json.as_json
