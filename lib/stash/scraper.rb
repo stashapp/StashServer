@@ -8,6 +8,7 @@ module Stash::Scraper
   class MechanizeScraper < Base
     def initialize
       @mechanize = Mechanize.new
+      @mechanize.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
   end
 
