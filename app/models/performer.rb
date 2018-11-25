@@ -7,7 +7,7 @@ class Performer < ApplicationRecord
   validate :image_exists
   validates_uniqueness_of :checksum
 
-  scoped_search on: [:name, :checksum, :birthdate]
+  scoped_search on: [:name, :checksum, :birthdate, :ethnicity]
 
   default_scope { order(name: :asc) }
   scope :filter_favorites, -> (favorite) { where(favorite: favorite) }
