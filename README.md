@@ -1,3 +1,7 @@
+# ⚠️ ATTENTION ⚠️
+### **[New Version](https://github.com/stashapp/stash)**
+**There is a new version of Stash, now written with Go.  The rewrite is far easier to install and use.  This Rails version will no longer be receiving updates as all my attention will be on the new project.  Existing users are able to export their metadata and import it into the new app.**
+
 # About
 
 **Stash is a rails app which organizes and serves your porn.**
